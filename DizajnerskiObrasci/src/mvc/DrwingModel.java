@@ -1,7 +1,6 @@
 package mvc;
 
 import java.util.ArrayList;
-
 import geometry.Shape;
 
 public class DrwingModel {
