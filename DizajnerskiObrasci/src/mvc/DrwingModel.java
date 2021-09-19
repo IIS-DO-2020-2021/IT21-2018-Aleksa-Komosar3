@@ -10,7 +10,6 @@ public class DrwingModel {
 		
 	}
 
-	
 	public void add(Shape s) {
 		shapes.add(s);
 	}
