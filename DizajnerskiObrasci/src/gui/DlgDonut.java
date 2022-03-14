@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -17,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class DlgDonut extends JDialog {
@@ -153,7 +153,7 @@ public class DlgDonut extends JDialog {
 			txtInnerRadius.setColumns(10);
 		}
 		{
-			JButton btnColor = new JButton("Color");
+			JButton btnColor = new JButton("Outline color");
 			btnColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
@@ -164,7 +164,8 @@ public class DlgDonut extends JDialog {
 			});
 		}
 		{
-			JButton btnInnerColor = new JButton("Inner color");
+			JButton btnInnerColor = new JButton("Color of donut");
+			btnInnerColor.setHorizontalAlignment(SwingConstants.LEADING);
 			btnInnerColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			contentPanel.add(btnInnerColor);
 			btnInnerColor.addActionListener(new ActionListener() {

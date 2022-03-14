@@ -1,6 +1,9 @@
 package mvc;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -20,83 +23,81 @@ import gui.DlgRectangle;
 
 public class DrawingController {
 	
-	//nema kreiranja objekata!
-	private DrawingFrame frame;
 	private DrwingModel model;
-	private Point startPoint;
-	private ArrayList<Shape> shapes = new ArrayList<Shape>();
+	private DrawingFrame frame;
+
+	//nema kreiranj objr
 	private Shape selected;
-	
+	private Point startPoint;
+
 	public DrawingController(DrwingModel model, DrawingFrame frame) {
-		this.model=model;
-		this.frame=frame;
+		this.model = model;
+		this.frame = frame;
 	}
 
-	public void mouseClicked(MouseEvent arg0) {
+	public void mouseClicked(MouseEvent e) {
 		Shape newShape=null;
-		int v1=0;
-		int v2=0;
-		
+		int v1=0,v2=0;
 		if (frame.getTglbtnSelection().isSelected()){
 			selected=null;
 			Iterator<Shape> it=model.getShapes().iterator();
 			while (it.hasNext()){
 				Shape shape = it.next();
 				shape.setSelected(false);
-				if(shape.contains(arg0.getX(), arg0.getY()))
-					selected=shape;
+				if(shape.contains(e.getX(), e.getY()))
+					selected= shape;
 			}
-			if (selected != null)
+			if (selected!=null) {
 				selected.setSelected(true);
+				model.getSelected().add(selected);
+			}
+
 		} else if(frame.getTglbtnPoint().isSelected()){
-			newShape=new Point(arg0.getX(), arg0.getY());
-			newShape.setColor(frame.getBtnColor().getBackground());
-			model.add(newShape);
+				Point p = new Point(e.getX(), e.getY());
+				p.setColor(Color.BLACK);
+				newShape = p;
 			} else if (frame.getTglbtnLine().isSelected()){
-				if (startPoint==null)
-					startPoint = new Point (arg0.getX(), arg0.getY());
+				if (startPoint==null) {
+					startPoint = new Point (e.getX(), e.getY());
+				}
 				else {
-					Line l = new Line(startPoint, new Point(arg0.getX(),arg0.getY()));
-					l.setColor(frame.getBtnColor().getBackground());
-					newShape=l;
+					Line l = new Line(startPoint, new Point(e.getX(),e.getY()));
+					l.setColor(Color.BLACK);
+					newShape = l;
 					startPoint=null;
-					model.add(newShape);
 				}
 		} else if (frame.getTglbtnRectangle().isSelected()){
 			DlgRectangle dlg = new DlgRectangle();
 			Rectangle r= new Rectangle();
 			dlg.setModal(true);
-			dlg.getTxtX().setText("" + arg0.getX());
-			dlg.getTxtY().setText("" + arg0.getY());
+			dlg.getTxtX().setText("" + e.getX());
+			dlg.getTxtY().setText("" + e.getY());
 			dlg.setVisible(true);
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtHeight().getText());
 				v2=Integer.parseInt(dlg.getTxtWidth().getText());
 			}
-			r = new Rectangle(new Point(arg0.getX(),arg0.getY()), v1, v2);
+			r = new Rectangle(new Point(e.getX(),e.getY()), v1, v2);
 			r.setColor(dlg.getC());
 			r.setInnerColor(dlg.getInnerC());
-			model.add(r);
 			try {
 				newShape = r;
 			} catch (Exception ex){
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		}
-			else if (frame.getTglbtnCircle().isSelected()){
+		} else if (frame.getTglbtnCircle().isSelected()){
 			DlgCircle dlg= new DlgCircle();
 			Circle c= new Circle();
 			dlg.setModal(true);
-			dlg.getTxtX().setText("" + arg0.getX());
-			dlg.getTxtY().setText("" + arg0.getY());
+			dlg.getTxtX().setText("" + e.getX());
+			dlg.getTxtY().setText("" + e.getY());
 			dlg.setVisible(true);
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 			}
-			c = new Circle(new Point(arg0.getX(),arg0.getY()), v1);
+			c = new Circle(new Point(e.getX(),e.getY()), v1);
 			c.setColor(dlg.getC());
 			c.setInnerColor(dlg.getInnerC());
-			model.add(c);
 			try {
 				newShape= c;
 			} catch (Exception ex){
@@ -106,17 +107,16 @@ public class DrawingController {
 			DlgDonut dlg= new DlgDonut();
 			Donut d = new Donut();
 			dlg.setModal(true);
-			dlg.getTxtX().setText("" + arg0.getX());
-			dlg.getTxtY().setText("" + arg0.getY());
+			dlg.getTxtX().setText("" + e.getX());
+			dlg.getTxtY().setText("" + e.getY());
 			dlg.setVisible(true);
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 				v2=Integer.parseInt(dlg.getTxtInnerRadius().getText());
 			}
-			d = new Donut(new Point(arg0.getX(),arg0.getY()), v1,v2);
+			d = new Donut(new Point(e.getX(),e.getY()), v1,v2);
 			d.setColor(dlg.getC());
 			d.setInnerColor(dlg.getInnerC());
-			model.add(d);
 			try {
 				newShape= d;
 			} catch (Exception ex){
@@ -124,32 +124,28 @@ public class DrawingController {
 			}
 		} 
 		if (newShape!=null)
-			shapes.add(newShape);
-			
+			model.getShapes().add(newShape);
 		frame.repaint();
-		
 	}
+
 	protected void delete() {
-		if (this.selected!=null) {
+		if (selected != null) {
 			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning message",
 					JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				model.getShape(selectedOption);
-				model.remove(selected);
+				model.getShapes().remove(selected);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "You have not selected any shape!","Error", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		this.setSelected(selected);
-		frame.getView().repaint();
-		frame.getTglbtnSelection().setSelected(false);
+		this.selected=null;
+		frame.repaint();
 	}
 
 	protected void modify(){
 		int x=0,y=0;
-		if (this.getSelected()!=null && selected!=null) {
-			Shape selected = this.getSelected();
+		//Shape selected = model.getSelectedShape(0);
+		if (selected != null) {
 			if (selected instanceof Point) {
 				Point p = (Point) selected;
 				DlgPoint dlg = new DlgPoint();
@@ -163,7 +159,7 @@ public class DrawingController {
 					y=Integer.parseInt(dlg.getTxtY().getText());
 					p = new Point(x, y);
 					p.setColor(dlg.getC());			
-					model.getShapes().set(model.getShapes().indexOf(selected), p);
+					model.getShapes().set(model.getShapes().indexOf(selected), p);	
 				}
 			} else if(selected instanceof Line){
 				Line l= (Line)selected;
@@ -274,20 +270,12 @@ public class DrawingController {
 					}
 					model.getShapes().set(model.getShapes().indexOf(selected), c);
 				}
-			} 	
+			}
 			frame.repaint();
 			}
 		else {
 			JOptionPane.showMessageDialog(null, "You have not selected any shape!","Error", JOptionPane.WARNING_MESSAGE);
 		}
 		}
-
-	public Shape getSelected() {
-		return selected;
-	}
-
-	public void setSelected(Shape selected) {
-		this.selected = selected;
-	}
 	
 }

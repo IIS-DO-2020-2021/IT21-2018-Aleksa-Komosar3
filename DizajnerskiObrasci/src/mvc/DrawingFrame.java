@@ -27,141 +27,72 @@ public class DrawingFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	//ne treba kreirati objekte, vec samo referenceriati, kad se kreiraju objekti nastane onaj haos
 	//kreira se objakt za frame jer je top level...
-	private DrawingView view= new DrawingView();
+	private DrawingView view = new DrawingView();
 	private DrawingController controller;
-	
+
 	private JToggleButton tglbtnPoint = new JToggleButton("Point");
 	private JToggleButton tglbtnLine = new JToggleButton("Line");
 	private JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
 	private JToggleButton tglbtnCircle = new JToggleButton("Circle");
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
 	private JToggleButton tglbtnSelection = new JToggleButton("Selection");
-	private JButton btnModification = new JButton("Modification");
-	private JButton btnDelete = new JButton("Delete");
-	private JButton btnColor = new JButton("");
-	private JButton btnInnerColor = new JButton("");
-	private final JTextArea txtAreaLog = new JTextArea();
-	private final JScrollPane scrollPane = new JScrollPane(txtAreaLog);
-	
+
 	public DrawingFrame() {
 		view.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				controller.mouseClicked(arg0);
+			public void mouseClicked(MouseEvent e) {
+				controller.mouseClicked(e);
 			}
 		});
-		
 		getContentPane().add(view, BorderLayout.CENTER);
-		
+		view.setLayout(new BorderLayout(0, 0));
 		view.setBorder(new EmptyBorder(5, 5, 5, 5));
-		view.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(300, 100, 1000, 700);
-		setTitle("Aleksa Komosar");
+		view.setBackground(Color.WHITE);
 		
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1000, 700);
+		setResizable(false);
+		setTitle("Aleksa Komosar");
+
 		JPanel pnlNorth = new JPanel();
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
-		JPanel pnlEast = new JPanel();
-		getContentPane().add(pnlEast, BorderLayout.EAST);
-		JPanel pnlWest = new JPanel();
-		getContentPane().add(pnlWest, BorderLayout.WEST);
 		JPanel pnlSouth = new JPanel();
 		getContentPane().add(pnlSouth, BorderLayout.SOUTH);
-		
+
+
 		ButtonGroup btnGroup = new ButtonGroup();
-		
-		btnModification.setEnabled(true);
+
+		JButton btnModification = new JButton("Modification");
 		btnModification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.modify();
 			}
 		});
-		
-		btnDelete.setEnabled(true);
+		JButton btnDelete = new JButton("Delete");
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.delete();
 			}
 		});
-		pnlNorth.setLayout(new GridLayout(0, 7, 5, 0));
-		
-		JLabel label = new JLabel("");
-		JLabel label_1 = new JLabel("");
-		JLabel label_2 = new JLabel("");
-		JLabel label_3 = new JLabel("");
-		JLabel label_4 = new JLabel("");
-		JLabel label_5 = new JLabel("");
-		JLabel label_6 = new JLabel("");
-		JLabel innerColor = new JLabel("InnerColor");
-		innerColor.setHorizontalAlignment(SwingConstants.RIGHT);
-		innerColor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		JLabel color = new JLabel("Color");
-		color.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		color.setHorizontalAlignment(SwingConstants.RIGHT);
-		JLabel label_9 = new JLabel("");
-		
-		pnlNorth.add(label_6);
+
 		pnlNorth.add(tglbtnPoint);
 		pnlNorth.add(tglbtnLine);
 		pnlNorth.add(tglbtnRectangle);
-		pnlNorth.add(color);
-		pnlNorth.add(btnColor);
-		pnlNorth.add(label_9);
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);	
-		pnlNorth.add(innerColor);
-		pnlNorth.add(btnInnerColor);
-		
-		pnlEast.setLayout(new GridLayout(0, 1, 0, 0));
-		pnlEast.add(tglbtnSelection);
-		pnlEast.add(btnModification);
-		pnlEast.add(btnDelete);
+		pnlSouth.add(tglbtnSelection);
+		pnlSouth.add(btnModification);
+		pnlSouth.add(btnDelete);	
 
-		
-		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
-		pnlWest.add(label);
-		pnlWest.add(label_1);
-
-		pnlWest.add(label_2);
-
-		pnlWest.add(label_3);
-		pnlWest.add(label_4);
-		pnlWest.add(label_5);
-		
 		btnGroup.add(tglbtnPoint);
 		btnGroup.add(tglbtnLine);
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
 		btnGroup.add(tglbtnSelection);
-		
-		JPanel pnlTop = new JPanel();
-		JPanel pnlBottom = new JPanel();
-		pnlSouth.add(pnlTop);
-		pnlSouth.add(pnlBottom);
-			
-		
-		pnlBottom.add(scrollPane);
-		
-		btnColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new JColorChooser();
-				btnColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
-			}
-		});
-		btnColor.setBackground(Color.BLACK);
-		
-		btnInnerColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new JColorChooser();
-				btnInnerColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
-			}
-		});
-		btnInnerColor.setBackground(Color.WHITE);
-		
-	
-		
 	}
+
 
 	public DrawingView getView() {
 		return view;
@@ -211,52 +142,13 @@ public class DrawingFrame extends JFrame {
 		this.tglbtnDonut = tglbtnDonut;
 	}
 
-
-	public void setTglbtnSelection(JToggleButton tglbtnSelection) {
-		this.tglbtnSelection = tglbtnSelection;
-	}
-
-	public JButton getBtnColor() {
-		return btnColor;
-	}
-
-
-	public void setBtnColor(JButton btnColor) {
-		this.btnColor = btnColor;
-	}
-
-
-	public JButton getBtnInnerColor() {
-		return btnInnerColor;
-	}
-
-
-	public void setBtnInnerColor(JButton btnInnerColor) {
-		this.btnInnerColor = btnInnerColor;
-	}
-
-
-	public JButton getBtnModification() {
-		return btnModification;
-	}
-
-
-	public void setBtnModification(JButton btnModification) {
-		this.btnModification = btnModification;
-	}
-
-
-	public JButton getBtnDelete() {
-		return btnDelete;
-	}
 	public JToggleButton getTglbtnSelection() {
 		return tglbtnSelection;
 	}
 
+	public void setTglbtnSelection(JToggleButton tglbtnSelection) {
+		this.tglbtnSelection = tglbtnSelection;
+	}	
 
-	public void setBtnDelete(JButton btnDelete) {
-		this.btnDelete = btnDelete;
-	}
-	
 	
 }

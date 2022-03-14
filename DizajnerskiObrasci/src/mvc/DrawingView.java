@@ -1,5 +1,6 @@
 package mvc;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -14,6 +15,7 @@ public class DrawingView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	//samo referenca treba na model, ne objekat!!!! Ali se ipak kreira da bi se nesto prikazalo
 	private DrwingModel model= new DrwingModel();
+	
 	
 	public DrawingView() {
 		addMouseListener(new MouseAdapter() {

@@ -11,7 +11,7 @@ public class Application {
 		DrawingController controller=new DrawingController(model, frame);
 		frame.setController(controller);
 		
-		frame.setSize(1000, 800);
+		frame.setSize(1000, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
