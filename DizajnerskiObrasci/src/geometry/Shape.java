@@ -3,7 +3,7 @@ package geometry;
 import java.awt.Graphics;
 import java.awt.Color;
 
-public abstract class Shape implements Moveable, Comparable<Object>{
+public abstract class Shape implements Moveable, Comparable{
 	private boolean selected;
 	private Color color;
 	
@@ -25,4 +25,8 @@ public abstract class Shape implements Moveable, Comparable<Object>{
 	public void setColor(Color color) {
 		this.color = color;
 	}
+	
+	public void markPoint(Graphics g, int x, int y) {
+		g.drawRect(x-3, y-3, 6, 6);
+    }
 }

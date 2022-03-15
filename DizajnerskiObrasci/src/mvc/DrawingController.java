@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
+import adapter.HexagonAdapter;
 import geometry.Circle;
 import geometry.Donut;
 import geometry.Line;
@@ -122,7 +123,25 @@ public class DrawingController {
 			} catch (Exception ex){
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
-		} 
+		} else if (frame.getTglbtnHexagon().isSelected()) {
+			DlgCircle dlg= new DlgCircle();
+			HexagonAdapter h= new HexagonAdapter();
+			dlg.setModal(true);
+			dlg.getTxtX().setText("" + e.getX());
+			dlg.getTxtY().setText("" + e.getY());
+			dlg.setVisible(true);
+			if(dlg.isOK()){
+				v1=Integer.parseInt(dlg.getTxtRadius().getText());
+			}
+			h = new HexagonAdapter(new Point(e.getX(),e.getY()), v1);
+			h.getHexagon().setBorderColor(dlg.getC());
+			h.getHexagon().setAreaColor(dlg.getInnerC());
+			try {
+				newShape= h;
+			} catch (Exception ex){
+				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 		if (newShape!=null)
 			model.getShapes().add(newShape);
 		frame.repaint();
@@ -269,6 +288,34 @@ public class DrawingController {
 						c.setInnerColor(dlg.getInnerPc());
 					}
 					model.getShapes().set(model.getShapes().indexOf(selected), c);
+				}
+			}else if(selected instanceof HexagonAdapter){
+				HexagonAdapter h= (HexagonAdapter) selected;
+				DlgCircle dlg= new DlgCircle();
+				dlg.getTxtX().setText("" + h.getHexagon().getX());
+				dlg.getTxtY().setText("" + h.getHexagon().getY());
+				dlg.getTxtRadius().setText(""+h.getHexagon().getR());
+				dlg.setPc(h.getHexagon().getBorderColor());
+				dlg.setInnerPc(h.getHexagon().getAreaColor());
+				dlg.setModal(true);
+				dlg.setVisible(true);
+				if(dlg.isOK()){
+					x=Integer.parseInt(dlg.getTxtX().getText());
+					y=Integer.parseInt(dlg.getTxtY().getText());
+					int r=Integer.parseInt(dlg.getTxtRadius().getText());
+					Point p=new Point(x,y);
+					h=new HexagonAdapter(p,r);
+					if(dlg.isColorChosen()){
+						h.getHexagon().setBorderColor(dlg.getC());
+					}else{
+						h.getHexagon().setBorderColor(dlg.getPc());
+					}
+					if(dlg.isInnerColorChosen()){
+						h.getHexagon().setAreaColor(dlg.getInnerC());
+					}else{
+						h.getHexagon().setAreaColor(dlg.getInnerPc());
+					}
+					model.getShapes().set(model.getShapes().indexOf(selected), h);
 				}
 			}
 			frame.repaint();

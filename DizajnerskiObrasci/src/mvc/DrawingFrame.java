@@ -36,6 +36,7 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton tglbtnCircle = new JToggleButton("Circle");
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
 	private JToggleButton tglbtnSelection = new JToggleButton("Selection");
+	private JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
 
 	public DrawingFrame() {
 		view.addMouseListener(new MouseAdapter() {
@@ -80,7 +81,10 @@ public class DrawingFrame extends JFrame {
 		pnlNorth.add(tglbtnLine);
 		pnlNorth.add(tglbtnRectangle);
 		pnlNorth.add(tglbtnCircle);
-		pnlNorth.add(tglbtnDonut);	
+		pnlNorth.add(tglbtnDonut);
+		pnlNorth.add(tglbtnHexagon);
+		
+		
 		pnlSouth.add(tglbtnSelection);
 		pnlSouth.add(btnModification);
 		pnlSouth.add(btnDelete);	
@@ -90,6 +94,7 @@ public class DrawingFrame extends JFrame {
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
+		btnGroup.add(tglbtnHexagon);
 		btnGroup.add(tglbtnSelection);
 	}
 
@@ -140,6 +145,15 @@ public class DrawingFrame extends JFrame {
 
 	public void setTglbtnDonut(JToggleButton tglbtnDonut) {
 		this.tglbtnDonut = tglbtnDonut;
+	}
+	
+	public JToggleButton getTglbtnHexagon() {
+		return tglbtnHexagon;
+	}
+
+
+	public void setTglbtnHexagon(JToggleButton tglbtnHexagon) {
+		this.tglbtnHexagon = tglbtnHexagon;
 	}
 
 	public JToggleButton getTglbtnSelection() {

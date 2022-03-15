@@ -54,7 +54,7 @@ public class Point extends Shape implements Moveable{
 		
 		if(isSelected()) {
 			g.setColor(Color.BLUE);
-			g.drawRect(this.x-3, this.y-3, 6, 6);
+			markPoint(g, this.x, this.y);
 		}
 	}
 	

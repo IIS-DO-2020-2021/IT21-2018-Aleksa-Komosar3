@@ -45,20 +45,23 @@ public class Circle extends SurfaceShape{
 	
 	public void draw(Graphics g) {
 		g.setColor(getColor());
-		g.drawOval(this.center.getX() - radius, this.center.getY() - radius, radius * 2, radius * 2);
+		g.drawOval(this.center.getX() - this.radius, this.center.getY() - this.radius, this.radius * 2, this.radius * 2);
 		
 		fill(g);
 		
-		if (isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(this.center.getX() - 3, this.center.getY() - 3, 6, 6);
-			g.drawRect(this.center.getX() - radius - 3, this.center.getY() - 3, 6, 6);
-			g.drawRect(this.center.getX() + radius - 3, this.center.getY() - 3, 6, 6);
-			g.drawRect(this.center.getX() - 3, this.center.getY() - radius - 3, 6, 6);
-			g.drawRect(this.center.getX() - 3, this.center.getY() + radius - 3, 6, 6);
-		}
+		putCirclePoint(g, this.radius);
 	}
 	
+	public void putCirclePoint(Graphics g, int r) {
+		if (isSelected()) {
+			g.setColor(Color.BLUE);
+			markPoint(g, this.center.getX(), this.center.getY());
+			markPoint(g, this.center.getX() - r, this.center.getY());
+			markPoint(g, this.center.getX() + r, this.center.getY());
+			markPoint(g, this.center.getX(), this.center.getY() - r);
+			markPoint(g, this.center.getX(), this.center.getY() + r);
+		}
+	}
 	@Override
 	public void fill(Graphics g) {
 		g.setColor(getInnerColor());

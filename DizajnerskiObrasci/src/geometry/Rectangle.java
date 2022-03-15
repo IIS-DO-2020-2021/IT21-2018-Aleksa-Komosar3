@@ -58,10 +58,10 @@ public class Rectangle extends SurfaceShape{
 		
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
-			g.drawRect(this.upperLeft.getX() - 3, getUpperLeft().getY() - 3, 6, 6);
-			g.drawRect(getUpperLeft().getX() + getWidth() - 3, getUpperLeft().getY() - 3, 6, 6);
-			g.drawRect(getUpperLeft().getX() - 3, getUpperLeft().getY() + getHeight() - 3, 6, 6);
-			g.drawRect(getUpperLeft().getX() + getWidth() - 3, getUpperLeft().getY() + getHeight() - 3, 6, 6);
+			markPoint(g, this.upperLeft.getX(), this.upperLeft.getY());
+			markPoint(g, this.upperLeft.getX() + this.width, this.upperLeft.getY());
+			markPoint(g, this.upperLeft.getX(), this.upperLeft.getY() + this.height);
+			markPoint(g, this.upperLeft.getX() + this.width, this.upperLeft.getY() + this.height);
 		}
 	}
 	
