@@ -129,7 +129,7 @@ public class DlgCircle extends JDialog {
 			txtRadius.setColumns(10);
 		}
 		{
-			JButton btnColor = new JButton("Color");
+			JButton btnColor = new JButton("Inner Color");
 			btnColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
@@ -140,7 +140,7 @@ public class DlgCircle extends JDialog {
 			});
 		}
 		{
-			JButton btnInnerColor = new JButton("Inner color");
+			JButton btnInnerColor = new JButton("Color");
 			btnInnerColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			contentPanel.add(btnInnerColor);
 			btnInnerColor.addActionListener(new ActionListener() {

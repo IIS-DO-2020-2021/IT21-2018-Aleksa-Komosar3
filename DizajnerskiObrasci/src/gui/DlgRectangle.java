@@ -38,8 +38,8 @@ public class DlgRectangle extends JDialog {
 	private Color pc, innerPc;
 	private boolean isOK;
 	private boolean colorChosen=false, innerColorChosen=false;
-	private JButton btnColor = new JButton("Color");
-	private JButton btnInnerColor = new JButton("Inner color");
+	private JButton btnColor = new JButton("Inner Color");
+	private JButton btnInnerColor = new JButton("Color");
 
 	/**
 	 * Launch the application.

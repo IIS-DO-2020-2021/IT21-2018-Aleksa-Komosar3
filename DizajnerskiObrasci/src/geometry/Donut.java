@@ -37,7 +37,7 @@ public class Donut extends Circle{
 		super.draw(g);
 		g.setColor(getColor());
 		g.drawOval(getCenter().getX() - this.innerRadius, getCenter().getY() - this.innerRadius, getInnerRadius() * 2, getInnerRadius() * 2);
-		Graphics2D g2d = (Graphics2D) g; 
+		//Graphics2D g2d = (Graphics2D) g; 
 
 		//Ellipse2D outer = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(), this.getRadius()*2, this.getRadius()*2); //jer je poluprecnik pa *2
 		//Ellipse2D inner = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius() , this.getCenter().getY() - this.getInnerRadius(), this.innerRadius * 2, this.innerRadius * 2);
