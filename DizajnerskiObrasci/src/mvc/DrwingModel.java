@@ -26,7 +26,20 @@ public class DrwingModel {
 		return selected;
 	}
 
-	public void setSelected(ArrayList<Shape> selected) {
-		this.selected = selected;
+	public ArrayList<Shape> getSelectedShapes() {
+		return selected;
+	}
+	
+	public Shape getShape(int i) {
+		return shapes.get(i);
+	}
+
+	/*Selected*/
+	public void addSelected(Shape s) {
+		selected.add(s);
+	}
+
+	public void removeSelected(Shape s) {
+		selected.remove(s);
 	}
 }

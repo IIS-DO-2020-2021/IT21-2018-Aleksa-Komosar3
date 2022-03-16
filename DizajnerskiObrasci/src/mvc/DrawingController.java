@@ -10,6 +10,8 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 
 import adapter.HexagonAdapter;
+import command.AddShapeCmd;
+import command.Command;
 import geometry.Circle;
 import geometry.Donut;
 import geometry.Line;
@@ -50,7 +52,7 @@ public class DrawingController {
 			}
 			if (selected!=null) {
 				selected.setSelected(true);
-				model.getSelected().add(selected);
+				model.getSelectedShapes().add(selected);
 			}
 
 		} else if(frame.getTglbtnPoint().isSelected()){
@@ -142,8 +144,11 @@ public class DrawingController {
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if (newShape!=null)
-			model.getShapes().add(newShape);
+		if (newShape!=null){
+			Command cmd = new AddShapeCmd(newShape, model);
+			cmd.execute();
+		}
+			
 		frame.repaint();
 	}
 
