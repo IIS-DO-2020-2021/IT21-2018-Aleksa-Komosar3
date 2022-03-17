@@ -3,8 +3,9 @@ package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Circle extends SurfaceShape{
-	private Point center;
+public class Circle extends SurfaceShape implements Cloneable{
+	//kod komanda se mora inicijalizovati novi objekat tacke inace ne radi modify
+	private Point center=new Point();
 	private int radius;
 	private boolean selected;
 	
@@ -107,5 +108,24 @@ public class Circle extends SurfaceShape{
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	@Override 
+	public Circle clone() {
+		Circle c = new Circle();
+		c.getCenter().setX(this.getCenter().getX());
+		c.getCenter().setY(this.getCenter().getY());
+
+		try {
+			c.setRadius(this.getRadius());
+		} catch (Exception e) {
+			//e.printStackTrace();
+			throw new NumberFormatException("Radius has to be value > then 0!");
+		}
+
+		c.setSelected(this.isSelected());
+		c.setColor(this.getColor());
+		c.setInnerColor(this.getInnerColor());
+
+		return c;
 	}
 }

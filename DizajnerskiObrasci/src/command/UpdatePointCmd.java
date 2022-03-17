@@ -24,9 +24,10 @@ public class UpdatePointCmd implements Command {
 		
 		//p1 ce pokazati na p2 tj novo i izgubimo p1 onda, tj pokazivac na oldState i onda caos
 		//mora se promeniti vrednosti a ne reference
-		original.setX(oldState.getX());
+		/*original.setX(oldState.getX());
 		original.setY(oldState.getY());
-		original.setColor(oldState.getColor());
+		original.setColor(oldState.getColor());*/
+		original = oldState.clone();
 		
 		oldState.setX(newState.getX());
 		oldState.setY(newState.getY());

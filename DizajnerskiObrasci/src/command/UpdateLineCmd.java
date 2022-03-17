@@ -17,9 +17,10 @@ public class UpdateLineCmd implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		original.setStartPoint(oldState.getStartPoint());
+		/*original.setStartPoint(oldState.getStartPoint());
 		original.setEndPoint(oldState.getEndPoint());
-		original.setColor(oldState.getColor());
+		original.setColor(oldState.getColor());*/
+		original = oldState.clone();
 
 		oldState.setStartPoint(newState.getStartPoint());
 		oldState.setEndPoint(newState.getEndPoint());

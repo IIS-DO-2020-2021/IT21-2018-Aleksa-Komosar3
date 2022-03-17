@@ -12,6 +12,12 @@ import javax.swing.JOptionPane;
 import adapter.HexagonAdapter;
 import command.AddShapeCmd;
 import command.Command;
+import command.UpdateCircleCmd;
+import command.UpdateDonutCmd;
+import command.UpdateHexagonCmd;
+import command.UpdateLineCmd;
+import command.UpdatePointCmd;
+import command.UpdateRectangleCmd;
 import geometry.Circle;
 import geometry.Donut;
 import geometry.Line;
@@ -108,7 +114,7 @@ public class DrawingController {
 			}
 		} else if (frame.getTglbtnDonut().isSelected()){
 			DlgDonut dlg= new DlgDonut();
-			Donut d = new Donut();
+			Donut don = new Donut();
 			dlg.setModal(true);
 			dlg.getTxtX().setText("" + e.getX());
 			dlg.getTxtY().setText("" + e.getY());
@@ -117,17 +123,17 @@ public class DrawingController {
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 				v2=Integer.parseInt(dlg.getTxtInnerRadius().getText());
 			}
-			d = new Donut(new Point(e.getX(),e.getY()), v1,v2);
-			d.setColor(dlg.getC());
-			d.setInnerColor(dlg.getInnerC());
+			don = new Donut(new Point(e.getX(),e.getY()), v1,v2);
+			don.setColor(dlg.getC());
+			don.setInnerColor(dlg.getInnerC());
 			try {
-				newShape= d;
+				newShape= don;
 			} catch (Exception ex){
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else if (frame.getTglbtnHexagon().isSelected()) {
 			DlgCircle dlg= new DlgCircle();
-			HexagonAdapter h= new HexagonAdapter();
+			HexagonAdapter hex= new HexagonAdapter();
 			dlg.setModal(true);
 			dlg.getTxtX().setText("" + e.getX());
 			dlg.getTxtY().setText("" + e.getY());
@@ -135,11 +141,11 @@ public class DrawingController {
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 			}
-			h = new HexagonAdapter(new Point(e.getX(),e.getY()), v1);
-			h.getHexagon().setBorderColor(dlg.getC());
-			h.getHexagon().setAreaColor(dlg.getInnerC());
+			hex = new HexagonAdapter(new Point(e.getX(),e.getY()), v1);
+			hex.getHexagon().setBorderColor(dlg.getC());
+			hex.getHexagon().setAreaColor(dlg.getInnerC());
 			try {
-				newShape= h;
+				newShape= hex;
 			} catch (Exception ex){
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -168,7 +174,7 @@ public class DrawingController {
 
 	protected void modify(){
 		int x=0,y=0;
-		//Shape selected = model.getSelectedShape(0);
+		Command cmd;
 		if (selected != null) {
 			if (selected instanceof Point) {
 				Point p = (Point) selected;
@@ -183,7 +189,9 @@ public class DrawingController {
 					y=Integer.parseInt(dlg.getTxtY().getText());
 					p = new Point(x, y);
 					p.setColor(dlg.getC());			
-					model.getShapes().set(model.getShapes().indexOf(selected), p);	
+					//model.getShapes().set(model.getShapes().indexOf(selected), p);
+					cmd = new UpdatePointCmd((Point)selected,p);
+					cmd.execute();
 				}
 			} else if(selected instanceof Line){
 				Line l= (Line)selected;
@@ -204,7 +212,9 @@ public class DrawingController {
 					Point p2= new Point(xe,ye);
 					l=new Line(p1,p2);
 					l.setColor(dlg.getC());
-					model.getShapes().set(model.getShapes().indexOf(selected), l);
+					cmd = new UpdateLineCmd((Line)selected,l);
+					cmd.execute();
+					//model.getShapes().set(model.getShapes().indexOf(selected), l);
 				}
 			} else if (selected instanceof Rectangle){
 				Rectangle r= (Rectangle) selected;
@@ -234,7 +244,9 @@ public class DrawingController {
 					}else{
 						r.setInnerColor(dlg.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selected), r);
+					cmd = new UpdateRectangleCmd((Rectangle)selected,r);
+					cmd.execute();
+					//model.getShapes().set(model.getShapes().indexOf(selected), r);
 				}
 			}else if(selected instanceof Donut){
 				Donut d= (Donut) selected;
@@ -264,7 +276,9 @@ public class DrawingController {
 					}else{
 						d.setInnerColor(dlg.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selected), d);
+					cmd = new UpdateDonutCmd((Donut)selected,d);
+					cmd.execute();
+					//model.getShapes().set(model.getShapes().indexOf(selected), d);
 				}
 			} else if(selected instanceof Circle){
 				Circle c= (Circle) selected;
@@ -292,16 +306,18 @@ public class DrawingController {
 					}else{
 						c.setInnerColor(dlg.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selected), c);
+					cmd = new UpdateCircleCmd((Circle)selected,c);
+					cmd.execute();
+					//model.getShapes().set(model.getShapes().indexOf(selected), c);
 				}
 			}else if(selected instanceof HexagonAdapter){
-				HexagonAdapter h= (HexagonAdapter) selected;
+				HexagonAdapter hex= (HexagonAdapter) selected;
 				DlgCircle dlg= new DlgCircle();
-				dlg.getTxtX().setText("" + h.getHexagon().getX());
-				dlg.getTxtY().setText("" + h.getHexagon().getY());
-				dlg.getTxtRadius().setText(""+h.getHexagon().getR());
-				dlg.setPc(h.getHexagon().getBorderColor());
-				dlg.setInnerPc(h.getHexagon().getAreaColor());
+				dlg.getTxtX().setText("" + hex.getHexagon().getX());
+				dlg.getTxtY().setText("" + hex.getHexagon().getY());
+				dlg.getTxtRadius().setText(""+hex.getHexagon().getR());
+				dlg.setPc(hex.getHexagon().getBorderColor());
+				dlg.setInnerPc(hex.getHexagon().getAreaColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if(dlg.isOK()){
@@ -309,18 +325,19 @@ public class DrawingController {
 					y=Integer.parseInt(dlg.getTxtY().getText());
 					int r=Integer.parseInt(dlg.getTxtRadius().getText());
 					Point p=new Point(x,y);
-					h=new HexagonAdapter(p,r);
+					hex=new HexagonAdapter(p,r);
 					if(dlg.isColorChosen()){
-						h.getHexagon().setBorderColor(dlg.getC());
+						hex.getHexagon().setBorderColor(dlg.getC());
 					}else{
-						h.getHexagon().setBorderColor(dlg.getPc());
+						hex.getHexagon().setBorderColor(dlg.getPc());
 					}
 					if(dlg.isInnerColorChosen()){
-						h.getHexagon().setAreaColor(dlg.getInnerC());
+						hex.getHexagon().setAreaColor(dlg.getInnerC());
 					}else{
-						h.getHexagon().setAreaColor(dlg.getInnerPc());
+						hex.getHexagon().setAreaColor(dlg.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selected), h);
+					cmd = new UpdateHexagonCmd((HexagonAdapter)selected,hex);
+					cmd.execute();
 				}
 			}
 			frame.repaint();

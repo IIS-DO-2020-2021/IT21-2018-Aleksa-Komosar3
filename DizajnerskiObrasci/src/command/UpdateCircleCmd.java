@@ -18,11 +18,12 @@ public class UpdateCircleCmd implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		original.getCenter().setX(oldState.getCenter().getX());
+		/*original.getCenter().setX(oldState.getCenter().getX());
 		original.getCenter().setY(oldState.getCenter().getY());
 		original.setRadius(oldState.getRadius());
 		original.setColor(oldState.getColor());
-		original.setInnerColor(oldState.getInnerColor());
+		original.setInnerColor(oldState.getInnerColor());*/
+		original = oldState.clone();
 
 		oldState.getCenter().setX(newState.getCenter().getX());
 		oldState.getCenter().setY(newState.getCenter().getY());

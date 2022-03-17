@@ -3,9 +3,9 @@ package geometry;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Line extends Shape{
-	private Point startPoint;
-	private Point endPoint;
+public class Line extends Shape implements Cloneable{
+	private Point startPoint=new Point();
+	private Point endPoint=new Point();
 	private boolean selected;
 	
 	public Line() {
@@ -84,5 +84,20 @@ public class Line extends Shape{
 	}
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+	
+	@Override	
+	public Line clone() {
+		Line line = new Line();
+
+		line.getStartPoint().setX(this.getStartPoint().getX());
+		line.getStartPoint().setY(this.getStartPoint().getY());
+		line.getEndPoint().setX(this.getEndPoint().getX());
+		line.getEndPoint().setY(this.getEndPoint().getY());
+
+		line.setColor(this.getColor());
+		line.setSelected(this.isSelected());
+
+		return line;	
 	}
 }

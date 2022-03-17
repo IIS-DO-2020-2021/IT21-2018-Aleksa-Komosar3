@@ -17,12 +17,14 @@ public class UpdateRectangleCmd implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		original.getUpperLeft().setX(oldState.getUpperLeft().getX());
+		/*original.getUpperLeft().setX(oldState.getUpperLeft().getX());
 		original.getUpperLeft().setY(oldState.getUpperLeft().getY());
 		original.setHeight(oldState.getHeight());
 		original.setWidth(oldState.getWidth());
 		original.setColor(oldState.getColor());
-		original.setInnerColor(oldState.getInnerColor());
+		original.setInnerColor(oldState.getInnerColor());*/
+		
+		original = oldState.clone();
 
 		oldState.getUpperLeft().setX(newState.getUpperLeft().getX());
 		oldState.getUpperLeft().setY(newState.getUpperLeft().getY());

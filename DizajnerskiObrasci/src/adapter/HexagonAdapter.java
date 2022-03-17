@@ -91,7 +91,7 @@ public class HexagonAdapter extends Shape implements Cloneable {
 		Point center = new Point(hexagon.getX(), hexagon.getY());
 		return "Hexagon [center=" + center + ", radius=" + hexagon.getR() + "]";
 	}
-
+	
 	@Override
 	public HexagonAdapter clone() {
 		HexagonAdapter hex=new HexagonAdapter();
@@ -114,5 +114,6 @@ public class HexagonAdapter extends Shape implements Cloneable {
 	public void setHexagon(Hexagon hexagon) {
 		this.hexagon = hexagon;
 	}
+	
 
 }

@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 
-public class Rectangle extends SurfaceShape{
-	private Point upperLeft;
+public class Rectangle extends SurfaceShape implements Cloneable{
+	private Point upperLeft=new Point();
 	private int height;
 	private int width;
 	private boolean selected;
@@ -125,5 +125,20 @@ public class Rectangle extends SurfaceShape{
 	}
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-	}	
+	}
+	
+	@Override	
+	public Rectangle clone() {
+		Rectangle rect = new Rectangle();
+
+		rect.setUpperLeft(this.getUpperLeft().clone());
+		rect.setHeight(this.getHeight());
+		rect.setWidth(this.getWidth());
+
+		rect.setInnerColor(this.getInnerColor());
+		rect.setColor(this.getColor());
+		rect.setSelected(this.isSelected());
+
+		return rect;
+	}
 }

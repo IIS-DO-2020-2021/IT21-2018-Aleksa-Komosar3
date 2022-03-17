@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 
-public class Point extends Shape implements Moveable{
+public class Point extends Shape implements Moveable, Cloneable{
 	private int x;
 	private int y;
 	private boolean selected;
@@ -89,5 +89,18 @@ public class Point extends Shape implements Moveable{
 	}
 	public void setSelected(boolean selected) {
 		this.selected = selected;
-	}	
+	}
+	
+	@Override
+	public Point clone() {
+		Point point = new Point();
+
+		point.setX(this.getX());
+		point.setY(this.getY());
+
+		point.setColor(this.getColor());
+		point.setSelected(this.isSelected());
+
+		return point;
+	}
 }

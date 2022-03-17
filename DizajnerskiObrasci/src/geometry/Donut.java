@@ -6,7 +6,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.Graphics;
 
-public class Donut extends Circle{
+public class Donut extends Circle implements Cloneable{
 	private int innerRadius;
 	
 	public Donut() {
@@ -124,5 +124,20 @@ public class Donut extends Circle{
 
 	public void setInnerRadius(int innerRadius) {
 		this.innerRadius=innerRadius;
+	}
+	
+	@Override
+	public Donut clone() {
+		Donut donut = new Donut();
+
+		super.clone();
+
+		try {
+			donut.setInnerRadius(this.getInnerRadius());
+		} catch (Exception e) {
+			
+		}
+
+		return donut;
 	}
 }
