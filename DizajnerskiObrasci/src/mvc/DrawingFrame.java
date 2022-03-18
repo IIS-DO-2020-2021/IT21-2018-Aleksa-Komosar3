@@ -37,6 +37,8 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
 	private JToggleButton tglbtnSelection = new JToggleButton("Selection");
 	private JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
+	private JButton btnUndo = new JButton("Undo");
+	private JButton btnRedo = new JButton("Redo");
 
 	public DrawingFrame() {
 		view.addMouseListener(new MouseAdapter() {
@@ -63,6 +65,7 @@ public class DrawingFrame extends JFrame {
 
 
 		ButtonGroup btnGroup = new ButtonGroup();
+		
 
 		JButton btnModification = new JButton("Modification");
 		btnModification.addActionListener(new ActionListener() {
@@ -76,8 +79,26 @@ public class DrawingFrame extends JFrame {
 				controller.delete();
 			}
 		});
+		
+		btnUndo.setEnabled(false);
+		btnUndo.setBackground(Color.white);
+		btnUndo.setForeground(Color.BLACK);
+		btnUndo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.undo();
+			}
+		});
+		btnRedo.setEnabled(false);
+		btnRedo.setBackground(Color.white);
+		btnRedo.setForeground(Color.BLACK);
+		btnRedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.redo();
+			}
+		});
 
 		pnlNorth.add(tglbtnPoint);
+		tglbtnPoint.setBackground(Color.LIGHT_GRAY);
 		pnlNorth.add(tglbtnLine);
 		pnlNorth.add(tglbtnRectangle);
 		pnlNorth.add(tglbtnCircle);
@@ -87,7 +108,10 @@ public class DrawingFrame extends JFrame {
 		
 		pnlSouth.add(tglbtnSelection);
 		pnlSouth.add(btnModification);
-		pnlSouth.add(btnDelete);	
+		pnlSouth.add(btnDelete);
+		
+		pnlSouth.add(btnUndo);
+		pnlSouth.add(btnRedo);
 
 		btnGroup.add(tglbtnPoint);
 		btnGroup.add(tglbtnLine);
@@ -162,6 +186,25 @@ public class DrawingFrame extends JFrame {
 
 	public void setTglbtnSelection(JToggleButton tglbtnSelection) {
 		this.tglbtnSelection = tglbtnSelection;
+	}
+	
+	public JButton getBtnUndo() {
+		return btnUndo;
+	}
+
+
+	public void setBtnUndo(JButton btnUndo) {
+		this.btnUndo = btnUndo;
+	}
+
+
+	public JButton getBtnRedo() {
+		return btnRedo;
+	}
+
+
+	public void setBtnRedo(JButton btnRedo) {
+		this.btnRedo = btnRedo;
 	}	
 
 	

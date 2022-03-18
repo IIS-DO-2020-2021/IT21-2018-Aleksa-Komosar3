@@ -12,6 +12,9 @@ import javax.swing.JOptionPane;
 import adapter.HexagonAdapter;
 import command.AddShapeCmd;
 import command.Command;
+import command.RemoveShapesCmd;
+import command.SelectShapesCmd;
+import command.UnselectShapesCmd;
 import command.UpdateCircleCmd;
 import command.UpdateDonutCmd;
 import command.UpdateHexagonCmd;
@@ -48,24 +51,27 @@ public class DrawingController {
 		Shape newShape=null;
 		int v1=0,v2=0;
 		if (frame.getTglbtnSelection().isSelected()){
-			selected=null;
+			//selected=null;
 			Iterator<Shape> it=model.getShapes().iterator();
 			while (it.hasNext()){
 				Shape shape = it.next();
-				shape.setSelected(false);
-				if(shape.contains(e.getX(), e.getY()))
-					selected= shape;
+				if(shape.contains(e.getX(), e.getY())) {
+					if (!shape.isSelected()) {
+						Command cmd = new SelectShapesCmd(shape, model);
+						cmd.execute();
+						model.pushCmdHistory(cmd);
+					} else if (shape.isSelected()) {
+						Command cmd = new UnselectShapesCmd(shape, model);
+						cmd.execute();
+						model.pushCmdHistory(cmd);
+					}	
+				}
 			}
-			if (selected!=null) {
-				selected.setSelected(true);
-				model.getSelectedShapes().add(selected);
-			}
-
-		} else if(frame.getTglbtnPoint().isSelected()){
+		}else if(frame.getTglbtnPoint().isSelected()){
 				Point p = new Point(e.getX(), e.getY());
 				p.setColor(Color.BLACK);
 				newShape = p;
-			} else if (frame.getTglbtnLine().isSelected()){
+			} /*else if (frame.getTglbtnLine().isSelected()){
 				if (startPoint==null) {
 					startPoint = new Point (e.getX(), e.getY());
 				}
@@ -75,7 +81,17 @@ public class DrawingController {
 					newShape = l;
 					startPoint=null;
 				}
-		} else if (frame.getTglbtnRectangle().isSelected()){
+		}*/else if (frame.getTglbtnLine().isSelected()){
+			if (startPoint==null) {
+				startPoint = new Point (e.getX(), e.getY());
+			} else {
+				Line l = new Line(startPoint, new Point(e.getX(),e.getY()));
+				l.setColor(Color.BLACK);
+				newShape = l;
+				startPoint=null;
+			}
+		}
+			else if (frame.getTglbtnRectangle().isSelected()){
 			DlgRectangle dlg = new DlgRectangle();
 			Rectangle r= new Rectangle();
 			dlg.setModal(true);
@@ -153,30 +169,42 @@ public class DrawingController {
 		if (newShape!=null){
 			Command cmd = new AddShapeCmd(newShape, model);
 			cmd.execute();
-		}
+			model.pushCmdHistory(cmd);
+			newShape=null;
+			}
+		if(!model.getCmdHistory().isEmpty()) {
+			frame.getBtnUndo().setEnabled(true);
+				}
+		disableRedo();
+			
 			
 		frame.repaint();
 	}
 
 	protected void delete() {
-		if (selected != null) {
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning message",
+		if (model.getSelectedShapes().size() != 0) {
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning message",
 					JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				model.getShapes().remove(selected);
+				Command cmd = new RemoveShapesCmd(model.getSelectedShapes(), model);
+				cmd.execute();
+				model.pushCmdHistory(cmd);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "You have not selected any shape!","Error", JOptionPane.WARNING_MESSAGE);
 		}
-		this.selected=null;
+		//this.selected=null;
+		disableRedo();
 		frame.repaint();
 	}
 
 	protected void modify(){
 		int x=0,y=0;
 		Command cmd;
-		if (selected != null) {
+		if (!model.getSelectedShapes().isEmpty()) {
 			if (selected instanceof Point) {
+				Shape selected = model.getSelectedShapes().get(0);
+			
 				Point p = (Point) selected;
 				DlgPoint dlg = new DlgPoint();
 				dlg.getTxtX().setText("" + p.getX());
@@ -192,6 +220,8 @@ public class DrawingController {
 					//model.getShapes().set(model.getShapes().indexOf(selected), p);
 					cmd = new UpdatePointCmd((Point)selected,p);
 					cmd.execute();
+					
+					model.pushCmdHistory(cmd);
 				}
 			} else if(selected instanceof Line){
 				Line l= (Line)selected;
@@ -215,6 +245,8 @@ public class DrawingController {
 					cmd = new UpdateLineCmd((Line)selected,l);
 					cmd.execute();
 					//model.getShapes().set(model.getShapes().indexOf(selected), l);
+					
+					model.pushCmdHistory(cmd);
 				}
 			} else if (selected instanceof Rectangle){
 				Rectangle r= (Rectangle) selected;
@@ -246,6 +278,8 @@ public class DrawingController {
 					}
 					cmd = new UpdateRectangleCmd((Rectangle)selected,r);
 					cmd.execute();
+					
+					model.pushCmdHistory(cmd);
 					//model.getShapes().set(model.getShapes().indexOf(selected), r);
 				}
 			}else if(selected instanceof Donut){
@@ -278,6 +312,8 @@ public class DrawingController {
 					}
 					cmd = new UpdateDonutCmd((Donut)selected,d);
 					cmd.execute();
+					
+					model.pushCmdHistory(cmd);
 					//model.getShapes().set(model.getShapes().indexOf(selected), d);
 				}
 			} else if(selected instanceof Circle){
@@ -308,6 +344,8 @@ public class DrawingController {
 					}
 					cmd = new UpdateCircleCmd((Circle)selected,c);
 					cmd.execute();
+					
+					model.pushCmdHistory(cmd);
 					//model.getShapes().set(model.getShapes().indexOf(selected), c);
 				}
 			}else if(selected instanceof HexagonAdapter){
@@ -338,13 +376,47 @@ public class DrawingController {
 					}
 					cmd = new UpdateHexagonCmd((HexagonAdapter)selected,hex);
 					cmd.execute();
+					
+					model.pushCmdHistory(cmd);
 				}
 			}
+			disableRedo();
 			frame.repaint();
 			}
 		else {
-			JOptionPane.showMessageDialog(null, "You have not selected any shape!","Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(null, "You have not selected any shapes!","Error", JOptionPane.WARNING_MESSAGE);
 		}
+	}
+	
+	public void undo() {
+		if(!model.getCmdHistory().isEmpty()) {
+			Command cmd = model.popCmdHistory();
+			cmd.unexecute();
+			model.pushCmdUndoHistory(cmd);
+			frame.getBtnRedo().setEnabled(true);
+			if(model.getCmdHistory().isEmpty()) {
+				frame.getBtnUndo().setEnabled(false);
+			}
 		}
+		frame.repaint();
+	}
+
+	public void redo() {
+		if(!model.getCmdUndoHistory().isEmpty()) {
+			Command cmd = model.popCmdUndoHistory();
+			cmd.execute();
+			model.pushCmdHistory(cmd);
+			if(model.getCmdUndoHistory().isEmpty()) {
+				frame.getBtnRedo().setEnabled(false);
+			}
+		}
+		frame.repaint();
+	}
+
+	public void disableRedo() {
+		model.getCmdUndoHistory().clear();
+		frame.getBtnRedo().setEnabled(false);
+	}
+
 	
 }
