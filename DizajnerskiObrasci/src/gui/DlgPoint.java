@@ -36,6 +36,7 @@ public class DlgPoint extends JDialog {
 	private boolean isOK;
 	private Color c=Color.BLACK;
 	private Color pc;
+	private boolean colorChosen;
 	
 
 	/**
@@ -120,6 +121,7 @@ public class DlgPoint extends JDialog {
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					c = JColorChooser.showDialog(null, "Choose color",pc);
+					colorChosen = true;
 				}
 			});
 		}
@@ -199,5 +201,12 @@ public class DlgPoint extends JDialog {
 
 	public void setPc(Color pc) {
 		this.pc = pc;
+	}
+	public boolean isColorChosen() {
+		return colorChosen;
+	}
+
+	public void setColorChosen(boolean colorChosen) {
+		this.colorChosen = colorChosen;
 	}
 }

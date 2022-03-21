@@ -77,7 +77,7 @@ public class DrawingController {
 			}
 		}else if(frame.getTglbtnPoint().isSelected()){
 				Point p = new Point(e.getX(), e.getY());
-				p.setColor(Color.BLACK);
+				p.setColor(frame.getBtnColor().getBackground());
 				newShape = p;
 			} /*else if (frame.getTglbtnLine().isSelected()){
 				if (startPoint==null) {
@@ -94,7 +94,7 @@ public class DrawingController {
 				startPoint = new Point (e.getX(), e.getY());
 			} else {
 				Line l = new Line(startPoint, new Point(e.getX(),e.getY()));
-				l.setColor(Color.BLACK);
+				l.setColor(frame.getBtnColor().getBackground());
 				newShape = l;
 				startPoint=null;
 			}
@@ -111,8 +111,14 @@ public class DrawingController {
 				v2=Integer.parseInt(dlg.getTxtWidth().getText());
 			}
 			r = new Rectangle(new Point(e.getX(),e.getY()), v1, v2);
-			r.setColor(dlg.getC());
-			r.setInnerColor(dlg.getInnerC());
+			if(dlg.isColorChosen())
+				r.setColor(dlg.getC());
+			else
+				r.setColor(frame.getBtnColor().getBackground());
+			if(dlg.isInnerColorChosen())
+				r.setInnerColor(dlg.getInnerC());
+			else
+				r.setInnerColor(frame.getBtnInnerColor().getBackground());
 			try {
 				newShape = r;
 			} catch (Exception ex){
@@ -128,9 +134,16 @@ public class DrawingController {
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 			}
+			//ovo je za onu boju treba uzei od prvog
 			c = new Circle(new Point(e.getX(),e.getY()), v1);
-			c.setColor(dlg.getC());
-			c.setInnerColor(dlg.getInnerC());
+			if(dlg.isColorChosen())
+				c.setColor(dlg.getC());
+			else
+				c.setColor(frame.getBtnColor().getBackground());
+			if(dlg.isInnerColorChosen())
+				c.setInnerColor(dlg.getInnerC());
+			else
+				c.setInnerColor(frame.getBtnInnerColor().getBackground());
 			try {
 				newShape= c;
 			} catch (Exception ex){
@@ -148,8 +161,14 @@ public class DrawingController {
 				v2=Integer.parseInt(dlg.getTxtInnerRadius().getText());
 			}
 			don = new Donut(new Point(e.getX(),e.getY()), v1,v2);
-			don.setColor(dlg.getC());
-			don.setInnerColor(dlg.getInnerC());
+			if(dlg.isColorChosen())
+				don.setColor(dlg.getC());
+			else
+				don.setColor(frame.getBtnColor().getBackground());
+			if(dlg.isInnerColorChosen())
+				don.setInnerColor(dlg.getInnerC());
+			else
+				don.setInnerColor(frame.getBtnInnerColor().getBackground());
 			try {
 				newShape= don;
 			} catch (Exception ex){
@@ -166,15 +185,21 @@ public class DrawingController {
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 			}
 			hex = new HexagonAdapter(new Point(e.getX(),e.getY()), v1);
-			hex.getHexagon().setBorderColor(dlg.getC());
-			hex.getHexagon().setAreaColor(dlg.getInnerC());
+			if(dlg.isColorChosen())
+				hex.getHexagon().setBorderColor(dlg.getC());
+			else
+				hex.getHexagon().setBorderColor(frame.getBtnColor().getBackground());
+			if(dlg.isInnerColorChosen())
+				hex.getHexagon().setAreaColor(dlg.getInnerC());
+			else
+				hex.getHexagon().setAreaColor(frame.getBtnInnerColor().getBackground());
 			try {
 				newShape= hex;
 			} catch (Exception ex){
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if (newShape!=null && !model.getShapes().contains(newShape)){
+		if (newShape!=null){
 			Command cmd = new AddShapeCmd(newShape, model);
 			cmd.execute();
 			model.pushCmdHistory(cmd);
@@ -234,7 +259,11 @@ public class DrawingController {
 					x=Integer.parseInt(dlg.getTxtX().getText());
 					y=Integer.parseInt(dlg.getTxtY().getText());
 					p = new Point(x, y);
-					p.setColor(dlg.getC());			
+					if(dlg.isColorChosen()){
+						p.setColor(dlg.getC());
+					}else{
+						p.setColor(dlg.getPc());
+					}		
 					//model.getShapes().set(model.getShapes().indexOf(selected), p);
 					cmd = new UpdatePointCmd((Point)selected,p);
 					cmd.execute();
@@ -259,7 +288,11 @@ public class DrawingController {
 					Point p1 = new Point(x, y);
 					Point p2= new Point(xe,ye);
 					l=new Line(p1,p2);
-					l.setColor(dlg.getC());
+					if(dlg.isColorChosen()){
+						l.setColor(dlg.getC());
+					}else{
+						l.setColor(dlg.getPc());
+					}
 					cmd = new UpdateLineCmd((Line)selected,l);
 					cmd.execute();
 					//model.getShapes().set(model.getShapes().indexOf(selected), l);

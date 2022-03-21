@@ -40,6 +40,18 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
 	private JButton btnUndo = new JButton("Undo");
 	private JButton btnRedo = new JButton("Redo");
+	private JButton btnColor = new JButton("");
+	private JButton btnInnerColor = new JButton("");
+	private final JLabel label_9_1 = new JLabel("");
+	private final JLabel label_10 = new JLabel("");
+	private final JLabel label_11 = new JLabel("");
+	private final JLabel label_12 = new JLabel("");
+	private final JLabel label_13 = new JLabel("");
+	private final JLabel label_14 = new JLabel("");
+	private final JLabel label_15 = new JLabel("");
+	private final JLabel label_16 = new JLabel("");
+	private final JLabel label_17 = new JLabel("");
+	private final JLabel label_18 = new JLabel("");
 	
 	private JButton btnToFront = new JButton("ToFront");
 	private JButton btnToBack = new JButton("ToBack");
@@ -62,14 +74,14 @@ public class DrawingFrame extends JFrame {
 		
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1000, 700);
+		setBounds(500, 300, 1000, 700);
 		setResizable(false);
 		setTitle("Aleksa Komosar");
 
 		JPanel pnlNorth = new JPanel();
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
-		JPanel pnlSouth = new JPanel();
-		getContentPane().add(pnlSouth, BorderLayout.SOUTH);
+		JPanel pnlEast = new JPanel();
+		getContentPane().add(pnlEast, BorderLayout.EAST);
 		JPanel pnlWest = new JPanel();
 		getContentPane().add(pnlWest, BorderLayout.WEST);
 
@@ -103,6 +115,14 @@ public class DrawingFrame extends JFrame {
 		JLabel label_8 = new JLabel("");
 		JLabel label_9 = new JLabel("");
 		
+		JLabel innerColor = new JLabel("Color");
+		innerColor.setHorizontalAlignment(SwingConstants.RIGHT);
+		innerColor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		JLabel color = new JLabel("InnerColor");
+		color.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		color.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
 		pnlNorth.add(label_6);
 
 		pnlNorth.add(tglbtnPoint);
@@ -115,11 +135,15 @@ public class DrawingFrame extends JFrame {
 		pnlNorth.add(tglbtnDonut);
 		pnlNorth.add(tglbtnHexagon);
 		pnlNorth.add(label_7);
+		pnlNorth.add(color);
+		pnlNorth.add(btnColor);
+		pnlNorth.add(innerColor);
+		pnlNorth.add(btnInnerColor);
 		
 		
-		pnlSouth.add(tglbtnSelection);
+		/*pnlSouth.add(tglbtnSelection);
 		pnlSouth.add(btnModification);
-		pnlSouth.add(btnDelete);
+		pnlSouth.add(btnDelete);*/
 		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
 		pnlWest.add(label);
 		pnlWest.add(label_1);
@@ -134,8 +158,22 @@ public class DrawingFrame extends JFrame {
 		pnlWest.add(label_4);
 		pnlWest.add(label_5);
 		
-		pnlSouth.add(btnUndo);
-		pnlSouth.add(btnRedo);
+		pnlEast.setLayout(new GridLayout(0, 1, 0, 0));
+		pnlEast.add(label_10);
+		pnlEast.add(label_11);
+		pnlEast.add(label_12);
+		pnlEast.add(label_13);
+		pnlEast.add(tglbtnSelection);
+		pnlEast.add(btnModification);
+		pnlEast.add(btnDelete);
+		pnlEast.add(label_14);	
+		pnlEast.add(label_15);
+		pnlEast.add(label_16);
+		pnlEast.add(label_17);
+		pnlEast.add(label_18);
+		
+		pnlWest.add(btnUndo);
+		pnlWest.add(btnRedo);
 
 		btnGroup.add(tglbtnPoint);
 		btnGroup.add(tglbtnLine);
@@ -144,6 +182,22 @@ public class DrawingFrame extends JFrame {
 		btnGroup.add(tglbtnDonut);
 		btnGroup.add(tglbtnHexagon);
 		btnGroup.add(tglbtnSelection);
+		
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new JColorChooser();
+				btnColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
+			}
+		});
+		btnColor.setBackground(Color.BLACK);
+
+		btnInnerColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new JColorChooser();
+				btnInnerColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
+			}
+		});
+		btnInnerColor.setBackground(Color.WHITE);
 		
 		
 		btnUndo.setEnabled(false);
@@ -192,6 +246,24 @@ public class DrawingFrame extends JFrame {
 		
 	}
 
+	public JButton getBtnColor() {
+		return btnColor;
+	}
+
+
+	public void setBtnColor(JButton btnColor) {
+		this.btnColor = btnColor;
+	}
+
+
+	public JButton getBtnInnerColor() {
+		return btnInnerColor;
+	}
+
+
+	public void setBtnInnerColor(JButton btnInnerColor) {
+		this.btnInnerColor = btnInnerColor;
+	}	
 
 	public DrawingView getView() {
 		return view;

@@ -36,6 +36,7 @@ public class DlgLine extends JDialog {
 	private Color c= Color.BLACK;
 	private boolean isOK;
 	private Color pc= Color.BLACK;
+	private boolean colorChosen;
 	/**
 	 * Launch the application.
 	 */
@@ -164,6 +165,7 @@ public class DlgLine extends JDialog {
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					c = JColorChooser.showDialog(null, "Choose color",pc);
+					colorChosen = true;
 				}
 			});
 		}
@@ -259,4 +261,13 @@ public class DlgLine extends JDialog {
 	public void setPc(Color pc) {
 		this.pc = pc;
 	}
+	
+	public boolean isColorChosen() {
+		return colorChosen;
+	}
+
+	public void setColorChosen(boolean colorChosen) {
+		this.colorChosen = colorChosen;
+	}
+	
 }

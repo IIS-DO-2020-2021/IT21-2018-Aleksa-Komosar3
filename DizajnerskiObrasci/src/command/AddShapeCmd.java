@@ -25,5 +25,4 @@ public class AddShapeCmd implements Command {
 		drawingModel.remove(shape);
 	}
 	
-
 }
