@@ -1,7 +1,5 @@
 package command;
 
-import java.util.ArrayList;
-
 import geometry.Shape;
 import mvc.DrwingModel;
 
@@ -10,7 +8,7 @@ public class SelectShapesCmd implements Command {
 	private DrwingModel drawingModel;
 	
 	public SelectShapesCmd(Shape shapes, DrwingModel drawingModel) {
-		super();
+		//super();
 		this.shapes = shapes;
 		this.drawingModel = drawingModel;
 	}

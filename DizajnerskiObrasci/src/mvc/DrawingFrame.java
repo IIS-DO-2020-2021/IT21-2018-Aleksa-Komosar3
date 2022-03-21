@@ -1,6 +1,7 @@
 package mvc;
 
 import javax.swing.ButtonGroup;
+
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
@@ -39,6 +40,11 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
 	private JButton btnUndo = new JButton("Undo");
 	private JButton btnRedo = new JButton("Redo");
+	
+	private JButton btnToFront = new JButton("ToFront");
+	private JButton btnToBack = new JButton("ToBack");
+	private JButton btnBringToFront = new JButton("BringToFront");
+	private JButton btnBringToBack = new JButton("BringToBack");
 
 	public DrawingFrame() {
 		view.addMouseListener(new MouseAdapter() {
@@ -50,6 +56,8 @@ public class DrawingFrame extends JFrame {
 		getContentPane().add(view, BorderLayout.CENTER);
 		view.setLayout(new BorderLayout(0, 0));
 		view.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		view.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		view.setBackground(Color.WHITE);
 		
 
@@ -62,6 +70,8 @@ public class DrawingFrame extends JFrame {
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
 		JPanel pnlSouth = new JPanel();
 		getContentPane().add(pnlSouth, BorderLayout.SOUTH);
+		JPanel pnlWest = new JPanel();
+		getContentPane().add(pnlWest, BorderLayout.WEST);
 
 
 		ButtonGroup btnGroup = new ButtonGroup();
@@ -80,35 +90,49 @@ public class DrawingFrame extends JFrame {
 			}
 		});
 		
-		btnUndo.setEnabled(false);
-		btnUndo.setBackground(Color.white);
-		btnUndo.setForeground(Color.BLACK);
-		btnUndo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.undo();
-			}
-		});
-		btnRedo.setEnabled(false);
-		btnRedo.setBackground(Color.white);
-		btnRedo.setForeground(Color.BLACK);
-		btnRedo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.redo();
-			}
-		});
+		pnlNorth.setLayout(new GridLayout(2, 6, 5, 0));
+
+		JLabel label = new JLabel("");
+		JLabel label_1 = new JLabel("");
+		JLabel label_2 = new JLabel("");
+		JLabel label_3 = new JLabel("");
+		JLabel label_4 = new JLabel("");
+		JLabel label_5 = new JLabel("");
+		JLabel label_6 = new JLabel("");
+		JLabel label_7 = new JLabel("");
+		JLabel label_8 = new JLabel("");
+		JLabel label_9 = new JLabel("");
+		
+		pnlNorth.add(label_6);
 
 		pnlNorth.add(tglbtnPoint);
 		tglbtnPoint.setBackground(Color.LIGHT_GRAY);
 		pnlNorth.add(tglbtnLine);
 		pnlNorth.add(tglbtnRectangle);
+		pnlNorth.add(label_8);
+		pnlNorth.add(label_9);
 		pnlNorth.add(tglbtnCircle);
 		pnlNorth.add(tglbtnDonut);
 		pnlNorth.add(tglbtnHexagon);
+		pnlNorth.add(label_7);
 		
 		
 		pnlSouth.add(tglbtnSelection);
 		pnlSouth.add(btnModification);
 		pnlSouth.add(btnDelete);
+		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
+		pnlWest.add(label);
+		pnlWest.add(label_1);
+		pnlWest.add(btnUndo);
+		pnlWest.add(btnRedo);
+		pnlWest.add(label_2);
+		pnlWest.add(btnToFront);
+		pnlWest.add(btnToBack);
+		pnlWest.add(label_3);
+		pnlWest.add(btnBringToFront);
+		pnlWest.add(btnBringToBack);
+		pnlWest.add(label_4);
+		pnlWest.add(label_5);
 		
 		pnlSouth.add(btnUndo);
 		pnlSouth.add(btnRedo);
@@ -120,6 +144,52 @@ public class DrawingFrame extends JFrame {
 		btnGroup.add(tglbtnDonut);
 		btnGroup.add(tglbtnHexagon);
 		btnGroup.add(tglbtnSelection);
+		
+		
+		btnUndo.setEnabled(false);
+		btnUndo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.undo();
+			}
+		});
+
+
+		btnRedo.setEnabled(false);
+		btnRedo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.redo();
+			}
+		});
+
+		btnToFront.setEnabled(false);
+		btnToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.toFront();
+			}
+		});
+
+		btnToBack.setEnabled(false);
+		btnToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.toBack();
+			}
+		});
+
+		btnBringToFront.setEnabled(false);
+		btnBringToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.bringToFront();
+			}
+		});
+
+		btnBringToBack.setEnabled(false);
+		btnBringToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.bringToBack();
+			}
+		});
+		
+		
 	}
 
 
@@ -205,7 +275,41 @@ public class DrawingFrame extends JFrame {
 
 	public void setBtnRedo(JButton btnRedo) {
 		this.btnRedo = btnRedo;
-	}	
-
+	}
 	
+	public JButton getBtnToFront() {
+		return btnToFront;
+	}
+
+
+	public void setBtnToFront(JButton btnToFront) {
+		this.btnToFront = btnToFront;
+	}
+
+
+	public JButton getBtnToBack() {
+		return btnToBack;
+	}
+
+
+	public void setBtnToBack(JButton btnToBack) {
+		this.btnToBack = btnToBack;
+	}
+
+	public JButton getBtnBringToFront() {
+		return btnBringToFront;
+	}
+
+	public void setBtnBringToFront(JButton btnBringToFront) {
+		this.btnBringToFront = btnBringToFront;
+	}
+
+	public JButton getBtnBringToBack() {
+		return btnBringToBack;
+	}
+
+	public void setBtnBringToBack(JButton btnBringToBack) {
+		this.btnBringToBack = btnBringToBack;
+	}
+
 }

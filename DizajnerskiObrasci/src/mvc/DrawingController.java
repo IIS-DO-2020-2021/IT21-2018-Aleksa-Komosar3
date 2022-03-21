@@ -1,19 +1,25 @@
 package mvc;
 
 import java.awt.Color;
+
 import java.awt.event.MouseEvent;
 
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.Stack;
 
 import javax.swing.JOptionPane;
 
 import adapter.HexagonAdapter;
 import command.AddShapeCmd;
+import command.BringToBackCmd;
+import command.BringToFrontCmd;
 import command.Command;
 import command.RemoveShapesCmd;
 import command.SelectShapesCmd;
+import command.ToBackCmd;
+import command.ToFrontCmd;
 import command.UnselectShapesCmd;
 import command.UpdateCircleCmd;
 import command.UpdateDonutCmd;
@@ -41,6 +47,9 @@ public class DrawingController {
 	//nema kreiranj objr
 	private Shape selected;
 	private Point startPoint;
+	
+	private Stack<Command> cmdHistory = new Stack<Command>();
+	private Stack<Command> cmdUndoHistory = new Stack<Command>();
 
 	public DrawingController(DrwingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -51,7 +60,6 @@ public class DrawingController {
 		Shape newShape=null;
 		int v1=0,v2=0;
 		if (frame.getTglbtnSelection().isSelected()){
-			//selected=null;
 			Iterator<Shape> it=model.getShapes().iterator();
 			while (it.hasNext()){
 				Shape shape = it.next();
@@ -166,15 +174,24 @@ public class DrawingController {
 				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		if (newShape!=null){
+		if (newShape!=null && !model.getShapes().contains(newShape)){
 			Command cmd = new AddShapeCmd(newShape, model);
 			cmd.execute();
 			model.pushCmdHistory(cmd);
-			newShape=null;
+			//newShape=null;
 			}
 		if(!model.getCmdHistory().isEmpty()) {
 			frame.getBtnUndo().setEnabled(true);
-				}
+		}
+		if(model.getSelectedShapes().size()==1 && model.getShapes().size()>1) {
+			checkPosition();
+		} else {
+			frame.getBtnToFront().setEnabled(false);
+			frame.getBtnToBack().setEnabled(false);
+			frame.getBtnBringToFront().setEnabled(false);
+			frame.getBtnBringToBack().setEnabled(false);
+		}
+		
 		disableRedo();
 			
 			
@@ -202,8 +219,9 @@ public class DrawingController {
 		int x=0,y=0;
 		Command cmd;
 		if (!model.getSelectedShapes().isEmpty()) {
+			Shape selected = model.getSelectedShapes().get(0);
 			if (selected instanceof Point) {
-				Shape selected = model.getSelectedShapes().get(0);
+				//Shape selected = model.getSelectedShapes().get(0);
 			
 				Point p = (Point) selected;
 				DlgPoint dlg = new DlgPoint();
@@ -380,18 +398,21 @@ public class DrawingController {
 					model.pushCmdHistory(cmd);
 				}
 			}
-			disableRedo();
-			frame.repaint();
 			}
+		
 		else {
 			JOptionPane.showMessageDialog(null, "You have not selected any shapes!","Error", JOptionPane.WARNING_MESSAGE);
 		}
+		disableRedo();
+		frame.repaint();
+		
 	}
 	
 	public void undo() {
 		if(!model.getCmdHistory().isEmpty()) {
 			Command cmd = model.popCmdHistory();
 			cmd.unexecute();
+			checkPosition();
 			model.pushCmdUndoHistory(cmd);
 			frame.getBtnRedo().setEnabled(true);
 			if(model.getCmdHistory().isEmpty()) {
@@ -405,17 +426,113 @@ public class DrawingController {
 		if(!model.getCmdUndoHistory().isEmpty()) {
 			Command cmd = model.popCmdUndoHistory();
 			cmd.execute();
+			checkPosition();
 			model.pushCmdHistory(cmd);
 			if(model.getCmdUndoHistory().isEmpty()) {
 				frame.getBtnRedo().setEnabled(false);
 			}
 		}
+		frame.getBtnUndo().setEnabled(true);
 		frame.repaint();
 	}
 
 	public void disableRedo() {
 		model.getCmdUndoHistory().clear();
 		frame.getBtnRedo().setEnabled(false);
+	}
+	
+	public Command popCmdHistory() {
+		return cmdHistory.pop();
+	}
+	
+	public void pushCmdHistory(Command c) {
+		cmdHistory.add(c);
+	}
+	
+	public Stack<Command> getCmdHistory() {
+		return cmdHistory;
+	}
+	
+	/*CmdUndoHistory*/
+	public Command popCmdUndoHistory() {
+		return cmdUndoHistory.pop();
+	}
+	
+	public void pushCmdUndoHistory(Command c) {
+		cmdUndoHistory.add(c);
+	}
+	
+	public Stack<Command> getCmdUndoHistory() {
+		return cmdUndoHistory;
+	}
+	
+	public void checkPosition() {
+		if(model.getSelectedShapes().size()>0) {
+			int i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			System.out.println(i+1);
+			System.out.println(model.getShapes().size());
+			if(i+1 == model.getShapes().size()) {
+				frame.getBtnToFront().setEnabled(false);
+				frame.getBtnToBack().setEnabled(true);
+				frame.getBtnBringToFront().setEnabled(false);
+				frame.getBtnBringToBack().setEnabled(true);
+			} else if (i == 0) {
+				frame.getBtnToFront().setEnabled(true);
+				frame.getBtnToBack().setEnabled(false);
+				frame.getBtnBringToFront().setEnabled(true);
+				frame.getBtnBringToBack().setEnabled(false);
+			} else if (i>0 && i+1<model.getShapes().size()) {
+				frame.getBtnToFront().setEnabled(true);
+				frame.getBtnToBack().setEnabled(true);
+				frame.getBtnBringToFront().setEnabled(true);
+				frame.getBtnBringToBack().setEnabled(true);
+			}
+		} else {
+			frame.getBtnToFront().setEnabled(false);
+			frame.getBtnToBack().setEnabled(false);
+			frame.getBtnBringToFront().setEnabled(false);
+			frame.getBtnBringToBack().setEnabled(false);
+		}
+	}
+
+	public void toFront() {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new ToFrontCmd(s, model);
+		cmd.execute();
+		model.pushCmdHistory(cmd);
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+
+	public void toBack() {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new ToBackCmd(s, model);
+		cmd.execute();
+		model.pushCmdHistory(cmd);
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+
+	public void bringToFront() {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new BringToFrontCmd(s, model);
+		cmd.execute();
+		model.pushCmdHistory(cmd);
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+
+	public void bringToBack () {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new BringToBackCmd(s, model);
+		cmd.execute();
+		model.pushCmdHistory(cmd);
+		checkPosition();
+		disableRedo();
+		frame.repaint();
 	}
 
 	
