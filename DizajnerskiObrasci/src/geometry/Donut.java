@@ -140,4 +140,9 @@ public class Donut extends Circle implements Cloneable{
 
 		return donut;
 	}
+	
+	@Override
+	public String toString() {
+		return "Donut [center=" + this.getCenter().toStringPoint() + ", outerRadius=" + this.getRadius() + ", innerRadius=" + innerRadius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
+	}
 }

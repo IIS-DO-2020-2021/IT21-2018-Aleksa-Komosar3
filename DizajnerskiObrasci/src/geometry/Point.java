@@ -43,9 +43,6 @@ public class Point extends Shape implements Moveable, Cloneable{
 		return 0;
 	}
 	
-	public String toString() {
-		return "(" + x + ", " + y + ")";
-	}
 	
 	public void draw(Graphics g) {
 		g.setColor(getColor());
@@ -102,5 +99,14 @@ public class Point extends Shape implements Moveable, Cloneable{
 		point.setSelected(this.isSelected());
 
 		return point;
+	}
+	
+	@Override
+	public String toString() {
+		return "Point [x= " + x + ", y= " + y + ", Color= " + this.getColorRGB() + "]";
+	}	
+
+	public String toStringPoint() {
+		return "(" + x + ", " + y + ")";
 	}
 }

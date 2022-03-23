@@ -128,4 +128,9 @@ public class Circle extends SurfaceShape implements Cloneable{
 
 		return c;
 	}
+	
+	@Override
+	public String toString() {
+		return "Circle [center=" + center.toStringPoint() + ", radius=" + radius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
+	}
 }

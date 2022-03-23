@@ -1,17 +1,20 @@
 package command;
 
 import geometry.Line;
+import mvc.DrawingFrame;
 
 public class UpdateLineCmd implements Command {
 
 	private Line oldState;
 	private Line newState;
 	private Line original=new Line();
+	private DrawingFrame frame;
 	
-	public UpdateLineCmd(Line oldState, Line newState) {
-		super();
+	public UpdateLineCmd(Line oldState, Line newState, DrawingFrame frame) {
+		//super();
 		this.oldState = oldState;
 		this.newState = newState;
+		this.frame=frame;
 	}
 
 	@Override
@@ -25,6 +28,8 @@ public class UpdateLineCmd implements Command {
 		oldState.setStartPoint(newState.getStartPoint());
 		oldState.setEndPoint(newState.getEndPoint());
 		oldState.setColor(newState.getColor());
+		
+		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override
@@ -33,6 +38,8 @@ public class UpdateLineCmd implements Command {
 		oldState.setStartPoint(original.getStartPoint());
 		oldState.setEndPoint(original.getEndPoint());
 		oldState.setColor(original.getColor());
+		
+		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

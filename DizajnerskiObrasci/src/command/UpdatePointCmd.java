@@ -1,6 +1,7 @@
 package command;
 
 import geometry.Point;
+import mvc.DrawingFrame;
 
 public class UpdatePointCmd implements Command {
 	//ovde model ne treba!!! Tako se pravi cvrsta veza to nije ok!!!! Nema reference na model u updateu!!!
@@ -9,13 +10,13 @@ public class UpdatePointCmd implements Command {
 	private Point oldState;
 	private Point newState;
 	private Point original=new Point();
+	private DrawingFrame frame;
 	
 	
-	
-	
-	public UpdatePointCmd(Point oldState, Point newState) {
+	public UpdatePointCmd(Point oldState, Point newState,DrawingFrame frame) {
 		this.oldState=oldState;
 		this.newState=newState;
+		this.frame=frame;
 	}
 
 	@Override
@@ -32,6 +33,8 @@ public class UpdatePointCmd implements Command {
 		oldState.setX(newState.getX());
 		oldState.setY(newState.getY());
 		oldState.setColor(newState.getColor());
+		
+		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 
 	}
 
@@ -41,6 +44,8 @@ public class UpdatePointCmd implements Command {
 		oldState.setX(original.getX());
 		oldState.setY(original.getY());
 		oldState.setColor(original.getColor());
+		
+		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

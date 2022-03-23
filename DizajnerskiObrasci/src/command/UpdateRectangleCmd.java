@@ -1,17 +1,20 @@
 package command;
 
 import geometry.Rectangle;
+import mvc.DrawingFrame;
 
 public class UpdateRectangleCmd implements Command {
 
 	private Rectangle oldState;
 	private Rectangle newState;
 	private Rectangle original=new Rectangle();
+	private DrawingFrame frame;
 	
-	public UpdateRectangleCmd(Rectangle oldState, Rectangle newState) {
+	public UpdateRectangleCmd(Rectangle oldState, Rectangle newState, DrawingFrame frame) {
 		super();
 		this.oldState = oldState;
 		this.newState = newState;
+		this.frame=frame;
 	}
 
 	@Override
@@ -32,6 +35,8 @@ public class UpdateRectangleCmd implements Command {
 		oldState.setWidth(newState.getWidth());
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
+		
+		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override
@@ -43,6 +48,8 @@ public class UpdateRectangleCmd implements Command {
 		oldState.setWidth(original.getWidth());
 		oldState.setColor(original.getColor());
 		oldState.setInnerColor(original.getInnerColor());
+		
+		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

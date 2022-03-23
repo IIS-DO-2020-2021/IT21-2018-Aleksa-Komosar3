@@ -89,7 +89,22 @@ public class HexagonAdapter extends Shape implements Cloneable {
 	@Override
 	public String toString() {
 		Point center = new Point(hexagon.getX(), hexagon.getY());
-		return "Hexagon [center=" + center + ", radius=" + hexagon.getR() + "]";
+		//return "Hexagon [center=" + center + ", radius=" + hexagon.getR() + "]";
+		return "Hexagon [center=" + center.toStringPoint() + ", radius=" + hexagon.getR() + ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() +  "]";
+	}
+	
+	public String getColorRGB() {
+		int red = hexagon.getBorderColor().getRed();
+		int green = hexagon.getBorderColor().getGreen();
+		int blue = hexagon.getBorderColor().getBlue();
+		return "RGB(" + red + ", " + green + ", " + blue + ")";
+	}
+
+	public String getInnerColorRGB() {
+		int red = hexagon.getAreaColor().getRed();
+		int green = hexagon.getAreaColor().getGreen();
+		int blue = hexagon.getAreaColor().getBlue();
+		return "(" + red + ", " + green + ", " + blue + ")";
 	}
 	
 	@Override

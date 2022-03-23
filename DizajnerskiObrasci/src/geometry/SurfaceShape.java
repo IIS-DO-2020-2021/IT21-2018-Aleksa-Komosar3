@@ -16,4 +16,11 @@ public abstract class SurfaceShape extends Shape{
 	public void setInnerColor(Color innerColor) {
 		this.innerColor = innerColor;
 	}
+	
+	public String getInnerColorRGB() {
+		int red = this.innerColor.getRed();
+		int green = this.innerColor.getGreen();
+		int blue = this.innerColor.getBlue();
+		return "(" + red + ", " + green + ", " + blue + ")";
+	}
 }

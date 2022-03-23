@@ -1,18 +1,21 @@
 package command;
 
 import geometry.Donut;
+import mvc.DrawingFrame;
 
 public class UpdateDonutCmd implements Command {
 	
 	private Donut oldState;
 	private Donut newState;
 	private Donut original=new Donut();
+	private DrawingFrame frame;
 
 	
-	public UpdateDonutCmd(Donut oldState, Donut newState) {
+	public UpdateDonutCmd(Donut oldState, Donut newState, DrawingFrame frame) {
 		super();
 		this.oldState = oldState;
 		this.newState = newState;
+		this.frame=frame;
 	}
 
 	@Override
@@ -43,6 +46,8 @@ public class UpdateDonutCmd implements Command {
 		}
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
+		
+		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override
@@ -59,6 +64,8 @@ public class UpdateDonutCmd implements Command {
 		}
 		oldState.setColor(original.getColor());
 		oldState.setInnerColor(original.getInnerColor());
+		
+		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

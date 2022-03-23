@@ -55,6 +55,9 @@ public class DrawingFrame extends JFrame {
 	private final JLabel label_17 = new JLabel("");
 	private final JLabel label_18 = new JLabel("");
 	
+	private final JTextArea txtAreaLog = new JTextArea();
+	private final JScrollPane scrollPane = new JScrollPane(txtAreaLog);
+	
 	private JButton btnToFront = new JButton("ToFront");
 	private JButton btnToBack = new JButton("ToBack");
 	private JButton btnBringToFront = new JButton("BringToFront");
@@ -86,6 +89,8 @@ public class DrawingFrame extends JFrame {
 		getContentPane().add(pnlEast, BorderLayout.EAST);
 		JPanel pnlWest = new JPanel();
 		getContentPane().add(pnlWest, BorderLayout.WEST);
+		JPanel pnlSouth = new JPanel();
+		getContentPane().add(pnlSouth, BorderLayout.SOUTH);
 
 
 		ButtonGroup btnGroup = new ButtonGroup();
@@ -126,23 +131,37 @@ public class DrawingFrame extends JFrame {
 		color.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		color.setHorizontalAlignment(SwingConstants.RIGHT);
 		
+				pnlNorth.add(tglbtnPoint);
+				tglbtnPoint.setBackground(Color.LIGHT_GRAY);
+				
+						btnGroup.add(tglbtnPoint);
+		pnlNorth.add(tglbtnLine);
+		btnGroup.add(tglbtnLine);
+		pnlNorth.add(tglbtnRectangle);
+		btnGroup.add(tglbtnRectangle);
+		pnlNorth.add(tglbtnDonut);
+		btnGroup.add(tglbtnDonut);
+		
 		
 		pnlNorth.add(label_6);
-
-		pnlNorth.add(tglbtnPoint);
-		tglbtnPoint.setBackground(Color.LIGHT_GRAY);
-		pnlNorth.add(tglbtnLine);
-		pnlNorth.add(tglbtnRectangle);
 		pnlNorth.add(label_8);
 		pnlNorth.add(label_9);
-		pnlNorth.add(tglbtnCircle);
-		pnlNorth.add(tglbtnDonut);
-		pnlNorth.add(tglbtnHexagon);
 		pnlNorth.add(label_7);
+		pnlNorth.add(tglbtnHexagon);
+		btnGroup.add(tglbtnHexagon);
+		pnlNorth.add(tglbtnCircle);
+		btnGroup.add(tglbtnCircle);
 		pnlNorth.add(color);
 		pnlNorth.add(btnColor);
+		
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new JColorChooser();
+				btnColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
+			}
+		});
+		btnColor.setBackground(Color.BLACK);
 		pnlNorth.add(innerColor);
-		pnlNorth.add(btnInnerColor);
 		
 		
 		/*pnlSouth.add(tglbtnSelection);
@@ -151,11 +170,25 @@ public class DrawingFrame extends JFrame {
 		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
 		pnlWest.add(label);
 		pnlWest.add(label_1);
+		pnlWest.add(btnToFront);
+		
+				btnToFront.setEnabled(false);
+				btnToFront.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.toFront();
+					}
+				});
 		pnlWest.add(btnUndo);
 		pnlWest.add(btnRedo);
-		pnlWest.add(label_2);
-		pnlWest.add(btnToFront);
 		pnlWest.add(btnToBack);
+		
+				btnToBack.setEnabled(false);
+				btnToBack.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.toBack();
+					}
+				});
+		pnlWest.add(label_2);
 		pnlWest.add(label_3);
 		pnlWest.add(btnBringToFront);
 		pnlWest.add(btnBringToBack);
@@ -178,30 +211,18 @@ public class DrawingFrame extends JFrame {
 		
 		pnlWest.add(btnUndo);
 		pnlWest.add(btnRedo);
-
-		btnGroup.add(tglbtnPoint);
-		btnGroup.add(tglbtnLine);
-		btnGroup.add(tglbtnRectangle);
-		btnGroup.add(tglbtnCircle);
-		btnGroup.add(tglbtnDonut);
-		btnGroup.add(tglbtnHexagon);
 		btnGroup.add(tglbtnSelection);
 		
-		btnColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new JColorChooser();
-				btnColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
-			}
-		});
-		btnColor.setBackground(Color.BLACK);
-
-		btnInnerColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new JColorChooser();
-				btnInnerColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
-			}
-		});
-		btnInnerColor.setBackground(Color.WHITE);
+		pnlSouth.add(scrollPane);
+		pnlNorth.add(btnInnerColor);
+		
+				btnInnerColor.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new JColorChooser();
+						btnInnerColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
+					}
+				});
+				btnInnerColor.setBackground(Color.WHITE);
 		
 		
 		btnUndo.setEnabled(false);
@@ -219,20 +240,6 @@ public class DrawingFrame extends JFrame {
 			}
 		});
 
-		btnToFront.setEnabled(false);
-		btnToFront.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.toFront();
-			}
-		});
-
-		btnToBack.setEnabled(false);
-		btnToBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				controller.toBack();
-			}
-		});
-
 		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -246,8 +253,13 @@ public class DrawingFrame extends JFrame {
 				controller.bringToBack();
 			}
 		});
-		
-		
+		txtAreaLog.setEnabled(false);
+		txtAreaLog.setEditable(false);
+		txtAreaLog.setTabSize(10);
+		txtAreaLog.setColumns(50);
+		txtAreaLog.setRows(5);
+		txtAreaLog.setDisabledTextColor(Color.BLACK);
+
 	}
 
 	public JButton getBtnColor() {
@@ -402,6 +414,10 @@ public class DrawingFrame extends JFrame {
 
 	public void setBtnDelete(JButton btnDelete) {
 		this.btnDelete = btnDelete;
+	}
+	
+	public JTextArea getTxtAreaLog() {
+		return txtAreaLog;
 	}
 	
 

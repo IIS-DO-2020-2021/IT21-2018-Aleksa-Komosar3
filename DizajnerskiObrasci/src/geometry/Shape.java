@@ -29,4 +29,11 @@ public abstract class Shape implements Moveable, Comparable<Object>{
 	public void markPoint(Graphics g, int x, int y) {
 		g.drawRect(x-3, y-3, 6, 6);
     }
+	
+	public String getColorRGB() {
+		int red = this.color.getRed();
+		int green = this.color.getGreen();
+		int blue = this.color.getBlue();
+		return "RGB(" + red + ", " + green + ", " + blue + ")";
+	}
 }

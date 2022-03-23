@@ -39,9 +39,6 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 		return width * height;
 	}
 	
-	public String toString() {
-		return "Upper left point=" + upperLeft + ", height=" + height + ", width=" + width;
-	}
 	
 	public int compareTo(Object o) {
 		if (o instanceof Rectangle) {
@@ -140,5 +137,10 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 		rect.setSelected(this.isSelected());
 
 		return rect;
+	}
+	
+	@Override
+	public String toString() {
+		return "Rectangle [upperLeft=" + upperLeft.toStringPoint() + ", height=" + height + ", width=" + width + ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
 	}
 }

@@ -68,11 +68,11 @@ public class DrawingController {
 				Shape shape = it.next();
 				if(shape.contains(e.getX(), e.getY())) {
 					if (!shape.isSelected()) {
-						Command cmd = new SelectShapesCmd(shape, model);
+						Command cmd = new SelectShapesCmd(shape, model, frame);
 						cmd.execute();
 						model.pushCmdHistory(cmd);
 					} else if (shape.isSelected()) {
-						Command cmd = new UnselectShapesCmd(shape, model);
+						Command cmd = new UnselectShapesCmd(shape, model, frame);
 						cmd.execute();
 						model.pushCmdHistory(cmd);
 					}	
@@ -203,7 +203,7 @@ public class DrawingController {
 			}
 		}
 		if (newShape!=null){
-			Command cmd = new AddShapeCmd(newShape, model);
+			Command cmd = new AddShapeCmd(newShape, model, frame);
 			cmd.execute();
 			model.pushCmdHistory(cmd);
 			//newShape=null;
@@ -231,7 +231,7 @@ public class DrawingController {
 			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning message",
 					JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				Command cmd = new RemoveShapesCmd(model.getSelectedShapes(), model);
+				Command cmd = new RemoveShapesCmd(model.getSelectedShapes(), model, frame);
 				cmd.execute();
 				model.pushCmdHistory(cmd);
 			}
@@ -268,7 +268,7 @@ public class DrawingController {
 						p.setColor(dlg.getPc());
 					}		
 					//model.getShapes().set(model.getShapes().indexOf(selected), p);
-					cmd = new UpdatePointCmd((Point)selected,p);
+					cmd = new UpdatePointCmd((Point)selected,p, frame);
 					cmd.execute();
 					
 					model.pushCmdHistory(cmd);
@@ -296,7 +296,7 @@ public class DrawingController {
 					}else{
 						l.setColor(dlg.getPc());
 					}
-					cmd = new UpdateLineCmd((Line)selected,l);
+					cmd = new UpdateLineCmd((Line)selected,l, frame);
 					cmd.execute();
 					//model.getShapes().set(model.getShapes().indexOf(selected), l);
 					
@@ -330,7 +330,7 @@ public class DrawingController {
 					}else{
 						r.setInnerColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateRectangleCmd((Rectangle)selected,r);
+					cmd = new UpdateRectangleCmd((Rectangle)selected,r, frame);
 					cmd.execute();
 					
 					model.pushCmdHistory(cmd);
@@ -364,7 +364,7 @@ public class DrawingController {
 					}else{
 						d.setInnerColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateDonutCmd((Donut)selected,d);
+					cmd = new UpdateDonutCmd((Donut)selected,d, frame);
 					cmd.execute();
 					
 					model.pushCmdHistory(cmd);
@@ -396,7 +396,7 @@ public class DrawingController {
 					}else{
 						c.setInnerColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateCircleCmd((Circle)selected,c);
+					cmd = new UpdateCircleCmd((Circle)selected,c, frame);
 					cmd.execute();
 					
 					model.pushCmdHistory(cmd);
@@ -428,7 +428,7 @@ public class DrawingController {
 					}else{
 						hex.getHexagon().setAreaColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateHexagonCmd((HexagonAdapter)selected,hex);
+					cmd = new UpdateHexagonCmd((HexagonAdapter)selected,hex, frame);
 					cmd.execute();
 					
 					model.pushCmdHistory(cmd);
@@ -461,6 +461,7 @@ public class DrawingController {
 
 	public void redo() {
 		if(!model.getCmdUndoHistory().isEmpty()) {
+			frame.getTxtAreaLog().append("Redo-> ");
 			Command cmd = model.popCmdUndoHistory();
 			cmd.execute();
 			checkPosition();
@@ -469,7 +470,8 @@ public class DrawingController {
 				frame.getBtnRedo().setEnabled(false);
 			}
 		}
-		frame.getBtnUndo().setEnabled(true);
+		//frame.getBtnUndo().setEnabled(true);
+		checkPosition();
 		frame.repaint();
 	}
 
@@ -508,7 +510,7 @@ public class DrawingController {
 			int i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
 			System.out.println(i+1);
 			System.out.println(model.getShapes().size());
-			if(i+1 == model.getShapes().size()) {
+			if(model.getShapes().size()==1) {
 				frame.getBtnToFront().setEnabled(false);
 				frame.getBtnToBack().setEnabled(true);
 				frame.getBtnBringToFront().setEnabled(false);
@@ -534,7 +536,7 @@ public class DrawingController {
 
 	public void toFront() {
 		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new ToFrontCmd(s, model);
+		Command cmd = new ToFrontCmd(s, model, frame);
 		cmd.execute();
 		model.pushCmdHistory(cmd);
 		checkPosition();
@@ -544,7 +546,7 @@ public class DrawingController {
 
 	public void toBack() {
 		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new ToBackCmd(s, model);
+		Command cmd = new ToBackCmd(s, model, frame);
 		cmd.execute();
 		model.pushCmdHistory(cmd);
 		checkPosition();
@@ -554,7 +556,7 @@ public class DrawingController {
 
 	public void bringToFront() {
 		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new BringToFrontCmd(s, model);
+		Command cmd = new BringToFrontCmd(s, model, frame);
 		cmd.execute();
 		model.pushCmdHistory(cmd);
 		checkPosition();
@@ -564,7 +566,7 @@ public class DrawingController {
 
 	public void bringToBack () {
 		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new BringToBackCmd(s, model);
+		Command cmd = new BringToBackCmd(s, model, frame);
 		cmd.execute();
 		model.pushCmdHistory(cmd);
 		checkPosition();

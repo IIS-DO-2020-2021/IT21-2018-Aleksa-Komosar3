@@ -100,4 +100,9 @@ public class Line extends Shape implements Cloneable{
 
 		return line;	
 	}
+	
+	@Override
+	public String toString() {
+		return "Line [startPoint=" + startPoint.toStringPoint() + ", endPoint=" + endPoint.toStringPoint() + ", Color= " + this.getColorRGB() + "]";
+	}
 }
