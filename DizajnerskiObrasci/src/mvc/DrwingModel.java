@@ -1,5 +1,7 @@
 package mvc;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -12,6 +14,13 @@ public class DrwingModel {
 	
 	private Stack<Command> cmdHistory = new Stack<Command>();
 	private Stack<Command> cmdUndoHistory = new Stack<Command>();
+	
+	private PropertyChangeSupport propertyChangeSupport;
+
+
+	public DrwingModel() {
+		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
 
 	public void add(Shape s) {
 		shapes.add(s);
@@ -42,10 +51,12 @@ public class DrwingModel {
 
 	/*Selected*/
 	public void addSelected(Shape s) {
+		propertyChangeSupport.firePropertyChange("selected", this.selected.size(), this.selected.size()+1);
 		selected.add(s);
 	}
 
 	public void removeSelected(Shape s) {
+		propertyChangeSupport.firePropertyChange("selected", this.selected.size(), this.selected.size()-1);
 		selected.remove(s);
 	}
 	
@@ -72,5 +83,12 @@ public class DrwingModel {
 
 	public Stack<Command> getCmdUndoHistory() {
 		return cmdUndoHistory;
+	}
+	public void addPropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+		propertyChangeSupport.addPropertyChangeListener(propertyChangeListener);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener propertyChangeListener) {
+		propertyChangeSupport.removePropertyChangeListener(propertyChangeListener);
 	}
 }

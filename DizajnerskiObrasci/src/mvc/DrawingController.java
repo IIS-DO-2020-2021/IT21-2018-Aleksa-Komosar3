@@ -38,6 +38,7 @@ import gui.DlgDonut;
 import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
+import observer.SelectedSizeObserver;
 
 public class DrawingController {
 	
@@ -54,6 +55,8 @@ public class DrawingController {
 	public DrawingController(DrwingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
+		SelectedSizeObserver selectedSizeObserver = new SelectedSizeObserver(frame);
+		model.addPropertyChangeListener(selectedSizeObserver);
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -431,11 +434,12 @@ public class DrawingController {
 					model.pushCmdHistory(cmd);
 				}
 			}
-			}
+		}
 		
 		else {
 			JOptionPane.showMessageDialog(null, "You have not selected any shapes!","Error", JOptionPane.WARNING_MESSAGE);
 		}
+		checkPosition();
 		disableRedo();
 		frame.repaint();
 		
@@ -500,7 +504,7 @@ public class DrawingController {
 	}
 	
 	public void checkPosition() {
-		if(model.getSelectedShapes().size()>0) {
+		if(model.getSelectedShapes().size()==1) {
 			int i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
 			System.out.println(i+1);
 			System.out.println(model.getShapes().size());

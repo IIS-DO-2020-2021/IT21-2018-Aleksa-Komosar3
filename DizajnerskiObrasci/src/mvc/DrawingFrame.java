@@ -38,6 +38,8 @@ public class DrawingFrame extends JFrame {
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
 	private JToggleButton tglbtnSelection = new JToggleButton("Selection");
 	private JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
+	private JButton btnModification = new JButton("Modification");
+	private JButton btnDelete = new JButton("Delete");
 	private JButton btnUndo = new JButton("Undo");
 	private JButton btnRedo = new JButton("Redo");
 	private JButton btnColor = new JButton("");
@@ -89,13 +91,15 @@ public class DrawingFrame extends JFrame {
 		ButtonGroup btnGroup = new ButtonGroup();
 		
 
-		JButton btnModification = new JButton("Modification");
+		//JButton btnModification = new JButton("Modification");
+		btnModification.setEnabled(false);
 		btnModification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.modify();
 			}
 		});
-		JButton btnDelete = new JButton("Delete");
+		//JButton btnDelete = new JButton("Delete");
+		btnDelete.setEnabled(false);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.delete();
@@ -383,5 +387,22 @@ public class DrawingFrame extends JFrame {
 	public void setBtnBringToBack(JButton btnBringToBack) {
 		this.btnBringToBack = btnBringToBack;
 	}
+
+	public JButton getBtnModification() {
+		return btnModification;
+	}
+
+	public void setBtnModification(JButton btnModification) {
+		this.btnModification = btnModification;
+	}
+
+	public JButton getBtnDelete() {
+		return btnDelete;
+	}
+
+	public void setBtnDelete(JButton btnDelete) {
+		this.btnDelete = btnDelete;
+	}
+	
 
 }
