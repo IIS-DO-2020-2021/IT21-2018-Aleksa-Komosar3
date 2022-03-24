@@ -2,13 +2,14 @@ package mvc;
 
 import java.awt.Color;
 
+
 import java.awt.event.MouseEvent;
 
 
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Stack;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import adapter.HexagonAdapter;
@@ -39,6 +40,9 @@ import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
 import observer.SelectedSizeObserver;
+import strategy.DrawingFile;
+import strategy.FileStrategy;
+import strategy.LogFile;
 
 public class DrawingController {
 	
@@ -211,17 +215,9 @@ public class DrawingController {
 		if(!model.getCmdHistory().isEmpty()) {
 			frame.getBtnUndo().setEnabled(true);
 		}
-		if(model.getSelectedShapes().size()==1 && model.getShapes().size()>1) {
-			checkPosition();
-		} else {
-			frame.getBtnToFront().setEnabled(false);
-			frame.getBtnToBack().setEnabled(false);
-			frame.getBtnBringToFront().setEnabled(false);
-			frame.getBtnBringToBack().setEnabled(false);
-		}
+		checkPosition();
 		
 		disableRedo();
-			
 			
 		frame.repaint();
 	}
@@ -572,6 +568,63 @@ public class DrawingController {
 		checkPosition();
 		disableRedo();
 		frame.repaint();
+	}
+	
+	public void saveDrawing() {
+		JFileChooser jfcSaveDrawing = new JFileChooser();
+		int userSelection = jfcSaveDrawing.showSaveDialog(frame);
+
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			String path = jfcSaveDrawing.getSelectedFile().getPath();
+			FileStrategy strategy = new DrawingFile(model);
+			strategy.save(path);
+		}
+	}
+
+	public void loadDrawing() {
+		JFileChooser jfcLoadDrawing = new JFileChooser();
+		int userSelection = jfcLoadDrawing.showOpenDialog(frame);
+
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			frame.getTxtAreaLog().setText("");
+			model.getShapes().clear();
+			model.getSelectedShapes().clear();
+			model.getCmdHistory().clear();
+			model.getCmdUndoHistory().clear();
+			String path = jfcLoadDrawing.getSelectedFile().getPath();
+			FileStrategy strategy = new DrawingFile(model);
+			strategy.load(path);
+			frame.repaint();
+		}		
+	}
+
+	public void saveLog() {
+		JFileChooser jfcSaveLog = new JFileChooser();
+		int userSelection = jfcSaveLog.showSaveDialog(frame);
+
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			String path = jfcSaveLog.getSelectedFile().getPath();
+			FileStrategy strategy = new LogFile(model, frame, this);
+			strategy.save(path);
+		}
+
+	}
+
+	public void loadLog() {
+		JFileChooser jfcLoadLog = new JFileChooser();
+		int userSelection = jfcLoadLog.showOpenDialog(frame);
+
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			frame.getTxtAreaLog().setText("");
+			model.getShapes().clear();
+			model.getSelectedShapes().clear();
+			model.getCmdHistory().clear();
+			model.getCmdUndoHistory().clear();
+			String path = jfcLoadLog.getSelectedFile().getPath();
+			FileStrategy strategy = new LogFile(model, frame, this);
+			strategy.load(path);
+			frame.repaint();
+		}
 	}
 
 	

@@ -1,5 +1,6 @@
 package mvc;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 
 import javax.swing.JButton;
@@ -44,7 +45,7 @@ public class DrawingFrame extends JFrame {
 	private JButton btnRedo = new JButton("Redo");
 	private JButton btnColor = new JButton("");
 	private JButton btnInnerColor = new JButton("");
-	private final JLabel label_9_1 = new JLabel("");
+	//private final JLabel label_9_1 = new JLabel("");
 	private final JLabel label_10 = new JLabel("");
 	private final JLabel label_11 = new JLabel("");
 	private final JLabel label_12 = new JLabel("");
@@ -62,6 +63,12 @@ public class DrawingFrame extends JFrame {
 	private JButton btnToBack = new JButton("ToBack");
 	private JButton btnBringToFront = new JButton("BringToFront");
 	private JButton btnBringToBack = new JButton("BringToBack");
+	
+	private final JButton btnSaveDrawing = new JButton("SaveDrawing");
+	private final JButton btnLoadDrawing = new JButton("LoadDrawing");
+	private final JButton btnSaveLog = new JButton("SaveLog");
+	private final JButton btnLoadLog = new JButton("LoadLog");
+	private final JButton btnNext = new JButton("Next");
 
 	public DrawingFrame() {
 		view.addMouseListener(new MouseAdapter() {
@@ -213,7 +220,9 @@ public class DrawingFrame extends JFrame {
 		pnlWest.add(btnRedo);
 		btnGroup.add(tglbtnSelection);
 		
-		pnlSouth.add(scrollPane);
+		pnlSouth.setLayout(new BoxLayout(pnlSouth, BoxLayout.Y_AXIS));
+		
+		//pnlSouth.add(scrollPane);
 		pnlNorth.add(btnInnerColor);
 		
 				btnInnerColor.addActionListener(new ActionListener() {
@@ -253,6 +262,32 @@ public class DrawingFrame extends JFrame {
 				controller.bringToBack();
 			}
 		});
+		
+		btnSaveDrawing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveDrawing();
+			}
+		});
+
+
+		btnLoadDrawing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.loadDrawing();
+			}
+		});
+
+		btnSaveLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveLog();
+			}
+		});
+
+		btnLoadLog.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.loadLog();
+			}
+		});
+		
 		txtAreaLog.setEnabled(false);
 		txtAreaLog.setEditable(false);
 		txtAreaLog.setTabSize(10);
@@ -419,6 +454,9 @@ public class DrawingFrame extends JFrame {
 	public JTextArea getTxtAreaLog() {
 		return txtAreaLog;
 	}
-	
+	public JButton getBtnNext() {
+		return btnNext;
+	}	
+
 
 }

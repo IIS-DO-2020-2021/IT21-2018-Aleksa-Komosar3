@@ -5,6 +5,10 @@ import java.awt.Graphics;
 
 
 public class Point extends Shape implements Moveable, Cloneable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
 	private boolean selected;
@@ -108,5 +112,17 @@ public class Point extends Shape implements Moveable, Cloneable{
 
 	public String toStringPoint() {
 		return "(" + x + ", " + y + ")";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Point other = (Point) obj;
+		return selected == other.selected && x == other.x && y == other.y;
 	}
 }

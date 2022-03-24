@@ -30,7 +30,7 @@ public class UpdateHexagonCmd implements Command {
 		oldState.getHexagon().setAreaColor(newState.getHexagon().getAreaColor());
 		oldState.getHexagon().setSelected(newState.getHexagon().isSelected());
 		
-		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
+		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override

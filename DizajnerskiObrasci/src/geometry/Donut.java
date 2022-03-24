@@ -7,6 +7,10 @@ import java.awt.geom.Ellipse2D;
 import java.awt.Graphics;
 
 public class Donut extends Circle implements Cloneable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int innerRadius;
 	
 	public Donut() {
@@ -94,21 +98,6 @@ public class Donut extends Circle implements Cloneable{
 	public double area() {
 		return super.area() - innerRadius * innerRadius * Math.PI;
 	}
-	
-	public boolean equals(Object obj) {
-		if (obj instanceof Donut) {
-			Donut d = (Donut) obj;
-			if (this.getCenter().equals(d.getCenter()) &&
-					this.getRadius() == d.getRadius() &&
-					this.innerRadius == d.getInnerRadius()) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
 
 	public void moveBy(int byX, int byY) {
 		super.moveBy(byX, byY);
@@ -144,5 +133,17 @@ public class Donut extends Circle implements Cloneable{
 	@Override
 	public String toString() {
 		return "Donut [center=" + this.getCenter().toStringPoint() + ", outerRadius=" + this.getRadius() + ", innerRadius=" + innerRadius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Donut other = (Donut) obj;
+		return innerRadius == other.innerRadius;
 	}
 }

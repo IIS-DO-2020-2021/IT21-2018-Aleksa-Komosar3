@@ -34,7 +34,7 @@ public class UpdateCircleCmd implements Command {
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
 		
-		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
+		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override

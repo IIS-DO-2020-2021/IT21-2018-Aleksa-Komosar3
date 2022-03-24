@@ -29,7 +29,7 @@ public class UpdateLineCmd implements Command {
 		oldState.setEndPoint(newState.getEndPoint());
 		oldState.setColor(newState.getColor());
 		
-		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
+		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override

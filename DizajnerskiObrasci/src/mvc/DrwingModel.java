@@ -2,13 +2,14 @@ package mvc;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Stack;
 
 import command.Command;
 import geometry.Shape;
 
-public class DrwingModel {
+public class DrwingModel implements Serializable {
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private ArrayList<Shape> selected = new ArrayList<Shape>();
 	

@@ -34,7 +34,7 @@ public class UpdatePointCmd implements Command {
 		oldState.setY(newState.getY());
 		oldState.setColor(newState.getColor());
 		
-		frame.getTxtAreaLog().append("Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
+		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 
 	}
 

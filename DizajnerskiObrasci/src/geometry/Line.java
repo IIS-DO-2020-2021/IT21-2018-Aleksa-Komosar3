@@ -2,8 +2,13 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Objects;
 
 public class Line extends Shape implements Cloneable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Point startPoint=new Point();
 	private Point endPoint=new Point();
 	private boolean selected;
@@ -104,5 +109,18 @@ public class Line extends Shape implements Cloneable{
 	@Override
 	public String toString() {
 		return "Line [startPoint=" + startPoint.toStringPoint() + ", endPoint=" + endPoint.toStringPoint() + ", Color= " + this.getColorRGB() + "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Line other = (Line) obj;
+		return Objects.equals(endPoint, other.endPoint) && selected == other.selected
+				&& Objects.equals(startPoint, other.startPoint);
 	}
 }

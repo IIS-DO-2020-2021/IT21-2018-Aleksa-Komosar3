@@ -2,9 +2,14 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Objects;
 
 
 public class Rectangle extends SurfaceShape implements Cloneable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Point upperLeft=new Point();
 	private int height;
 	private int width;
@@ -142,5 +147,18 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 	@Override
 	public String toString() {
 		return "Rectangle [upperLeft=" + upperLeft.toStringPoint() + ", height=" + height + ", width=" + width + ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rectangle other = (Rectangle) obj;
+		return height == other.height && selected == other.selected && Objects.equals(upperLeft, other.upperLeft)
+				&& width == other.width;
 	}
 }

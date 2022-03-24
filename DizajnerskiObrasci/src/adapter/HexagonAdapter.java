@@ -2,12 +2,17 @@ package adapter;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Objects;
 
 import geometry.Point;
 import geometry.Shape;
 import hexagon.Hexagon;
 
 public class HexagonAdapter extends Shape implements Cloneable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private  Hexagon hexagon = new Hexagon(0,0,0);
 
 	public HexagonAdapter()
@@ -130,5 +135,16 @@ public class HexagonAdapter extends Shape implements Cloneable {
 		this.hexagon = hexagon;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HexagonAdapter other = (HexagonAdapter) obj;
+		return Objects.equals(hexagon.getX(), other.getHexagon().getX()) && hexagon.getY() == other.getHexagon().getY() && hexagon.getR() == other.getHexagon().getR() && hexagon.isSelected() == other.getHexagon().isSelected();
+	}
 
 }

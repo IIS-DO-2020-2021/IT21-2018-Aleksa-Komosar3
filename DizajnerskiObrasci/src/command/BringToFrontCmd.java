@@ -38,7 +38,6 @@ public class BringToFrontCmd implements Command {
 		drawingModel.getShapes().add(i, shapes);
 		
 		frame.getTxtAreaLog().append("Undo-> BringToFront: " + shapes.toString() + "\n");
-
 	}
 
 }

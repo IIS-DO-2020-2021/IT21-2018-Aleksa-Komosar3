@@ -2,8 +2,13 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Objects;
 
 public class Circle extends SurfaceShape implements Cloneable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//kod komanda se mora inicijalizovati novi objekat tacke inace ne radi modify
 	private Point center=new Point();
 	private int radius;
@@ -132,5 +137,17 @@ public class Circle extends SurfaceShape implements Cloneable{
 	@Override
 	public String toString() {
 		return "Circle [center=" + center.toStringPoint() + ", radius=" + radius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Circle other = (Circle) obj;
+		return Objects.equals(center, other.center) && radius == other.radius && selected == other.selected;
 	}
 }
