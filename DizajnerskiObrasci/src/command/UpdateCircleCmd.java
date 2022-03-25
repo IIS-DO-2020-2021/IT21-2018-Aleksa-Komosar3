@@ -7,15 +7,11 @@ public class UpdateCircleCmd implements Command {
 	private Circle oldState;
 	private Circle newState;
 	private Circle original = new Circle();
-	private DrawingFrame frame;
 	
-	
-	
-	public UpdateCircleCmd(Circle oldState, Circle newState, DrawingFrame frame) {
-		super();
+	public UpdateCircleCmd(Circle oldState, Circle newState) {
+		
 		this.oldState = oldState;
 		this.newState = newState;
-		this.frame=frame;
 	}
 
 	@Override
@@ -33,8 +29,6 @@ public class UpdateCircleCmd implements Command {
 		oldState.setRadius(newState.getRadius());
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
-		
-		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override
@@ -45,8 +39,6 @@ public class UpdateCircleCmd implements Command {
 		oldState.setRadius(original.getRadius());
 		oldState.setColor(original.getColor());
 		oldState.setInnerColor(original.getInnerColor());
-		
-		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

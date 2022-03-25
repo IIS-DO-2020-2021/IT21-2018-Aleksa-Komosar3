@@ -8,14 +8,10 @@ public class UpdateHexagonCmd implements Command {
 	private HexagonAdapter oldState;
 	private HexagonAdapter newState;
 	private HexagonAdapter original=new HexagonAdapter();
-	private DrawingFrame frame;
 
-	
-	public UpdateHexagonCmd(HexagonAdapter oldState, HexagonAdapter newState, DrawingFrame frame) {
-		super();
+	public UpdateHexagonCmd(HexagonAdapter oldState, HexagonAdapter newState) {
 		this.oldState = oldState;
 		this.newState = newState;
-		this.frame = frame;
 	}
 
 	@Override
@@ -30,7 +26,6 @@ public class UpdateHexagonCmd implements Command {
 		oldState.getHexagon().setAreaColor(newState.getHexagon().getAreaColor());
 		oldState.getHexagon().setSelected(newState.getHexagon().isSelected());
 		
-		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override
@@ -43,7 +38,6 @@ public class UpdateHexagonCmd implements Command {
 		oldState.getHexagon().setAreaColor(original.getHexagon().getAreaColor());
 		oldState.getHexagon().setSelected(original.getHexagon().isSelected());
 		
-		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

@@ -1,61 +1,27 @@
 package mvc;
-
-import java.awt.Color;
-
-
-import java.awt.event.MouseEvent;
-
-
-import java.util.Iterator;
-import java.util.Stack;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import adapter.HexagonAdapter;
-import command.AddShapeCmd;
-import command.BringToBackCmd;
-import command.BringToFrontCmd;
-import command.Command;
-import command.RemoveShapesCmd;
-import command.SelectShapesCmd;
-import command.ToBackCmd;
-import command.ToFrontCmd;
-import command.UnselectShapesCmd;
-import command.UpdateCircleCmd;
-import command.UpdateDonutCmd;
-import command.UpdateHexagonCmd;
-import command.UpdateLineCmd;
-import command.UpdatePointCmd;
-import command.UpdateRectangleCmd;
-import geometry.Circle;
-import geometry.Donut;
-import geometry.Line;
-import geometry.Point;
-import geometry.Rectangle;
-import geometry.Shape;
-import gui.DlgCircle;
-import gui.DlgDonut;
-import gui.DlgLine;
-import gui.DlgPoint;
-import gui.DlgRectangle;
+import command.*;
+import geometry.*;
+import gui.*;
 import observer.SelectedSizeObserver;
 import strategy.DrawingFile;
 import strategy.FileStrategy;
 import strategy.LogFile;
+import java.awt.event.MouseEvent;
+import java.util.ListIterator;
+import java.util.Stack;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import adapter.HexagonAdapter;
 
 public class DrawingController {
-	
 	private DrwingModel model;
 	private DrawingFrame frame;
-
-	//nema kreiranj objr
-	private Shape selected;
 	private Point startPoint;
 	
 	private Stack<Command> cmdHistory = new Stack<Command>();
 	private Stack<Command> cmdUndoHistory = new Stack<Command>();
-
+	
 	public DrawingController(DrwingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
@@ -66,37 +32,32 @@ public class DrawingController {
 	public void mouseClicked(MouseEvent e) {
 		Shape newShape=null;
 		int v1=0,v2=0;
+		
 		if (frame.getTglbtnSelection().isSelected()){
-			Iterator<Shape> it=model.getShapes().iterator();
-			while (it.hasNext()){
-				Shape shape = it.next();
+			//selected=null;
+			ListIterator<Shape> it=model.getShapes().listIterator(model.getShapes().size());
+			while (it.hasPrevious()){
+				Shape shape = it.previous();
 				if(shape.contains(e.getX(), e.getY())) {
 					if (!shape.isSelected()) {
-						Command cmd = new SelectShapesCmd(shape, model, frame);
+						Command cmd = new SelectShapesCmd(shape, model);
 						cmd.execute();
-						model.pushCmdHistory(cmd);
+						pushCmdHistory(cmd);
+						frame.getTxtAreaLog().append("Select: " + shape.toString() + "\n");
 					} else if (shape.isSelected()) {
-						Command cmd = new UnselectShapesCmd(shape, model, frame);
+						Command cmd = new UnselectShapesCmd(shape, model);
 						cmd.execute();
-						model.pushCmdHistory(cmd);
-					}	
+						pushCmdHistory(cmd);
+						frame.getTxtAreaLog().append("Unselect: " + shape.toString() + "\n");
+					}
+					break;
 				}
 			}
-		}else if(frame.getTglbtnPoint().isSelected()){
+		} else if (frame.getTglbtnPoint().isSelected()){
 				Point p = new Point(e.getX(), e.getY());
 				p.setColor(frame.getBtnColor().getBackground());
 				newShape = p;
-			} /*else if (frame.getTglbtnLine().isSelected()){
-				if (startPoint==null) {
-					startPoint = new Point (e.getX(), e.getY());
-				}
-				else {
-					Line l = new Line(startPoint, new Point(e.getX(),e.getY()));
-					l.setColor(Color.BLACK);
-					newShape = l;
-					startPoint=null;
-				}
-		}*/else if (frame.getTglbtnLine().isSelected()){
+		} else if (frame.getTglbtnLine().isSelected()){
 			if (startPoint==null) {
 				startPoint = new Point (e.getX(), e.getY());
 			} else {
@@ -105,8 +66,7 @@ public class DrawingController {
 				newShape = l;
 				startPoint=null;
 			}
-		}
-			else if (frame.getTglbtnRectangle().isSelected()){
+		} else if (frame.getTglbtnRectangle().isSelected()){
 			DlgRectangle dlg = new DlgRectangle();
 			Rectangle r= new Rectangle();
 			dlg.setModal(true);
@@ -116,21 +76,22 @@ public class DrawingController {
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtHeight().getText());
 				v2=Integer.parseInt(dlg.getTxtWidth().getText());
+				r = new Rectangle(new Point(e.getX(),e.getY()), v1, v2);
+				if(dlg.isColorChosen())
+					r.setColor(dlg.getC());
+				else
+					r.setColor(frame.getBtnColor().getBackground());
+				if(dlg.isInnerColorChosen())
+					r.setInnerColor(dlg.getInnerC());
+				else
+					r.setInnerColor(frame.getBtnInnerColor().getBackground());
+				try {
+					newShape = r;
+				} catch (Exception ex){
+					JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			r = new Rectangle(new Point(e.getX(),e.getY()), v1, v2);
-			if(dlg.isColorChosen())
-				r.setColor(dlg.getC());
-			else
-				r.setColor(frame.getBtnColor().getBackground());
-			if(dlg.isInnerColorChosen())
-				r.setInnerColor(dlg.getInnerC());
-			else
-				r.setInnerColor(frame.getBtnInnerColor().getBackground());
-			try {
-				newShape = r;
-			} catch (Exception ex){
-				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			
 		} else if (frame.getTglbtnCircle().isSelected()){
 			DlgCircle dlg= new DlgCircle();
 			Circle c= new Circle();
@@ -140,25 +101,25 @@ public class DrawingController {
 			dlg.setVisible(true);
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
+				c = new Circle(new Point(e.getX(),e.getY()), v1);
+				if(dlg.isColorChosen())
+					c.setColor(dlg.getC());
+				else
+					c.setColor(frame.getBtnColor().getBackground());
+				if(dlg.isInnerColorChosen())
+					c.setInnerColor(dlg.getInnerC());
+				else
+					c.setInnerColor(frame.getBtnInnerColor().getBackground());
+				try {
+					newShape= c;
+				} catch (Exception ex){
+					JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			//ovo je za onu boju treba uzei od prvog
-			c = new Circle(new Point(e.getX(),e.getY()), v1);
-			if(dlg.isColorChosen())
-				c.setColor(dlg.getC());
-			else
-				c.setColor(frame.getBtnColor().getBackground());
-			if(dlg.isInnerColorChosen())
-				c.setInnerColor(dlg.getInnerC());
-			else
-				c.setInnerColor(frame.getBtnInnerColor().getBackground());
-			try {
-				newShape= c;
-			} catch (Exception ex){
-				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			
 		} else if (frame.getTglbtnDonut().isSelected()){
 			DlgDonut dlg= new DlgDonut();
-			Donut don = new Donut();
+			Donut d = new Donut();
 			dlg.setModal(true);
 			dlg.getTxtX().setText("" + e.getX());
 			dlg.getTxtY().setText("" + e.getY());
@@ -166,87 +127,86 @@ public class DrawingController {
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 				v2=Integer.parseInt(dlg.getTxtInnerRadius().getText());
+				d = new Donut(new Point(e.getX(),e.getY()), v1,v2);
+				if(dlg.isColorChosen())
+					d.setColor(dlg.getC());
+				else
+					d.setColor(frame.getBtnColor().getBackground());
+				if(dlg.isInnerColorChosen())
+					d.setInnerColor(dlg.getInnerC());
+				else
+					d.setInnerColor(frame.getBtnInnerColor().getBackground());
+				try {
+					newShape= d;
+				} catch (Exception ex){
+					JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			don = new Donut(new Point(e.getX(),e.getY()), v1,v2);
-			if(dlg.isColorChosen())
-				don.setColor(dlg.getC());
-			else
-				don.setColor(frame.getBtnColor().getBackground());
-			if(dlg.isInnerColorChosen())
-				don.setInnerColor(dlg.getInnerC());
-			else
-				don.setInnerColor(frame.getBtnInnerColor().getBackground());
-			try {
-				newShape= don;
-			} catch (Exception ex){
-				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			
 		} else if (frame.getTglbtnHexagon().isSelected()) {
 			DlgCircle dlg= new DlgCircle();
-			HexagonAdapter hex= new HexagonAdapter();
+			HexagonAdapter h= new HexagonAdapter();
 			dlg.setModal(true);
 			dlg.getTxtX().setText("" + e.getX());
 			dlg.getTxtY().setText("" + e.getY());
 			dlg.setVisible(true);
 			if(dlg.isOK()){
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
+				h = new HexagonAdapter(new Point(e.getX(),e.getY()), v1);
+				if(dlg.isColorChosen())
+					h.getHexagon().setBorderColor(dlg.getC());
+				else
+					h.getHexagon().setBorderColor(frame.getBtnColor().getBackground());
+				if(dlg.isInnerColorChosen())
+					h.getHexagon().setAreaColor(dlg.getInnerC());
+				else
+					h.getHexagon().setAreaColor(frame.getBtnInnerColor().getBackground());
+				try {
+					newShape= h;
+				} catch (Exception ex){
+					JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			hex = new HexagonAdapter(new Point(e.getX(),e.getY()), v1);
-			if(dlg.isColorChosen())
-				hex.getHexagon().setBorderColor(dlg.getC());
-			else
-				hex.getHexagon().setBorderColor(frame.getBtnColor().getBackground());
-			if(dlg.isInnerColorChosen())
-				hex.getHexagon().setAreaColor(dlg.getInnerC());
-			else
-				hex.getHexagon().setAreaColor(frame.getBtnInnerColor().getBackground());
-			try {
-				newShape= hex;
-			} catch (Exception ex){
-				JOptionPane.showMessageDialog(frame, "Wrong data type.", "Error", JOptionPane.ERROR_MESSAGE);
-			}
+			
 		}
-		if (newShape!=null){
-			Command cmd = new AddShapeCmd(newShape, model, frame);
+		if (newShape!=null) {
+			Command cmd = new AddShapeCmd(newShape, model);
 			cmd.execute();
-			model.pushCmdHistory(cmd);
-			//newShape=null;
-			}
-		if(!model.getCmdHistory().isEmpty()) {
+			pushCmdHistory(cmd);
+			frame.getTxtAreaLog().append("Add: " + newShape.toString() + "\n");
+		}
+		if(!getCmdHistory().isEmpty()) {
 			frame.getBtnUndo().setEnabled(true);
 		}
 		checkPosition();
-		
 		disableRedo();
-			
 		frame.repaint();
 	}
-
+	
 	protected void delete() {
 		if (model.getSelectedShapes().size() != 0) {
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning message",
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure?", "Warning message",
 					JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				Command cmd = new RemoveShapesCmd(model.getSelectedShapes(), model, frame);
+				frame.getTxtAreaLog().append("Delete: " + model.getSelectedShapes().toString() + "\n");
+				Command cmd = new RemoveShapesCmd(model.getSelectedShapes(), model);
 				cmd.execute();
-				model.pushCmdHistory(cmd);
+				pushCmdHistory(cmd);
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, "You have not selected any shape!","Error", JOptionPane.WARNING_MESSAGE);
 		}
-		//this.selected=null;
+		checkPosition();
 		disableRedo();
 		frame.repaint();
 	}
-
+	
 	protected void modify(){
 		int x=0,y=0;
 		Command cmd;
 		if (!model.getSelectedShapes().isEmpty()) {
 			Shape selected = model.getSelectedShapes().get(0);
 			if (selected instanceof Point) {
-				//Shape selected = model.getSelectedShapes().get(0);
-			
 				Point p = (Point) selected;
 				DlgPoint dlg = new DlgPoint();
 				dlg.getTxtX().setText("" + p.getX());
@@ -262,12 +222,11 @@ public class DrawingController {
 						p.setColor(dlg.getC());
 					}else{
 						p.setColor(dlg.getPc());
-					}		
-					//model.getShapes().set(model.getShapes().indexOf(selected), p);
-					cmd = new UpdatePointCmd((Point)selected,p, frame);
+					}
+					frame.getTxtAreaLog().append("Modify: " + ((Point)selected).toString() + " To: " + p.toString() + "\n");
+					cmd = new UpdatePointCmd((Point)selected,p);
 					cmd.execute();
-					
-					model.pushCmdHistory(cmd);
+					pushCmdHistory(cmd);
 				}
 			} else if(selected instanceof Line){
 				Line l= (Line)selected;
@@ -292,11 +251,10 @@ public class DrawingController {
 					}else{
 						l.setColor(dlg.getPc());
 					}
-					cmd = new UpdateLineCmd((Line)selected,l, frame);
+					frame.getTxtAreaLog().append("Modify: " + ((Line)selected).toString() + " To: " + l.toString() + "\n");
+					cmd = new UpdateLineCmd((Line)selected,l);
 					cmd.execute();
-					//model.getShapes().set(model.getShapes().indexOf(selected), l);
-					
-					model.pushCmdHistory(cmd);
+					pushCmdHistory(cmd);
 				}
 			} else if (selected instanceof Rectangle){
 				Rectangle r= (Rectangle) selected;
@@ -326,11 +284,10 @@ public class DrawingController {
 					}else{
 						r.setInnerColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateRectangleCmd((Rectangle)selected,r, frame);
-					cmd.execute();
-					
-					model.pushCmdHistory(cmd);
-					//model.getShapes().set(model.getShapes().indexOf(selected), r);
+					frame.getTxtAreaLog().append("Modify: " + ((Rectangle)selected).toString() + " To: " + r.toString() + "\n");
+					cmd = new UpdateRectangleCmd((Rectangle)selected,r);
+					cmd.execute(); 
+					pushCmdHistory(cmd);
 				}
 			}else if(selected instanceof Donut){
 				Donut d= (Donut) selected;
@@ -360,11 +317,10 @@ public class DrawingController {
 					}else{
 						d.setInnerColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateDonutCmd((Donut)selected,d, frame);
-					cmd.execute();
-					
-					model.pushCmdHistory(cmd);
-					//model.getShapes().set(model.getShapes().indexOf(selected), d);
+					frame.getTxtAreaLog().append("Modify: " + ((Donut)selected).toString() + " To: " + d.toString() + "\n");
+					cmd = new UpdateDonutCmd((Donut)selected,d);
+					cmd.execute(); 
+					pushCmdHistory(cmd);
 				}
 			} else if(selected instanceof Circle){
 				Circle c= (Circle) selected;
@@ -392,20 +348,19 @@ public class DrawingController {
 					}else{
 						c.setInnerColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateCircleCmd((Circle)selected,c, frame);
-					cmd.execute();
-					
-					model.pushCmdHistory(cmd);
-					//model.getShapes().set(model.getShapes().indexOf(selected), c);
+					frame.getTxtAreaLog().append("Modify: " + ((Circle)selected).toString() + " To: " + c.toString() + "\n");
+					cmd = new UpdateCircleCmd((Circle)selected,c);
+					cmd.execute(); 
+					pushCmdHistory(cmd);
 				}
-			}else if(selected instanceof HexagonAdapter){
-				HexagonAdapter hex= (HexagonAdapter) selected;
+			} else if(selected instanceof HexagonAdapter){
+				HexagonAdapter h= (HexagonAdapter) selected;
 				DlgCircle dlg= new DlgCircle();
-				dlg.getTxtX().setText("" + hex.getHexagon().getX());
-				dlg.getTxtY().setText("" + hex.getHexagon().getY());
-				dlg.getTxtRadius().setText(""+hex.getHexagon().getR());
-				dlg.setPc(hex.getHexagon().getBorderColor());
-				dlg.setInnerPc(hex.getHexagon().getAreaColor());
+				dlg.getTxtX().setText("" + h.getHexagon().getX());
+				dlg.getTxtY().setText("" + h.getHexagon().getY());
+				dlg.getTxtRadius().setText(""+h.getHexagon().getR());
+				dlg.setPc(h.getHexagon().getBorderColor());
+				dlg.setInnerPc(h.getHexagon().getAreaColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if(dlg.isOK()){
@@ -413,69 +368,223 @@ public class DrawingController {
 					y=Integer.parseInt(dlg.getTxtY().getText());
 					int r=Integer.parseInt(dlg.getTxtRadius().getText());
 					Point p=new Point(x,y);
-					hex=new HexagonAdapter(p,r);
+					h=new HexagonAdapter(p,r);
 					if(dlg.isColorChosen()){
-						hex.getHexagon().setBorderColor(dlg.getC());
+						h.getHexagon().setBorderColor(dlg.getC());
 					}else{
-						hex.getHexagon().setBorderColor(dlg.getPc());
+						h.getHexagon().setBorderColor(dlg.getPc());
 					}
 					if(dlg.isInnerColorChosen()){
-						hex.getHexagon().setAreaColor(dlg.getInnerC());
+						h.getHexagon().setAreaColor(dlg.getInnerC());
 					}else{
-						hex.getHexagon().setAreaColor(dlg.getInnerPc());
+						h.getHexagon().setAreaColor(dlg.getInnerPc());
 					}
-					cmd = new UpdateHexagonCmd((HexagonAdapter)selected,hex, frame);
-					cmd.execute();
-					
-					model.pushCmdHistory(cmd);
+					h.getHexagon().setSelected(true);
+					frame.getTxtAreaLog().append("Modify: " + ((HexagonAdapter)selected).toString() + " To: " + h.toString() + "\n");
+					cmd = new UpdateHexagonCmd((HexagonAdapter)selected,h);
+					cmd.execute(); 
+					pushCmdHistory(cmd);
 				}
 			}
+		} else {
+			JOptionPane.showMessageDialog(null, "You have not selected any shape!","Error", JOptionPane.WARNING_MESSAGE);
 		}
-		
-		else {
-			JOptionPane.showMessageDialog(null, "You have not selected any shapes!","Error", JOptionPane.WARNING_MESSAGE);
-		}
-		checkPosition();
-		disableRedo();
 		frame.repaint();
-		
+
 	}
 	
 	public void undo() {
-		if(!model.getCmdHistory().isEmpty()) {
-			Command cmd = model.popCmdHistory();
+		if(!getCmdHistory().isEmpty()) {
+			frame.getTxtAreaLog().append("Undo-> ");
+			Command cmd = popCmdHistory();
 			cmd.unexecute();
-			checkPosition();
-			model.pushCmdUndoHistory(cmd);
+			printCmd(cmd);
+			pushCmdUndoHistory(cmd);
 			frame.getBtnRedo().setEnabled(true);
-			if(model.getCmdHistory().isEmpty()) {
+			if(getCmdHistory().isEmpty()) {
 				frame.getBtnUndo().setEnabled(false);
 			}
 		}
-		frame.repaint();
-	}
-
-	public void redo() {
-		if(!model.getCmdUndoHistory().isEmpty()) {
-			frame.getTxtAreaLog().append("Redo-> ");
-			Command cmd = model.popCmdUndoHistory();
-			cmd.execute();
-			checkPosition();
-			model.pushCmdHistory(cmd);
-			if(model.getCmdUndoHistory().isEmpty()) {
-				frame.getBtnRedo().setEnabled(false);
-			}
-		}
-		//frame.getBtnUndo().setEnabled(true);
 		checkPosition();
 		frame.repaint();
 	}
-
+	
+	public void redo() {
+		if(!getCmdUndoHistory().isEmpty()) {
+			frame.getTxtAreaLog().append("Redo-> ");
+			Command cmd = popCmdUndoHistory();
+			cmd.execute();
+			printCmd(cmd);
+			pushCmdHistory(cmd);
+			frame.getBtnUndo().setEnabled(true);
+			if(getCmdUndoHistory().isEmpty()) {
+				frame.getBtnRedo().setEnabled(false);
+			}
+		}
+		checkPosition();
+		frame.repaint();
+	}
+	
+	public void printCmd(Command cmd) {
+		if(cmd instanceof AddShapeCmd)
+			frame.getTxtAreaLog().append("Add\n");
+		else if (cmd instanceof RemoveShapesCmd)
+			frame.getTxtAreaLog().append("Delete\n");
+		else if (cmd instanceof SelectShapesCmd)
+			frame.getTxtAreaLog().append("Select\n");
+		else if (cmd instanceof UnselectShapesCmd)
+			frame.getTxtAreaLog().append("Unselect\n");
+		else if (cmd instanceof BringToBackCmd)
+			frame.getTxtAreaLog().append("BringToBack\n");
+		else if (cmd instanceof BringToFrontCmd)
+			frame.getTxtAreaLog().append("BringToFront\n");
+		else if (cmd instanceof ToBackCmd)
+			frame.getTxtAreaLog().append("ToBack\n");
+		else if (cmd instanceof ToFrontCmd)
+			frame.getTxtAreaLog().append("ToFront\n");
+		else
+			frame.getTxtAreaLog().append("Modify\n");
+	}
+	
 	public void disableRedo() {
-		model.getCmdUndoHistory().clear();
+		getCmdUndoHistory().clear();
 		frame.getBtnRedo().setEnabled(false);
 	}
 	
+	public void checkPosition() {
+		if(model.getSelectedShapes().size()==1) {
+			int i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			if (model.getShapes().size()==1) {
+				frame.getBtnToFront().setEnabled(false);
+				frame.getBtnToBack().setEnabled(false);
+				frame.getBtnBringToFront().setEnabled(false);
+				frame.getBtnBringToBack().setEnabled(false);
+			} else if(i+1 == model.getShapes().size()) {
+				frame.getBtnToFront().setEnabled(false);
+				frame.getBtnToBack().setEnabled(true);
+				frame.getBtnBringToFront().setEnabled(false);
+				frame.getBtnBringToBack().setEnabled(true);
+			} else if (i == 0) {
+				frame.getBtnToFront().setEnabled(true);
+				frame.getBtnToBack().setEnabled(false);
+				frame.getBtnBringToFront().setEnabled(true);
+				frame.getBtnBringToBack().setEnabled(false);
+			} else if (i>0 && i+1<model.getShapes().size()) {
+				frame.getBtnToFront().setEnabled(true);
+				frame.getBtnToBack().setEnabled(true);
+				frame.getBtnBringToFront().setEnabled(true);
+				frame.getBtnBringToBack().setEnabled(true);
+			}
+		} else {
+			frame.getBtnToFront().setEnabled(false);
+			frame.getBtnToBack().setEnabled(false);
+			frame.getBtnBringToFront().setEnabled(false);
+			frame.getBtnBringToBack().setEnabled(false);
+		}
+	}
+	
+	public void toFront() {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new ToFrontCmd(s, model);
+		cmd.execute();
+		pushCmdHistory(cmd);
+		frame.getTxtAreaLog().append("ToFront: " + s.toString() + "\n");
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+	
+	public void toBack() {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new ToBackCmd(s, model);
+		cmd.execute();
+		pushCmdHistory(cmd);
+		frame.getTxtAreaLog().append("ToBack: " + s.toString() + "\n");
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+	
+	public void bringToFront() {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new BringToFrontCmd(s, model);
+		cmd.execute();
+		pushCmdHistory(cmd);
+		frame.getTxtAreaLog().append("BringToFront: " + s.toString() + "\n");
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+	
+	public void bringToBack () {
+		Shape s = model.getSelectedShapes().get(0);
+		Command cmd = new BringToBackCmd(s, model);
+		cmd.execute();
+		pushCmdHistory(cmd);
+		frame.getTxtAreaLog().append("BringToBack: " + s.toString() + "\n");
+		checkPosition();
+		disableRedo();
+		frame.repaint();
+	}
+
+	public void saveDrawing() {
+		JFileChooser jfcSaveDrawing = new JFileChooser();
+		int userSelection = jfcSaveDrawing.showSaveDialog(frame);
+		
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			String path = jfcSaveDrawing.getSelectedFile().getPath();
+			FileStrategy strategy = new DrawingFile(model);
+			strategy.save(path);
+		}
+	}
+
+	public void loadDrawing() {
+		JFileChooser jfcLoadDrawing = new JFileChooser();
+		int userSelection = jfcLoadDrawing.showOpenDialog(frame);
+		
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			frame.getTxtAreaLog().setText("");
+			model.getShapes().clear();
+			model.getSelectedShapes().clear();
+			getCmdHistory().clear();
+			getCmdUndoHistory().clear();
+			String path = jfcLoadDrawing.getSelectedFile().getPath();
+			FileStrategy strategy = new DrawingFile(model);
+			strategy.load(path);
+			frame.repaint();
+		}		
+	}
+
+	public void saveLog() {
+		JFileChooser jfcSaveLog = new JFileChooser();
+		int userSelection = jfcSaveLog.showSaveDialog(frame);
+		
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			String path = jfcSaveLog.getSelectedFile().getPath();
+			FileStrategy strategy = new LogFile(model, frame, this);
+			strategy.save(path);
+		}
+		
+	}
+
+	public void loadLog() {
+		JFileChooser jfcLoadLog = new JFileChooser();
+		int userSelection = jfcLoadLog.showOpenDialog(frame);
+		
+		if(userSelection == JFileChooser.APPROVE_OPTION) {
+			frame.getTxtAreaLog().setText("");
+			model.getShapes().clear();
+			model.getSelectedShapes().clear();
+			getCmdHistory().clear();
+			getCmdUndoHistory().clear();
+			String path = jfcLoadLog.getSelectedFile().getPath();
+			FileStrategy strategy = new LogFile(model, frame, this);
+			strategy.load(path);
+			frame.repaint();
+		}
+	}
+	
+	/*CmdHistory*/
 	public Command popCmdHistory() {
 		return cmdHistory.pop();
 	}
@@ -500,132 +609,4 @@ public class DrawingController {
 	public Stack<Command> getCmdUndoHistory() {
 		return cmdUndoHistory;
 	}
-	
-	public void checkPosition() {
-		if(model.getSelectedShapes().size()==1) {
-			int i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
-			System.out.println(i+1);
-			System.out.println(model.getShapes().size());
-			if(model.getShapes().size()==1) {
-				frame.getBtnToFront().setEnabled(false);
-				frame.getBtnToBack().setEnabled(true);
-				frame.getBtnBringToFront().setEnabled(false);
-				frame.getBtnBringToBack().setEnabled(true);
-			} else if (i == 0) {
-				frame.getBtnToFront().setEnabled(true);
-				frame.getBtnToBack().setEnabled(false);
-				frame.getBtnBringToFront().setEnabled(true);
-				frame.getBtnBringToBack().setEnabled(false);
-			} else if (i>0 && i+1<model.getShapes().size()) {
-				frame.getBtnToFront().setEnabled(true);
-				frame.getBtnToBack().setEnabled(true);
-				frame.getBtnBringToFront().setEnabled(true);
-				frame.getBtnBringToBack().setEnabled(true);
-			}
-		} else {
-			frame.getBtnToFront().setEnabled(false);
-			frame.getBtnToBack().setEnabled(false);
-			frame.getBtnBringToFront().setEnabled(false);
-			frame.getBtnBringToBack().setEnabled(false);
-		}
-	}
-
-	public void toFront() {
-		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new ToFrontCmd(s, model, frame);
-		cmd.execute();
-		model.pushCmdHistory(cmd);
-		checkPosition();
-		disableRedo();
-		frame.repaint();
-	}
-
-	public void toBack() {
-		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new ToBackCmd(s, model, frame);
-		cmd.execute();
-		model.pushCmdHistory(cmd);
-		checkPosition();
-		disableRedo();
-		frame.repaint();
-	}
-
-	public void bringToFront() {
-		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new BringToFrontCmd(s, model, frame);
-		cmd.execute();
-		model.pushCmdHistory(cmd);
-		checkPosition();
-		disableRedo();
-		frame.repaint();
-	}
-
-	public void bringToBack () {
-		Shape s = model.getSelectedShapes().get(0);
-		Command cmd = new BringToBackCmd(s, model, frame);
-		cmd.execute();
-		model.pushCmdHistory(cmd);
-		checkPosition();
-		disableRedo();
-		frame.repaint();
-	}
-	
-	public void saveDrawing() {
-		JFileChooser jfcSaveDrawing = new JFileChooser();
-		int userSelection = jfcSaveDrawing.showSaveDialog(frame);
-
-		if(userSelection == JFileChooser.APPROVE_OPTION) {
-			String path = jfcSaveDrawing.getSelectedFile().getPath();
-			FileStrategy strategy = new DrawingFile(model);
-			strategy.save(path);
-		}
-	}
-
-	public void loadDrawing() {
-		JFileChooser jfcLoadDrawing = new JFileChooser();
-		int userSelection = jfcLoadDrawing.showOpenDialog(frame);
-
-		if(userSelection == JFileChooser.APPROVE_OPTION) {
-			frame.getTxtAreaLog().setText("");
-			model.getShapes().clear();
-			model.getSelectedShapes().clear();
-			model.getCmdHistory().clear();
-			model.getCmdUndoHistory().clear();
-			String path = jfcLoadDrawing.getSelectedFile().getPath();
-			FileStrategy strategy = new DrawingFile(model);
-			strategy.load(path);
-			frame.repaint();
-		}		
-	}
-
-	public void saveLog() {
-		JFileChooser jfcSaveLog = new JFileChooser();
-		int userSelection = jfcSaveLog.showSaveDialog(frame);
-
-		if(userSelection == JFileChooser.APPROVE_OPTION) {
-			String path = jfcSaveLog.getSelectedFile().getPath();
-			FileStrategy strategy = new LogFile(model, frame, this);
-			strategy.save(path);
-		}
-
-	}
-
-	public void loadLog() {
-		JFileChooser jfcLoadLog = new JFileChooser();
-		int userSelection = jfcLoadLog.showOpenDialog(frame);
-
-		if(userSelection == JFileChooser.APPROVE_OPTION) {
-			frame.getTxtAreaLog().setText("");
-			model.getShapes().clear();
-			model.getSelectedShapes().clear();
-			model.getCmdHistory().clear();
-			model.getCmdUndoHistory().clear();
-			String path = jfcLoadLog.getSelectedFile().getPath();
-			FileStrategy strategy = new LogFile(model, frame, this);
-			strategy.load(path);
-			frame.repaint();
-		}
-	}
-
-	
 }

@@ -41,19 +41,6 @@ public class Donut extends Circle implements Cloneable{
 		super.draw(g);
 		g.setColor(getColor());
 		g.drawOval(getCenter().getX() - this.innerRadius, getCenter().getY() - this.innerRadius, getInnerRadius() * 2, getInnerRadius() * 2);
-		//Graphics2D g2d = (Graphics2D) g; 
-
-		//Ellipse2D outer = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(), this.getRadius()*2, this.getRadius()*2); //jer je poluprecnik pa *2
-		//Ellipse2D inner = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius() , this.getCenter().getY() - this.getInnerRadius(), this.innerRadius * 2, this.innerRadius * 2);
-
-		/*Area area = new Area(outer);
-		Area innerArea = new Area(inner);
-		area.subtract(innerArea);
-
-		g2d.setColor(getInnerColor());
-		g2d.fill(area);
-		g2d.setColor(getColor());
-		g2d.draw(area);*/
 		if (isSelected()) {
 			g.setColor(Color.BLUE);
 			super.putCirclePoint(g, this.getRadius());
@@ -118,8 +105,12 @@ public class Donut extends Circle implements Cloneable{
 	@Override
 	public Donut clone() {
 		Donut donut = new Donut();
+		donut.setCenter(this.getCenter().clone());
+		donut.setRadius(this.getRadius());
 
-		super.clone();
+		donut.setColor(this.getColor());
+		donut.setInnerColor(this.getInnerColor());
+		donut.setSelected(this.isSelected());
 
 		try {
 			donut.setInnerRadius(this.getInnerRadius());

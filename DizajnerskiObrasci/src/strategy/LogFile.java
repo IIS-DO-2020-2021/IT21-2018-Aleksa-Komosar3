@@ -86,7 +86,7 @@ public class LogFile implements FileStrategy {
 		if (splitLine[0].equals("Add:")) {
 			Shape shape = getShape(line, splitLine[1], false);
 			if (shape != null) {
-				cmd = new AddShapeCmd(shape, model, frame);
+				cmd = new AddShapeCmd(shape, model);
 				cmd.execute();
 				controller.pushCmdHistory(cmd);
 				frame.getTxtAreaLog().append("Add: " + shape.toString() + "\n");
@@ -97,7 +97,7 @@ public class LogFile implements FileStrategy {
 
 		} else if (splitLine[0].equals("Delete:")) {
 			frame.getTxtAreaLog().append("Delete: " + model.getSelectedShapes().toString() + "\n");
-			cmd = new RemoveShapesCmd(model.getSelectedShapes(), model, frame);
+			cmd = new RemoveShapesCmd(model.getSelectedShapes(), model);
 			cmd.execute();
 			controller.pushCmdHistory(cmd);
 			controller.checkPosition();
@@ -113,17 +113,17 @@ public class LogFile implements FileStrategy {
 					oldShape = s;
 
 			if (splitLine[1].equals("Point"))
-				cmd = new UpdatePointCmd((Point) oldShape, (Point) newShape, frame);
+				cmd = new UpdatePointCmd((Point) oldShape, (Point) newShape);
 			else if (splitLine[1].equals("Line"))
-				cmd = new UpdateLineCmd((Line) oldShape, (Line) newShape, frame);
+				cmd = new UpdateLineCmd((Line) oldShape, (Line) newShape);
 			else if (splitLine[1].equals("Rectangle"))
-				cmd = new UpdateRectangleCmd((Rectangle) oldShape, (Rectangle) newShape, frame);
+				cmd = new UpdateRectangleCmd((Rectangle) oldShape, (Rectangle) newShape);
 			else if (splitLine[1].equals("Circle"))
-				cmd = new UpdateCircleCmd((Circle) oldShape, (Circle) newShape, frame);
+				cmd = new UpdateCircleCmd((Circle) oldShape, (Circle) newShape);
 			else if (splitLine[1].equals("Donut"))
-				cmd = new UpdateDonutCmd((Donut) oldShape, (Donut) newShape, frame);
+				cmd = new UpdateDonutCmd((Donut) oldShape, (Donut) newShape);
 			else if (splitLine[1].equals("Hexagon"))
-				cmd = new UpdateHexagonCmd((HexagonAdapter) oldShape, (HexagonAdapter) newShape, frame);
+				cmd = new UpdateHexagonCmd((HexagonAdapter) oldShape, (HexagonAdapter) newShape);
 			frame.getTxtAreaLog().append("Modify: " + oldShape.toString() + " To: " + newShape.toString() + "\n");
 			cmd.execute();
 			controller.pushCmdHistory(cmd);
@@ -136,7 +136,7 @@ public class LogFile implements FileStrategy {
 				if (shape.equals(s)) {
 					shape = s;
 				}
-			cmd = new SelectShapesCmd(shape, model, frame);
+			cmd = new SelectShapesCmd(shape, model);
 			cmd.execute();
 
 			frame.getTxtAreaLog().append("Select: " + shape.toString() + "\n");
@@ -152,7 +152,7 @@ public class LogFile implements FileStrategy {
 			for (Shape s : model.getShapes())
 				if (shape.equals(s))
 					shape = s;
-			cmd = new UnselectShapesCmd(shape, model, frame);
+			cmd = new UnselectShapesCmd(shape, model);
 			cmd.execute();
 
 			frame.getTxtAreaLog().append("Unselect: " + shape.toString() + "\n");
@@ -181,7 +181,7 @@ public class LogFile implements FileStrategy {
 		String[] numbersWithBlank = numbersOnly.split(" ");
 		ArrayList<Integer> num = new ArrayList<Integer>();
 		for (String s : numbersWithBlank) {
-			if (s.isEmpty())
+			if (s==null || s.trim().isEmpty())
 				continue;
 			num.add(Integer.parseInt(s));
 		}

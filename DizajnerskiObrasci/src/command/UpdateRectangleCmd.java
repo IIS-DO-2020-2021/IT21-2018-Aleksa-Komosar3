@@ -8,13 +8,11 @@ public class UpdateRectangleCmd implements Command {
 	private Rectangle oldState;
 	private Rectangle newState;
 	private Rectangle original=new Rectangle();
-	private DrawingFrame frame;
 	
-	public UpdateRectangleCmd(Rectangle oldState, Rectangle newState, DrawingFrame frame) {
+	public UpdateRectangleCmd(Rectangle oldState, Rectangle newState) {
 		super();
 		this.oldState = oldState;
 		this.newState = newState;
-		this.frame=frame;
 	}
 
 	@Override
@@ -36,7 +34,6 @@ public class UpdateRectangleCmd implements Command {
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
 		
-		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 	}
 
 	@Override
@@ -49,7 +46,6 @@ public class UpdateRectangleCmd implements Command {
 		oldState.setColor(original.getColor());
 		oldState.setInnerColor(original.getInnerColor());
 		
-		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }

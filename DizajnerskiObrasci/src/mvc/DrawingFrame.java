@@ -13,7 +13,6 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -23,15 +22,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 public class DrawingFrame extends JFrame {
-
 	private static final long serialVersionUID = 1L;
 	//ne treba kreirati objekte, vec samo referenceriati, kad se kreiraju objekti nastane onaj haos
 	//kreira se objakt za frame jer je top level...
 	private DrawingView view = new DrawingView();
 	private DrawingController controller;
-
 	private JToggleButton tglbtnPoint = new JToggleButton("Point");
 	private JToggleButton tglbtnLine = new JToggleButton("Line");
 	private JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
@@ -45,6 +41,7 @@ public class DrawingFrame extends JFrame {
 	private JButton btnRedo = new JButton("Redo");
 	private JButton btnColor = new JButton("");
 	private JButton btnInnerColor = new JButton("");
+	private final JLabel label_9_1 = new JLabel("");
 	//private final JLabel label_9_1 = new JLabel("");
 	private final JLabel label_10 = new JLabel("");
 	private final JLabel label_11 = new JLabel("");
@@ -63,7 +60,7 @@ public class DrawingFrame extends JFrame {
 	private JButton btnToBack = new JButton("ToBack");
 	private JButton btnBringToFront = new JButton("BringToFront");
 	private JButton btnBringToBack = new JButton("BringToBack");
-	
+
 	private final JButton btnSaveDrawing = new JButton("SaveDrawing");
 	private final JButton btnLoadDrawing = new JButton("LoadDrawing");
 	private final JButton btnSaveLog = new JButton("SaveLog");
@@ -84,12 +81,10 @@ public class DrawingFrame extends JFrame {
 		view.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		view.setBackground(Color.WHITE);
 		
-
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(500, 300, 1000, 700);
 		setResizable(false);
 		setTitle("Aleksa Komosar");
-
 		JPanel pnlNorth = new JPanel();
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
 		JPanel pnlEast = new JPanel();
@@ -98,11 +93,9 @@ public class DrawingFrame extends JFrame {
 		getContentPane().add(pnlWest, BorderLayout.WEST);
 		JPanel pnlSouth = new JPanel();
 		getContentPane().add(pnlSouth, BorderLayout.SOUTH);
-
-
+		pnlSouth.setLayout(new BoxLayout(pnlSouth, BoxLayout.Y_AXIS));
 		ButtonGroup btnGroup = new ButtonGroup();
 		
-
 		//JButton btnModification = new JButton("Modification");
 		btnModification.setEnabled(false);
 		btnModification.addActionListener(new ActionListener() {
@@ -119,7 +112,6 @@ public class DrawingFrame extends JFrame {
 		});
 		
 		pnlNorth.setLayout(new GridLayout(2, 6, 5, 0));
-
 		JLabel label = new JLabel("");
 		JLabel label_1 = new JLabel("");
 		JLabel label_2 = new JLabel("");
@@ -131,10 +123,10 @@ public class DrawingFrame extends JFrame {
 		JLabel label_8 = new JLabel("");
 		JLabel label_9 = new JLabel("");
 		
-		JLabel innerColor = new JLabel("Color");
+		JLabel innerColor = new JLabel("Inner Color");
 		innerColor.setHorizontalAlignment(SwingConstants.RIGHT);
 		innerColor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		JLabel color = new JLabel("InnerColor");
+		JLabel color = new JLabel("Color");
 		color.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		color.setHorizontalAlignment(SwingConstants.RIGHT);
 		
@@ -170,10 +162,6 @@ public class DrawingFrame extends JFrame {
 		btnColor.setBackground(Color.BLACK);
 		pnlNorth.add(innerColor);
 		
-		
-		/*pnlSouth.add(tglbtnSelection);
-		pnlSouth.add(btnModification);
-		pnlSouth.add(btnDelete);*/
 		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
 		pnlWest.add(label);
 		pnlWest.add(label_1);
@@ -220,11 +208,22 @@ public class DrawingFrame extends JFrame {
 		pnlWest.add(btnRedo);
 		btnGroup.add(tglbtnSelection);
 		
-		pnlSouth.setLayout(new BoxLayout(pnlSouth, BoxLayout.Y_AXIS));
+		JPanel pnlTop = new JPanel();
+		JPanel pnlBottom = new JPanel();
+		pnlSouth.add(pnlTop);
+		pnlSouth.add(pnlBottom);
 		
-		//pnlSouth.add(scrollPane);
+		pnlTop.add(btnSaveDrawing);
+		pnlTop.add(btnLoadDrawing);	
+		pnlTop.add(btnSaveLog);	
+		pnlTop.add(btnLoadLog);	
+		btnNext.setEnabled(false);
+		pnlTop.add(btnNext);		
+		
+		pnlBottom.add(scrollPane);
+
 		pnlNorth.add(btnInnerColor);
-		
+
 				btnInnerColor.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						new JColorChooser();
@@ -240,29 +239,25 @@ public class DrawingFrame extends JFrame {
 				controller.undo();
 			}
 		});
-
-
 		btnRedo.setEnabled(false);
 		btnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.redo();
 			}
 		});
-
 		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToFront();
 			}
 		});
-
 		btnBringToBack.setEnabled(false);
 		btnBringToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToBack();
 			}
 		});
-		
+
 		btnSaveDrawing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.saveDrawing();
@@ -287,79 +282,59 @@ public class DrawingFrame extends JFrame {
 				controller.loadLog();
 			}
 		});
-		
+
 		txtAreaLog.setEnabled(false);
 		txtAreaLog.setEditable(false);
 		txtAreaLog.setTabSize(10);
 		txtAreaLog.setColumns(50);
 		txtAreaLog.setRows(5);
 		txtAreaLog.setDisabledTextColor(Color.BLACK);
-
 	}
-
 	public JButton getBtnColor() {
 		return btnColor;
 	}
-
-
 	public void setBtnColor(JButton btnColor) {
 		this.btnColor = btnColor;
 	}
-
-
 	public JButton getBtnInnerColor() {
 		return btnInnerColor;
 	}
-
-
 	public void setBtnInnerColor(JButton btnInnerColor) {
 		this.btnInnerColor = btnInnerColor;
 	}	
-
 	public DrawingView getView() {
 		return view;
 	}
-
 	public void setController(DrawingController controller) {
 		this.controller = controller;
 	}
-
 	public JToggleButton getTglbtnPoint() {
 		return tglbtnPoint;
 	}
-
 	public void setTglbtnPoint(JToggleButton tglbtnPoint) {
 		this.tglbtnPoint = tglbtnPoint;
 	}
-
 	public JToggleButton getTglbtnLine() {
 		return tglbtnLine;
 	}
-
 	public void setTglbtnLine(JToggleButton tglbtnLine) {
 		this.tglbtnLine = tglbtnLine;
 	}
-
 	public JToggleButton getTglbtnRectangle() {
 		return tglbtnRectangle;
 	}
-
 	public void setTglbtnRectangle(JToggleButton tglbtnRectangle) {
 		this.tglbtnRectangle = tglbtnRectangle;
 	}
-
 	public JToggleButton getTglbtnCircle() {
 		return tglbtnCircle;
 	}
-
 	public void setTglbtnCircle(JToggleButton tglbtnCircle) {
 		this.tglbtnCircle = tglbtnCircle;
 	}
-
 	public JToggleButton getTglbtnDonut() {
 		return tglbtnDonut;
 	}
-
 	public void setTglbtnDonut(JToggleButton tglbtnDonut) {
 		this.tglbtnDonut = tglbtnDonut;
 	}
@@ -367,16 +342,12 @@ public class DrawingFrame extends JFrame {
 	public JToggleButton getTglbtnHexagon() {
 		return tglbtnHexagon;
 	}
-
-
 	public void setTglbtnHexagon(JToggleButton tglbtnHexagon) {
 		this.tglbtnHexagon = tglbtnHexagon;
 	}
-
 	public JToggleButton getTglbtnSelection() {
 		return tglbtnSelection;
 	}
-
 	public void setTglbtnSelection(JToggleButton tglbtnSelection) {
 		this.tglbtnSelection = tglbtnSelection;
 	}
@@ -384,18 +355,12 @@ public class DrawingFrame extends JFrame {
 	public JButton getBtnUndo() {
 		return btnUndo;
 	}
-
-
 	public void setBtnUndo(JButton btnUndo) {
 		this.btnUndo = btnUndo;
 	}
-
-
 	public JButton getBtnRedo() {
 		return btnRedo;
 	}
-
-
 	public void setBtnRedo(JButton btnRedo) {
 		this.btnRedo = btnRedo;
 	}
@@ -403,50 +368,36 @@ public class DrawingFrame extends JFrame {
 	public JButton getBtnToFront() {
 		return btnToFront;
 	}
-
-
 	public void setBtnToFront(JButton btnToFront) {
 		this.btnToFront = btnToFront;
 	}
-
-
 	public JButton getBtnToBack() {
 		return btnToBack;
 	}
-
-
 	public void setBtnToBack(JButton btnToBack) {
 		this.btnToBack = btnToBack;
 	}
-
 	public JButton getBtnBringToFront() {
 		return btnBringToFront;
 	}
-
 	public void setBtnBringToFront(JButton btnBringToFront) {
 		this.btnBringToFront = btnBringToFront;
 	}
-
 	public JButton getBtnBringToBack() {
 		return btnBringToBack;
 	}
-
 	public void setBtnBringToBack(JButton btnBringToBack) {
 		this.btnBringToBack = btnBringToBack;
 	}
-
 	public JButton getBtnModification() {
 		return btnModification;
 	}
-
 	public void setBtnModification(JButton btnModification) {
 		this.btnModification = btnModification;
 	}
-
 	public JButton getBtnDelete() {
 		return btnDelete;
 	}
-
 	public void setBtnDelete(JButton btnDelete) {
 		this.btnDelete = btnDelete;
 	}
@@ -454,9 +405,9 @@ public class DrawingFrame extends JFrame {
 	public JTextArea getTxtAreaLog() {
 		return txtAreaLog;
 	}
+
 	public JButton getBtnNext() {
 		return btnNext;
-	}	
-
+	}
 
 }

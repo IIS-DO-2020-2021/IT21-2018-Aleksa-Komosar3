@@ -50,8 +50,8 @@ public class Point extends Shape implements Moveable, Cloneable{
 	
 	public void draw(Graphics g) {
 		g.setColor(getColor());
-		g.drawLine(this.x-2, this.y, this.x+2, this.y);
-		g.drawLine(this.x, this.y-2, this.x, this.y+2);
+		g.drawLine(this.x-3, this.y, this.x+2, this.y);
+		g.drawLine(this.x, this.y-3, this.x, this.y+3);
 		
 		if(isSelected()) {
 			g.setColor(Color.BLUE);

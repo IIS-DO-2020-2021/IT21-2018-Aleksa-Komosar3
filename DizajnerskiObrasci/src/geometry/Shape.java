@@ -7,7 +7,7 @@ import adapter.HexagonAdapter;
 
 import java.awt.Color;
 
-public abstract class Shape implements Moveable, Comparable, Serializable{
+public abstract class Shape implements Moveable, Comparable<Object>, Serializable{
 	/**
 	 * 
 	 */
@@ -19,7 +19,10 @@ public abstract class Shape implements Moveable, Comparable, Serializable{
 	public abstract boolean contains(int x, int y);
 	
 	public boolean isSelected() {
-		return selected;
+		if (this instanceof HexagonAdapter)
+			return ((HexagonAdapter)this).getHexagon().isSelected();
+		else
+			return selected;
 	}
 
 	public void setSelected(boolean selected) {

@@ -10,13 +10,11 @@ public class UpdatePointCmd implements Command {
 	private Point oldState;
 	private Point newState;
 	private Point original=new Point();
-	private DrawingFrame frame;
 	
 	
-	public UpdatePointCmd(Point oldState, Point newState,DrawingFrame frame) {
+	public UpdatePointCmd(Point oldState, Point newState) {
 		this.oldState=oldState;
 		this.newState=newState;
-		this.frame=frame;
 	}
 
 	@Override
@@ -33,8 +31,6 @@ public class UpdatePointCmd implements Command {
 		oldState.setX(newState.getX());
 		oldState.setY(newState.getY());
 		oldState.setColor(newState.getColor());
-		
-		frame.getTxtAreaLog().append("Modify: " + original.toString() + " To: " + newState.toString() + "\n");
 
 	}
 
@@ -45,7 +41,6 @@ public class UpdatePointCmd implements Command {
 		oldState.setY(original.getY());
 		oldState.setColor(original.getColor());
 		
-		frame.getTxtAreaLog().append("Undo-> Modify: " + oldState.toString() + " To: " + newState.toString() + "\n");
 	}
 
 }
