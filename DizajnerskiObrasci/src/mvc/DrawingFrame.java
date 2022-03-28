@@ -132,6 +132,15 @@ public class DrawingFrame extends JFrame {
 		
 				pnlNorth.add(tglbtnPoint);
 				tglbtnPoint.setBackground(Color.LIGHT_GRAY);
+				tglbtnLine.setBackground(Color.LIGHT_GRAY);
+				tglbtnDonut.setBackground(Color.LIGHT_GRAY);
+				tglbtnCircle.setBackground(Color.LIGHT_GRAY);
+				tglbtnRectangle.setBackground(Color.LIGHT_GRAY);
+				tglbtnHexagon.setBackground(Color.LIGHT_GRAY);
+				tglbtnSelection.setBackground(Color.WHITE);
+				btnModification.setBackground(Color.WHITE);
+				btnDelete.setBackground(Color.WHITE);
+				
 				
 						btnGroup.add(tglbtnPoint);
 		pnlNorth.add(tglbtnLine);
