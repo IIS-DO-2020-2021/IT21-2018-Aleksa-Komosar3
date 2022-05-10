@@ -1,10 +1,9 @@
 package command;
 
 import geometry.Shape;
-import mvc.DrawingFrame;
 import mvc.DrwingModel;
 
-public class UnselectShapesCmd implements Command {
+public class UnselectShapesCmd implements ICommand {
 	
 	private Shape shapes;
 	private DrwingModel drawingModel;

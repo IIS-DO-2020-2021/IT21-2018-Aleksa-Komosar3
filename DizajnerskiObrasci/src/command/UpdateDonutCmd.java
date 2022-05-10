@@ -1,14 +1,15 @@
 package command;
 
+import javax.swing.JOptionPane;
+
 import geometry.Donut;
 import mvc.DrawingFrame;
 
-public class UpdateDonutCmd implements Command {
+public class UpdateDonutCmd implements ICommand {
 	
 	private Donut oldState;
 	private Donut newState;
-	private Donut original=new Donut();
-
+	private Donut originalDonut=new Donut();
 	
 	public UpdateDonutCmd(Donut oldState, Donut newState) {
 		this.oldState = oldState;
@@ -18,19 +19,7 @@ public class UpdateDonutCmd implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		/*original.getCenter().setX(oldState.getCenter().getX());
-		original.getCenter().setY(oldState.getCenter().getY());
-		original.setRadius(oldState.getRadius());
-		try {
-			original.setInnerRadius(oldState.getInnerRadius());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		original.setColor(oldState.getColor());
-		original.setInnerColor(oldState.getInnerColor());*/
-		
-		original = oldState.clone();
+		originalDonut = oldState.clone();
 
 		oldState.getCenter().setX(newState.getCenter().getX());
 		oldState.getCenter().setY(newState.getCenter().getY());
@@ -38,8 +27,8 @@ public class UpdateDonutCmd implements Command {
 		try {
 			oldState.setInnerRadius(newState.getInnerRadius());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
 		}
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
@@ -49,17 +38,16 @@ public class UpdateDonutCmd implements Command {
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
-		oldState.getCenter().setX(original.getCenter().getX());
-		oldState.getCenter().setY(original.getCenter().getY());
-		oldState.setRadius(original.getRadius());
+		oldState.getCenter().setX(originalDonut.getCenter().getX());
+		oldState.getCenter().setY(originalDonut.getCenter().getY());
+		oldState.setRadius(originalDonut.getRadius());
 		try {
-			oldState.setInnerRadius(original.getInnerRadius());
+			oldState.setInnerRadius(originalDonut.getInnerRadius());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		oldState.setColor(original.getColor());
-		oldState.setInnerColor(original.getInnerColor());
+		oldState.setColor(originalDonut.getColor());
+		oldState.setInnerColor(originalDonut.getInnerColor());
 		
 	}
 

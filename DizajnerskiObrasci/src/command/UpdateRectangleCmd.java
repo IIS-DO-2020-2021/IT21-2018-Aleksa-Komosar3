@@ -1,13 +1,12 @@
 package command;
 
 import geometry.Rectangle;
-import mvc.DrawingFrame;
 
-public class UpdateRectangleCmd implements Command {
+public class UpdateRectangleCmd implements ICommand {
 
 	private Rectangle oldState;
 	private Rectangle newState;
-	private Rectangle original=new Rectangle();
+	private Rectangle originalRec=new Rectangle();
 	
 	public UpdateRectangleCmd(Rectangle oldState, Rectangle newState) {
 		super();
@@ -17,15 +16,8 @@ public class UpdateRectangleCmd implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		/*original.getUpperLeft().setX(oldState.getUpperLeft().getX());
-		original.getUpperLeft().setY(oldState.getUpperLeft().getY());
-		original.setHeight(oldState.getHeight());
-		original.setWidth(oldState.getWidth());
-		original.setColor(oldState.getColor());
-		original.setInnerColor(oldState.getInnerColor());*/
-		
-		original = oldState.clone();
+		// TODO Auto-generated method stub		
+		originalRec = oldState.clone();
 
 		oldState.getUpperLeft().setX(newState.getUpperLeft().getX());
 		oldState.getUpperLeft().setY(newState.getUpperLeft().getY());
@@ -33,19 +25,17 @@ public class UpdateRectangleCmd implements Command {
 		oldState.setWidth(newState.getWidth());
 		oldState.setColor(newState.getColor());
 		oldState.setInnerColor(newState.getInnerColor());
-		
 	}
 
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
-		oldState.getUpperLeft().setX(original.getUpperLeft().getX());
-		oldState.getUpperLeft().setY(original.getUpperLeft().getY());
-		oldState.setHeight(original.getHeight());
-		oldState.setWidth(original.getWidth());
-		oldState.setColor(original.getColor());
-		oldState.setInnerColor(original.getInnerColor());
-		
+		oldState.getUpperLeft().setX(originalRec.getUpperLeft().getX());
+		oldState.getUpperLeft().setY(originalRec.getUpperLeft().getY());
+		oldState.setHeight(originalRec.getHeight());
+		oldState.setWidth(originalRec.getWidth());
+		oldState.setColor(originalRec.getColor());
+		oldState.setInnerColor(originalRec.getInnerColor());
 	}
 
 }

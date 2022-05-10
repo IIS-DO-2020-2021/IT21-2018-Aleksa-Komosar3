@@ -2,7 +2,8 @@ package mvc;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
@@ -41,8 +42,6 @@ public class DrawingFrame extends JFrame {
 	private JButton btnRedo = new JButton("Redo");
 	private JButton btnColor = new JButton("");
 	private JButton btnInnerColor = new JButton("");
-	private final JLabel label_9_1 = new JLabel("");
-	//private final JLabel label_9_1 = new JLabel("");
 	private final JLabel label_10 = new JLabel("");
 	private final JLabel label_11 = new JLabel("");
 	private final JLabel label_12 = new JLabel("");
@@ -56,15 +55,15 @@ public class DrawingFrame extends JFrame {
 	private final JTextArea txtAreaLog = new JTextArea();
 	private final JScrollPane scrollPane = new JScrollPane(txtAreaLog);
 	
-	private JButton btnToFront = new JButton("ToFront");
-	private JButton btnToBack = new JButton("ToBack");
-	private JButton btnBringToFront = new JButton("BringToFront");
-	private JButton btnBringToBack = new JButton("BringToBack");
+	private JButton btnToFront = new JButton("To front");
+	private JButton btnToBack = new JButton("To back");
+	private JButton btnBringToFront = new JButton("Bring to front");
+	private JButton btnBringToBack = new JButton("Bring to back");
 
-	private final JButton btnSaveDrawing = new JButton("SaveDrawing");
-	private final JButton btnLoadDrawing = new JButton("LoadDrawing");
-	private final JButton btnSaveLog = new JButton("SaveLog");
-	private final JButton btnLoadLog = new JButton("LoadLog");
+	private final JButton btnSaveDrawing = new JButton("Save drawing");
+	private final JButton btnLoadDrawing = new JButton("Load drawing from PC");
+	private final JButton btnSaveLog = new JButton("Save log");
+	private final JButton btnLoadLog = new JButton("Load log");
 	private final JButton btnNext = new JButton("Next");
 
 	public DrawingFrame() {
@@ -81,6 +80,51 @@ public class DrawingFrame extends JFrame {
 		view.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		view.setBackground(Color.WHITE);
 		
+		Image pointimg=new ImageIcon(this.getClass().getResource("/point.png")).getImage();
+		tglbtnPoint.setIcon(new ImageIcon(pointimg));
+		
+		Image circleimg=new ImageIcon(this.getClass().getResource("/circle.png")).getImage();
+		
+		Image lineimg=new ImageIcon(this.getClass().getResource("/line.png")).getImage();
+		tglbtnLine.setIcon(new ImageIcon(lineimg));
+		
+		Image rectangleimg=new ImageIcon(this.getClass().getResource("/rectangle.png")).getImage();
+		tglbtnRectangle.setIcon(new ImageIcon(rectangleimg));
+		
+		Image donutimg=new ImageIcon(this.getClass().getResource("/donut.png")).getImage();
+		
+		Image heximg=new ImageIcon(this.getClass().getResource("/hexagon.png")).getImage();
+		
+		Image undoimg=new ImageIcon(this.getClass().getResource("/undo.png")).getImage();
+		
+		Image redoimg=new ImageIcon(this.getClass().getResource("/redo.png")).getImage();
+		
+		Image saveimg=new ImageIcon(this.getClass().getResource("/save.png")).getImage();
+		btnSaveLog.setIcon(new ImageIcon(saveimg));
+		btnSaveDrawing.setIcon(new ImageIcon(saveimg));
+		
+		Image loadimg=new ImageIcon(this.getClass().getResource("/load.png")).getImage();
+		btnLoadLog.setIcon(new ImageIcon(loadimg));
+		btnLoadDrawing.setIcon(new ImageIcon(loadimg));
+		
+		Image selectionimg=new ImageIcon(this.getClass().getResource("/selection.png")).getImage();
+		tglbtnSelection.setIcon(new ImageIcon(selectionimg));
+		
+		Image modifyimg=new ImageIcon(this.getClass().getResource("/modify.png")).getImage();
+		btnModification.setIcon(new ImageIcon(modifyimg));
+		
+		Image delimg=new ImageIcon(this.getClass().getResource("/delete.png")).getImage();
+		btnDelete.setIcon(new ImageIcon(delimg));
+		
+		Image nextimg=new ImageIcon(this.getClass().getResource("/next.png")).getImage();
+		btnNext.setIcon(new ImageIcon(nextimg));
+		
+		
+		Image bbimg=new ImageIcon(this.getClass().getResource("/bf.png")).getImage();
+		
+		Image bfimg=new ImageIcon(this.getClass().getResource("/bb.png")).getImage();
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(500, 300, 1000, 700);
 		setResizable(false);
@@ -96,21 +140,6 @@ public class DrawingFrame extends JFrame {
 		pnlSouth.setLayout(new BoxLayout(pnlSouth, BoxLayout.Y_AXIS));
 		ButtonGroup btnGroup = new ButtonGroup();
 		
-		//JButton btnModification = new JButton("Modification");
-		btnModification.setEnabled(false);
-		btnModification.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.modify();
-			}
-		});
-		//JButton btnDelete = new JButton("Delete");
-		btnDelete.setEnabled(false);
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.delete();
-			}
-		});
-		
 		pnlNorth.setLayout(new GridLayout(2, 6, 5, 0));
 		JLabel label = new JLabel("");
 		JLabel label_1 = new JLabel("");
@@ -122,124 +151,29 @@ public class DrawingFrame extends JFrame {
 		JLabel label_7 = new JLabel("");
 		JLabel label_8 = new JLabel("");
 		JLabel label_9 = new JLabel("");
-		
-		JLabel innerColor = new JLabel("Inner Color");
-		innerColor.setHorizontalAlignment(SwingConstants.RIGHT);
-		innerColor.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		JLabel color = new JLabel("Color");
-		color.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		color.setHorizontalAlignment(SwingConstants.RIGHT);
+		Image colorimg1=new ImageIcon(this.getClass().getResource("/color.png")).getImage();
 		
 				pnlNorth.add(tglbtnPoint);
 				tglbtnPoint.setBackground(Color.LIGHT_GRAY);
 				tglbtnLine.setBackground(Color.LIGHT_GRAY);
-				tglbtnDonut.setBackground(Color.LIGHT_GRAY);
-				tglbtnCircle.setBackground(Color.LIGHT_GRAY);
 				tglbtnRectangle.setBackground(Color.LIGHT_GRAY);
-				tglbtnHexagon.setBackground(Color.LIGHT_GRAY);
-				tglbtnSelection.setBackground(Color.WHITE);
-				btnModification.setBackground(Color.WHITE);
-				btnDelete.setBackground(Color.WHITE);
 				
 				
-						btnGroup.add(tglbtnPoint);
+		btnGroup.add(tglbtnPoint);
 		pnlNorth.add(tglbtnLine);
 		btnGroup.add(tglbtnLine);
 		pnlNorth.add(tglbtnRectangle);
 		btnGroup.add(tglbtnRectangle);
-		pnlNorth.add(tglbtnDonut);
-		btnGroup.add(tglbtnDonut);
+		tglbtnCircle.setIcon(new ImageIcon(circleimg));
+		tglbtnCircle.setBackground(Color.LIGHT_GRAY);
+		pnlNorth.add(tglbtnCircle);
+		btnGroup.add(tglbtnCircle);
 		
 		
 		pnlNorth.add(label_6);
-		pnlNorth.add(label_8);
-		pnlNorth.add(label_9);
-		pnlNorth.add(label_7);
-		pnlNorth.add(tglbtnHexagon);
-		btnGroup.add(tglbtnHexagon);
-		pnlNorth.add(tglbtnCircle);
-		btnGroup.add(tglbtnCircle);
-		pnlNorth.add(color);
-		pnlNorth.add(btnColor);
-		
-		btnColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				new JColorChooser();
-				btnColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
-			}
-		});
-		btnColor.setBackground(Color.BLACK);
-		pnlNorth.add(innerColor);
-		
-		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
-		pnlWest.add(label);
-		pnlWest.add(label_1);
-		pnlWest.add(btnToFront);
-		
-				btnToFront.setEnabled(false);
-				btnToFront.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						controller.toFront();
-					}
-				});
-		pnlWest.add(btnUndo);
-		pnlWest.add(btnRedo);
-		pnlWest.add(btnToBack);
-		
-				btnToBack.setEnabled(false);
-				btnToBack.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						controller.toBack();
-					}
-				});
-		pnlWest.add(label_2);
-		pnlWest.add(label_3);
-		pnlWest.add(btnBringToFront);
-		pnlWest.add(btnBringToBack);
-		pnlWest.add(label_4);
-		pnlWest.add(label_5);
-		
-		pnlEast.setLayout(new GridLayout(0, 1, 0, 0));
-		pnlEast.add(label_10);
-		pnlEast.add(label_11);
-		pnlEast.add(label_12);
-		pnlEast.add(label_13);
-		pnlEast.add(tglbtnSelection);
-		pnlEast.add(btnModification);
-		pnlEast.add(btnDelete);
-		pnlEast.add(label_14);	
-		pnlEast.add(label_15);
-		pnlEast.add(label_16);
-		pnlEast.add(label_17);
-		pnlEast.add(label_18);
-		
-		pnlWest.add(btnUndo);
-		pnlWest.add(btnRedo);
-		btnGroup.add(tglbtnSelection);
-		
-		JPanel pnlTop = new JPanel();
-		JPanel pnlBottom = new JPanel();
-		pnlSouth.add(pnlTop);
-		pnlSouth.add(pnlBottom);
-		
-		pnlTop.add(btnSaveDrawing);
-		pnlTop.add(btnLoadDrawing);	
-		pnlTop.add(btnSaveLog);	
-		pnlTop.add(btnLoadLog);	
-		btnNext.setEnabled(false);
-		pnlTop.add(btnNext);		
-		
-		pnlBottom.add(scrollPane);
-
-		pnlNorth.add(btnInnerColor);
-
-				btnInnerColor.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						new JColorChooser();
-						btnInnerColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
-					}
-				});
-				btnInnerColor.setBackground(Color.WHITE);
+		pnlNorth.add(btnUndo);
+		btnUndo.setIcon(new ImageIcon(undoimg));
+		btnUndo.setBackground(Color.WHITE);
 		
 		
 		btnUndo.setEnabled(false);
@@ -248,24 +182,153 @@ public class DrawingFrame extends JFrame {
 				controller.undo();
 			}
 		});
+		tglbtnDonut.setIcon(new ImageIcon(donutimg));
+		tglbtnDonut.setBackground(Color.LIGHT_GRAY);
+		pnlNorth.add(tglbtnDonut);
+		btnGroup.add(tglbtnDonut);
+		tglbtnHexagon.setIcon(new ImageIcon(heximg));
+		tglbtnHexagon.setBackground(Color.LIGHT_GRAY);
+		pnlNorth.add(tglbtnHexagon);
+		btnGroup.add(tglbtnHexagon);
+		pnlNorth.add(label_8);
+		pnlNorth.add(label_9);
+		pnlNorth.add(label_7);
+		pnlNorth.add(btnRedo);
+		btnRedo.setIcon(new ImageIcon(redoimg));
+		btnRedo.setBackground(Color.WHITE);
 		btnRedo.setEnabled(false);
 		btnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.redo();
 			}
 		});
+		
+		pnlWest.setLayout(new GridLayout(0, 1, 0, 0));
+		pnlWest.add(label);
+		btnToFront.setIcon(new ImageIcon(bbimg));
+		pnlWest.add(btnToFront);
+		
+				btnToFront.setEnabled(false);
+				btnToFront.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.toFront();
+					}
+				});
+				btnToFront.setBackground(Color.WHITE);
+		btnToBack.setIcon(new ImageIcon(bfimg));
+		pnlWest.add(btnToBack);
+		
+				btnToBack.setEnabled(false);
+				btnToBack.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.toBack();
+					}
+				});
+				btnToBack.setBackground(Color.WHITE);
+		pnlWest.add(label_1);
+		btnBringToFront.setIcon(new ImageIcon(bbimg));
+		pnlWest.add(btnBringToFront);
+		btnBringToFront.setBackground(Color.WHITE);
 		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToFront();
 			}
 		});
+		btnBringToBack.setIcon(new ImageIcon(bfimg));
+		btnBringToBack.setBackground(Color.WHITE);
+		pnlWest.add(btnBringToBack);
 		btnBringToBack.setEnabled(false);
 		btnBringToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToBack();
 			}
 		});
+		pnlWest.add(label_2);
+		pnlWest.add(label_3);
+		pnlWest.add(label_4);
+		pnlWest.add(label_5);
+		JLabel color = new JLabel("Color");
+		pnlWest.add(color);
+		color.setIcon(new ImageIcon(colorimg1));
+		color.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		color.setHorizontalAlignment(SwingConstants.LEFT);
+		pnlWest.add(btnColor);
+		
+		btnColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new JColorChooser();
+				btnColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
+			}
+		});
+		btnColor.setBackground(Color.BLACK);
+		
+		JLabel innerColor = new JLabel("Inner Color");
+		pnlWest.add(innerColor);
+		innerColor.setIcon(new ImageIcon(colorimg1));
+		innerColor.setHorizontalAlignment(SwingConstants.LEFT);
+		innerColor.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		pnlWest.add(btnInnerColor);
+		
+						btnInnerColor.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								new JColorChooser();
+								btnInnerColor.setBackground(JColorChooser.showDialog(null, "Choose color", null));
+							}
+						});
+						btnInnerColor.setBackground(Color.WHITE);
+		
+		pnlEast.setLayout(new GridLayout(0, 1, 0, 0));
+		pnlEast.add(label_10);
+		
+		btnDelete.setEnabled(false);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.delete();
+			}
+		});
+		
+		
+		btnModification.setEnabled(false);
+		btnModification.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.modify();
+			}
+		});
+		tglbtnSelection.setBackground(Color.WHITE);
+		pnlEast.add(tglbtnSelection);
+		btnGroup.add(tglbtnSelection);
+		btnModification.setBackground(Color.WHITE);
+		pnlEast.add(btnModification);
+		btnDelete.setBackground(Color.WHITE);
+		pnlEast.add(btnDelete);
+		pnlEast.add(label_11);
+		pnlEast.add(label_12);
+		pnlEast.add(label_13);
+		pnlEast.add(label_14);	
+		pnlEast.add(label_15);
+		pnlEast.add(label_16);
+		pnlEast.add(label_17);
+		pnlEast.add(label_18);
+		
+		JPanel pnlTop = new JPanel();
+		JPanel pnlBottom = new JPanel();
+		pnlSouth.add(pnlTop);
+		pnlSouth.add(pnlBottom);
+		
+		pnlTop.add(btnSaveDrawing);
+		btnSaveDrawing.setBackground(Color.WHITE);
+		pnlTop.add(btnLoadDrawing);	
+		btnLoadDrawing.setBackground(Color.WHITE);
+		pnlTop.add(btnSaveLog);	
+		btnSaveLog.setBackground(Color.WHITE);
+		pnlTop.add(btnLoadLog);	
+		btnLoadLog.setBackground(Color.WHITE);
+		btnNext.setEnabled(false);
+		pnlTop.add(btnNext);		
+		btnNext.setBackground(Color.WHITE);
+		
+		pnlBottom.add(scrollPane);
 
 		btnSaveDrawing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

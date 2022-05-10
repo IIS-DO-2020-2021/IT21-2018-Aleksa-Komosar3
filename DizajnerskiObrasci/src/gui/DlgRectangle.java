@@ -25,25 +25,19 @@ import javax.swing.SwingConstants;
 
 public class DlgRectangle extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtX;
 	private JTextField txtY;
 	private JTextField txtHeight;
 	private JTextField txtWidth;
-	private Color c = Color.BLACK, innerC = new Color(0f,0f,0f,0f);
-	private Color pc, innerPc;
+	private Color c = Color.BLACK, innerColor = new Color(0f,0f,0f,0f);
+	private Color picked, innerPc;
 	private boolean isOK;
 	private boolean colorChosen=false, innerColorChosen=false;
 	private JButton btnColor = new JButton("Color");
 	private JButton btnInnerColor = new JButton("Inner Color");
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			DlgRectangle dialog = new DlgRectangle();
@@ -54,9 +48,6 @@ public class DlgRectangle extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public DlgRectangle() {
 		setBounds(100, 100, 300, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -163,7 +154,7 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",pc);
+					c = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen=true;
 				}
 			});
@@ -174,7 +165,7 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(btnInnerColor);
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					innerC = JColorChooser.showDialog(null, "Choose color",innerPc);
+					innerColor = JColorChooser.showDialog(null, "Choose color",innerPc);
 					innerColorChosen=true;
 				}
 			});
@@ -251,20 +242,20 @@ public class DlgRectangle extends JDialog {
 		this.txtWidth = txtWidth;
 	}
 
-	public Color getC() {
+	public Color getColor() {
 		return c;
 	}
 
-	public void setC(Color c) {
+	public void setColor(Color c) {
 		this.c = c;
 	}
 
 	public Color getInnerC() {
-		return innerC;
+		return innerColor;
 	}
 
-	public void setInnerC(Color innerC) {
-		this.innerC = innerC;
+	public void setInnerColor(Color innerC) {
+		this.innerColor = innerC;
 	}
 
 	public boolean isOK() {
@@ -275,12 +266,12 @@ public class DlgRectangle extends JDialog {
 		this.isOK = isOK;
 	}
 
-	public Color getPc() {
-		return pc;
+	public Color getPicked() {
+		return picked;
 	}
 
-	public void setPc(Color pc) {
-		this.pc = pc;
+	public void setPicked(Color picked) {
+		this.picked = picked;
 	}
 
 	public Color getInnerPc() {

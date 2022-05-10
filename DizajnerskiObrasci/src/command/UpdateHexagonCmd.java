@@ -1,13 +1,12 @@
 package command;
 
 import adapter.HexagonAdapter;
-import mvc.DrawingFrame;
 
-public class UpdateHexagonCmd implements Command {
+public class UpdateHexagonCmd implements ICommand {
 
 	private HexagonAdapter oldState;
 	private HexagonAdapter newState;
-	private HexagonAdapter original=new HexagonAdapter();
+	private HexagonAdapter originalHex=new HexagonAdapter();
 
 	public UpdateHexagonCmd(HexagonAdapter oldState, HexagonAdapter newState) {
 		this.oldState = oldState;
@@ -17,7 +16,7 @@ public class UpdateHexagonCmd implements Command {
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		original = oldState.clone();
+		originalHex = oldState.clone();
 
 		oldState.getHexagon().setX(newState.getHexagon().getX());
 		oldState.getHexagon().setY(newState.getHexagon().getY());
@@ -31,12 +30,12 @@ public class UpdateHexagonCmd implements Command {
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
-		oldState.getHexagon().setX(original.getHexagon().getX());
-		oldState.getHexagon().setY(original.getHexagon().getY());
-		oldState.getHexagon().setR(original.getHexagon().getR());
-		oldState.getHexagon().setBorderColor(original.getHexagon().getBorderColor());
-		oldState.getHexagon().setAreaColor(original.getHexagon().getAreaColor());
-		oldState.getHexagon().setSelected(original.getHexagon().isSelected());
+		oldState.getHexagon().setX(originalHex.getHexagon().getX());
+		oldState.getHexagon().setY(originalHex.getHexagon().getY());
+		oldState.getHexagon().setR(originalHex.getHexagon().getR());
+		oldState.getHexagon().setBorderColor(originalHex.getHexagon().getBorderColor());
+		oldState.getHexagon().setAreaColor(originalHex.getHexagon().getAreaColor());
+		oldState.getHexagon().setSelected(originalHex.getHexagon().isSelected());
 		
 	}
 

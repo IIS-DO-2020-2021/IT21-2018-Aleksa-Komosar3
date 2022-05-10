@@ -1,17 +1,15 @@
 package adapter;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.util.Objects;
-
 import geometry.Point;
 import geometry.Shape;
 import hexagon.Hexagon;
 
 public class HexagonAdapter extends Shape implements Cloneable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private  Hexagon hexagon = new Hexagon(0,0,0);
 
@@ -94,7 +92,6 @@ public class HexagonAdapter extends Shape implements Cloneable {
 	@Override
 	public String toString() {
 		Point center = new Point(hexagon.getX(), hexagon.getY());
-		//return "Hexagon [center=" + center + ", radius=" + hexagon.getR() + "]";
 		return "Hexagon [center=" + center.toStringPoint() + ", radius=" + hexagon.getR() + ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() +  "]";
 	}
 	
@@ -131,8 +128,8 @@ public class HexagonAdapter extends Shape implements Cloneable {
 		return hexagon;
 	}
 
-	public void setHexagon(Hexagon hexagon) {
-		this.hexagon = hexagon;
+	public void setHexagon(Hexagon hex) {
+		this.hexagon = hex;
 	}
 	
 	@Override

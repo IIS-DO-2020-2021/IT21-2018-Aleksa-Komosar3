@@ -1,6 +1,5 @@
 package mvc;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,7 +31,7 @@ public class DrawingView extends JPanel {
 		while (it.hasNext()) {
 			it.next().draw(g);
 		}
-		}
+	}
 		
 	public void setModel(DrwingModel model) {
 		this.model = model;

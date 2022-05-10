@@ -71,7 +71,7 @@ public class PnlDrawing extends JPanel{
 				v2=Integer.parseInt(dlg.getTxtWidth().getText());
 			}
 			r = new Rectangle(new Point(e.getX(),e.getY()), v1, v2);
-			r.setColor(dlg.getC());
+			r.setColor(dlg.getColor());
 			r.setInnerColor(dlg.getInnerC());
 			try {
 				newShape = r;

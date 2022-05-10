@@ -137,7 +137,7 @@ public class FrmDrawing extends JFrame {
 				DlgPoint dlg = new DlgPoint();
 				dlg.getTxtX().setText("" + p.getX());
 				dlg.getTxtY().setText("" + p.getY());
-				dlg.setPc(p.getColor());
+				dlg.setPicked(p.getColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if (dlg.isOK()) {
@@ -154,7 +154,7 @@ public class FrmDrawing extends JFrame {
 				dlg.getTxtYs().setText("" + l.getStartPoint().getY());
 				dlg.getTxtXe().setText("" + l.getEndPoint().getX());
 				dlg.getTxtYe().setText("" + l.getEndPoint().getY());
-				dlg.setPc(l.getColor());
+				dlg.setPicked(l.getColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if(dlg.isOK()){
@@ -165,7 +165,7 @@ public class FrmDrawing extends JFrame {
 					Point p1 = new Point(x, y);
 					Point p2= new Point(xe,ye);
 					l=new Line(p1,p2);
-					l.setColor(dlg.getC());
+					l.setColor(dlg.getColor());
 					pnlDrawing.getShapes().set(pnlDrawing.getShapes().indexOf(selected), l);
 				}
 			} else if (selected instanceof Rectangle){
@@ -175,7 +175,7 @@ public class FrmDrawing extends JFrame {
 				dlg.getTxtY().setText("" + r.getUpperLeft().getY());
 				dlg.getTxtHeight().setText(""+r.getHeight());
 				dlg.getTxtWidth().setText(""+r.getWidth());
-				dlg.setPc(r.getColor());
+				dlg.setPicked(r.getColor());
 				dlg.setInnerPc(r.getInnerColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
@@ -187,9 +187,9 @@ public class FrmDrawing extends JFrame {
 					Point p=new Point(x,y);
 					r=new Rectangle(p,h,w);
 					if(dlg.isColorChosen()){
-						r.setColor(dlg.getC());
+						r.setColor(dlg.getColor());
 					}else{
-						r.setColor(dlg.getPc());
+						r.setColor(dlg.getPicked());
 					}
 					if(dlg.isInnerColorChosen()){
 						r.setInnerColor(dlg.getInnerC());

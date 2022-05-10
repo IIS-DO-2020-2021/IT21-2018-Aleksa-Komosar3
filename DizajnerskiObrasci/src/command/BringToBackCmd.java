@@ -3,7 +3,7 @@ package command;
 import geometry.Shape;
 import mvc.DrwingModel;
 
-public class BringToBackCmd implements Command {
+public class BringToBackCmd implements ICommand {
 	
 	private Shape shapes;
 	private DrwingModel drawingModel;
@@ -28,7 +28,6 @@ public class BringToBackCmd implements Command {
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
-
 		drawingModel.getShapes().remove(0);
 		drawingModel.getShapes().add(i, shapes);
 		

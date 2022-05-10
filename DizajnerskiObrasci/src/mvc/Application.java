@@ -11,10 +11,10 @@ public class Application {
 		DrawingController controller=new DrawingController(model, frame);
 		frame.setController(controller);
 		
-		//frame.setSize(1000, 600);
+		
+		frame.setTitle("Aleksa Komosar");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-
+		frame.setLocationRelativeTo(null);
 	}
-
 }

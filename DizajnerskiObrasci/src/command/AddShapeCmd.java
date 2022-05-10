@@ -3,7 +3,7 @@ package command;
 import geometry.Shape;
 import mvc.DrwingModel;
 
-public class AddShapeCmd implements Command {
+public class AddShapeCmd implements ICommand {
 	private Shape shape;
 	private DrwingModel drawingModel;
 	

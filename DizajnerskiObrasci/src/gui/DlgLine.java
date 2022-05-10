@@ -35,7 +35,7 @@ public class DlgLine extends JDialog {
 	private JTextField txtYe;
 	private Color c= Color.BLACK;
 	private boolean isOK;
-	private Color pc= Color.BLACK;
+	private Color picked= Color.BLACK;
 	private boolean colorChosen;
 	/**
 	 * Launch the application.
@@ -164,7 +164,7 @@ public class DlgLine extends JDialog {
 			btnColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",pc);
+					c = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen = true;
 				}
 			});
@@ -238,11 +238,11 @@ public class DlgLine extends JDialog {
 		this.txtYe = txtYe;
 	}
 
-	public Color getC() {
+	public Color getColor() {
 		return c;
 	}
 
-	public void setC(Color c) {
+	public void setColor(Color c) {
 		this.c = c;
 	}
 
@@ -254,12 +254,12 @@ public class DlgLine extends JDialog {
 		this.isOK = isOK;
 	}
 
-	public Color getPc() {
-		return pc;
+	public Color getPicked() {
+		return picked;
 	}
 
-	public void setPc(Color pc) {
-		this.pc = pc;
+	public void setPicked(Color picked) {
+		this.picked = picked;
 	}
 	
 	public boolean isColorChosen() {

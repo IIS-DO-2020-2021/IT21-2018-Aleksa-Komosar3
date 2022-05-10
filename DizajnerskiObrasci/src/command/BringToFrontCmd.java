@@ -1,10 +1,9 @@
 package command;
 
 import geometry.Shape;
-import mvc.DrawingFrame;
 import mvc.DrwingModel;
 
-public class BringToFrontCmd implements Command {
+public class BringToFrontCmd implements ICommand {
 	
 	private DrwingModel drawingModel;
 	private int i;
@@ -29,7 +28,6 @@ public class BringToFrontCmd implements Command {
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
-		
 		drawingModel.getShapes().remove(drawingModel.getShapes().size()-1);
 		drawingModel.getShapes().add(i, shapes);
 	}

@@ -4,12 +4,13 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Stack;
-
-import command.Command;
 import geometry.Shape;
 
 public class DrwingModel implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private ArrayList<Shape> selected = new ArrayList<Shape>();
 	
@@ -52,7 +53,6 @@ public class DrwingModel implements Serializable {
 		return shapes.get(i);
 	}
 
-	/*Selected*/
 	public void addSelected(Shape s) {
 		propertyChangeSupport.firePropertyChange("selected", this.selected.size(), this.selected.size()+1);
 		selected.add(s);
