@@ -129,26 +129,6 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 		this.selected = selected;
 	}
 	
-	@Override	
-	public Rectangle clone() {
-		Rectangle rect = new Rectangle();
-
-		rect.setUpperLeft(this.getUpperLeft().clone());
-		rect.setHeight(this.getHeight());
-		rect.setWidth(this.getWidth());
-
-		rect.setInnerColor(this.getInnerColor());
-		rect.setColor(this.getColor());
-		rect.setSelected(this.isSelected());
-
-		return rect;
-	}
-	
-	@Override
-	public String toString() {
-		return "Rectangle [upperLeft=" + upperLeft.toStringPoint() + ", height=" + height + ", width=" + width + ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

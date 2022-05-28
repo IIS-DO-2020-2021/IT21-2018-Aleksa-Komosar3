@@ -114,30 +114,6 @@ public class Circle extends SurfaceShape implements Cloneable{
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	@Override 
-	public Circle clone() {
-		Circle c = new Circle();
-		c.getCenter().setX(this.getCenter().getX());
-		c.getCenter().setY(this.getCenter().getY());
-
-		try {
-			c.setRadius(this.getRadius());
-		} catch (Exception e) {
-			//e.printStackTrace();
-			throw new NumberFormatException("Radius has to be value > then 0!");
-		}
-
-		c.setSelected(this.isSelected());
-		c.setColor(this.getColor());
-		c.setInnerColor(this.getInnerColor());
-
-		return c;
-	}
-	
-	@Override
-	public String toString() {
-		return "Circle [center=" + center.toStringPoint() + ", radius=" + radius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
-	}
 	
 	@Override
 	public boolean equals(Object obj) {

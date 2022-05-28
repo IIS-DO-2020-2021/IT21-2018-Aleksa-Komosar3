@@ -91,24 +91,6 @@ public class Point extends Shape implements Moveable, Cloneable{
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
-	
-	@Override
-	public Point clone() {
-		Point point = new Point();
-
-		point.setX(this.getX());
-		point.setY(this.getY());
-
-		point.setColor(this.getColor());
-		point.setSelected(this.isSelected());
-
-		return point;
-	}
-	
-	@Override
-	public String toString() {
-		return "Point [x= " + x + ", y= " + y + ", Color= " + this.getColorRGB() + "]";
-	}	
 
 	public String toStringPoint() {
 		return "(" + x + ", " + y + ")";

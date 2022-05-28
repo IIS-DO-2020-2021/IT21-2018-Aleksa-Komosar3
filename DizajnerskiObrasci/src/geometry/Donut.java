@@ -1,9 +1,6 @@
 package geometry;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.awt.Graphics;
 
 public class Donut extends Circle implements Cloneable{
@@ -41,37 +38,15 @@ public class Donut extends Circle implements Cloneable{
 		super.draw(g);
 		g.setColor(getColor());
 		g.drawOval(getCenter().getX() - this.innerRadius, getCenter().getY() - this.innerRadius, getInnerRadius() * 2, getInnerRadius() * 2);
-		if (isSelected()) {
-			g.setColor(Color.BLUE);
-			super.putCirclePoint(g, this.getRadius());
-			super.putCirclePoint(g, innerRadius);
-		}
 	}
 	
 	
 	public void fill(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g; 
-
-		Ellipse2D outer = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(), this.getCenter().getY() - this.getRadius(), this.getRadius()*2, this.getRadius()*2);
-		Ellipse2D inner = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius() , this.getCenter().getY() - this.getInnerRadius(), this.innerRadius * 2, this.innerRadius * 2);
-
-		Area area = new Area(outer);
-		Area innerArea = new Area(inner);
-		area.subtract(innerArea);
-
-		g2d.setColor(getInnerColor());
-		g2d.fill(area);
-		g2d.setColor(getColor());
-		g2d.draw(area);
-	}
-	
-	
-	/*public void fill(Graphics g) {
 		g.setColor(getInnerColor());
 		super.fill(g);
 		g.setColor(Color.CYAN);
 		g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() * 2, getInnerRadius() * 2);
-	}*/
+	}
 	
 	public boolean contains(int x, int y) {
 		double dFromCenter = this.getCenter().distance(x, y);
@@ -100,30 +75,6 @@ public class Donut extends Circle implements Cloneable{
 
 	public void setInnerRadius(int innerRadius) {
 		this.innerRadius=innerRadius;
-	}
-	
-	@Override
-	public Donut clone() {
-		Donut donut = new Donut();
-		donut.setCenter(this.getCenter().clone());
-		donut.setRadius(this.getRadius());
-
-		donut.setColor(this.getColor());
-		donut.setInnerColor(this.getInnerColor());
-		donut.setSelected(this.isSelected());
-
-		try {
-			donut.setInnerRadius(this.getInnerRadius());
-		} catch (Exception e) {
-			
-		}
-
-		return donut;
-	}
-	
-	@Override
-	public String toString() {
-		return "Donut [center=" + this.getCenter().toStringPoint() + ", outerRadius=" + this.getRadius() + ", innerRadius=" + innerRadius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
 	}
 	
 	@Override

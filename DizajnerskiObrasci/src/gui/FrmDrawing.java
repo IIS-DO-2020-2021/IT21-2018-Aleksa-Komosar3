@@ -36,7 +36,6 @@ public class FrmDrawing extends JFrame {
 	private JToggleButton tglbtnRectangle = new JToggleButton("Rectangle");
 	private JToggleButton tglbtnCircle = new JToggleButton("Circle");
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
-	private JToggleButton tglbtnHexagon = new JToggleButton("Hexagon");
 	private JToggleButton tglbtnSelection = new JToggleButton("Selection");
 
 	/**
@@ -96,8 +95,7 @@ public class FrmDrawing extends JFrame {
 		pnlNorth.add(tglbtnLine);
 		pnlNorth.add(tglbtnRectangle);
 		pnlNorth.add(tglbtnCircle);
-		pnlNorth.add(tglbtnDonut);
-		pnlNorth.add(tglbtnHexagon);	
+		pnlNorth.add(tglbtnDonut);	
 		pnlSouth.add(tglbtnSelection);
 		pnlSouth.add(btnModification);
 		pnlSouth.add(btnDelete);	
@@ -107,7 +105,6 @@ public class FrmDrawing extends JFrame {
 		btnGroup.add(tglbtnRectangle);
 		btnGroup.add(tglbtnCircle);
 		btnGroup.add(tglbtnDonut);
-		btnGroup.add(tglbtnHexagon);
 		btnGroup.add(tglbtnSelection);
 		
 		pnlDrawing.repaint();

@@ -91,25 +91,6 @@ public class Line extends Shape implements Cloneable{
 		this.selected = selected;
 	}
 	
-	@Override	
-	public Line clone() {
-		Line line = new Line();
-
-		line.getStartPoint().setX(this.getStartPoint().getX());
-		line.getStartPoint().setY(this.getStartPoint().getY());
-		line.getEndPoint().setX(this.getEndPoint().getX());
-		line.getEndPoint().setY(this.getEndPoint().getY());
-
-		line.setColor(this.getColor());
-		line.setSelected(this.isSelected());
-
-		return line;	
-	}
-	
-	@Override
-	public String toString() {
-		return "Line [startPoint=" + startPoint.toStringPoint() + ", endPoint=" + endPoint.toStringPoint() + ", Color= " + this.getColorRGB() + "]";
-	}
 	
 	@Override
 	public boolean equals(Object obj) {
