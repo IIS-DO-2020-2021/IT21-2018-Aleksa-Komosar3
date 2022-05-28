@@ -3,8 +3,6 @@ package geometry;
 import java.awt.Graphics;
 import java.io.Serializable;
 
-import adapter.HexagonAdapter;
-
 import java.awt.Color;
 
 public abstract class Shape implements Moveable, Comparable<Object>, Serializable{
@@ -19,16 +17,10 @@ public abstract class Shape implements Moveable, Comparable<Object>, Serializabl
 	public abstract boolean contains(int x, int y);
 	
 	public boolean isSelected() {
-		if (this instanceof HexagonAdapter)
-			return ((HexagonAdapter)this).getHexagon().isSelected();
-		else
 			return selected;
 	}
 
 	public void setSelected(boolean selected) {
-		if (this instanceof HexagonAdapter)
-			((HexagonAdapter)this).getHexagon().setSelected(selected);
-		else
 			this.selected = selected;
 	}
 
