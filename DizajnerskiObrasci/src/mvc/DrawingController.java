@@ -106,7 +106,9 @@ public class DrawingController {
 			
 			
 			if(dlgRectangle.isOK()){
-				rectangle = new Rectangle(new Point(e.getX(),e.getY()), Integer.parseInt(dlgRectangle.getTxtHeight().getText()), Integer.parseInt(dlgRectangle.getTxtWidth().getText()));
+				rectangle = new Rectangle(new Point(e.getX(),e.getY()), 
+						Integer.parseInt(dlgRectangle.getTxtHeight().getText()), 
+						Integer.parseInt(dlgRectangle.getTxtWidth().getText()));
 				if(dlgRectangle.isColorChosen())
 					rectangle.setColor(dlgRectangle.getColor());
 				try {
@@ -126,7 +128,8 @@ public class DrawingController {
 			
 			
 			if(dlgCircle.isOK()){
-				circle = new Circle(new Point(e.getX(),e.getY()), Integer.parseInt(dlgCircle.getTxtRadius().getText()));
+				circle = new Circle(new Point(e.getX(),e.getY()),
+						Integer.parseInt(dlgCircle.getTxtRadius().getText()));
 				circle.setColor(dlgCircle.getColor());
 				circle.setInnerColor(dlgCircle.getInnerC());
 				try {
@@ -146,7 +149,13 @@ public class DrawingController {
 			
 			
 			if(dlgDonut.isOK()){
-				donut = new Donut(new Point(e.getX(),e.getY()), Integer.parseInt(dlgDonut.getTxtRadius().getText()),Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
+				if(Integer.parseInt(dlgDonut.getTxtRadius().getText())==
+						Integer.parseInt(dlgDonut.getTxtInnerRadius().getText())){
+					JOptionPane.showMessageDialog(frame, "Radius and inner radius cannot be the same!", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				donut = new Donut(new Point(e.getX(),e.getY()),
+						Integer.parseInt(dlgDonut.getTxtRadius().getText()),
+						Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
 				donut.setColor(dlgDonut.getColor());
 				donut.setInnerColor(dlgDonut.getInnerColor());
 				try {
@@ -177,7 +186,8 @@ public class DrawingController {
 			
 				
 				if (dlgPoint.isOK()) {
-					point = new Point(Integer.parseInt(dlgPoint.getTxtX().getText()),Integer.parseInt(dlgPoint.getTxtY().getText()));
+					point = new Point(Integer.parseInt(dlgPoint.getTxtX().getText()),
+							Integer.parseInt(dlgPoint.getTxtY().getText()));
 					point.setColor(dlgPoint.getColor());			
 					model.getShapes().set(model.getShapes().indexOf(selShape), point);	
 				}
@@ -195,8 +205,10 @@ public class DrawingController {
 				
 				
 				if(dlgLine.isOK()){
-					Point startPoint = new Point(Integer.parseInt(dlgLine.getTxtXs().getText()), Integer.parseInt(dlgLine.getTxtYs().getText()));
-					Point endPoint= new Point(Integer.parseInt(dlgLine.getTxtXe().getText()),Integer.parseInt(dlgLine.getTxtYe().getText()));
+					Point startPoint = new Point(Integer.parseInt(dlgLine.getTxtXs().getText()), 
+							Integer.parseInt(dlgLine.getTxtYs().getText()));
+					Point endPoint= new Point(Integer.parseInt(dlgLine.getTxtXe().getText()),
+							Integer.parseInt(dlgLine.getTxtYe().getText()));
 					line = new Line(startPoint,endPoint);
 					line.setColor(dlgLine.getColor());
 					model.getShapes().set(model.getShapes().indexOf(selShape), line);
@@ -216,8 +228,10 @@ public class DrawingController {
 				
 				
 				if(dlgRec.isOK()){
-					Point point = new Point(Integer.parseInt(dlgRec.getTxtX().getText()),Integer.parseInt(dlgRec.getTxtY().getText()));
-					rectangle = new Rectangle(point,Integer.parseInt(dlgRec.getTxtHeight().getText()),Integer.parseInt(dlgRec.getTxtWidth().getText()));
+					Point point = new Point(Integer.parseInt(dlgRec.getTxtX().getText()),
+							Integer.parseInt(dlgRec.getTxtY().getText()));
+					rectangle = new Rectangle(point,Integer.parseInt(dlgRec.getTxtHeight().getText()),
+							Integer.parseInt(dlgRec.getTxtWidth().getText()));
 					if(dlgRec.isColorChosen()){
 						rectangle.setColor(dlgRec.getColor());
 					} else {
@@ -245,8 +259,10 @@ public class DrawingController {
 				
 				
 				if(dlgDonut.isOK()){
-					Point point=new Point(Integer.parseInt(dlgDonut.getTxtX().getText()),Integer.parseInt(dlgDonut.getTxtY().getText()));
-					donut=new Donut(point,Integer.parseInt(dlgDonut.getTxtRadius().getText()),Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
+					Point point=new Point(Integer.parseInt(dlgDonut.getTxtX().getText()),
+							Integer.parseInt(dlgDonut.getTxtY().getText()));
+					donut=new Donut(point,Integer.parseInt(dlgDonut.getTxtRadius().getText()),
+							Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
 					if(dlgDonut.isColorChosen()){
 						donut.setColor(dlgDonut.getColor());
 					}else{
@@ -273,7 +289,8 @@ public class DrawingController {
 				dlgCircle.setVisible(true);
 				
 				if(dlgCircle.isOK()){
-					Point point=new Point(Integer.parseInt(dlgCircle.getTxtX().getText()),Integer.parseInt(dlgCircle.getTxtY().getText()));
+					Point point=new Point(Integer.parseInt(dlgCircle.getTxtX().getText()),
+							Integer.parseInt(dlgCircle.getTxtY().getText()));
 					circle=new Circle(point,Integer.parseInt(dlgCircle.getTxtRadius().getText()));
 					if(dlgCircle.isColorChosen()){
 						circle.setColor(dlgCircle.getColor());
@@ -292,7 +309,8 @@ public class DrawingController {
 		}
 		else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
-			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error", JOptionPane.WARNING_MESSAGE, icon);
+			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
+					JOptionPane.WARNING_MESSAGE, icon);
 		}
 	}
 	
@@ -306,7 +324,8 @@ public class DrawingController {
 			}
 		} else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
-			JOptionPane.showMessageDialog(null, "You did not select any shape!","Error", JOptionPane.WARNING_MESSAGE, icon);
+			JOptionPane.showMessageDialog(null, "You did not select any shape!","Error",
+					JOptionPane.WARNING_MESSAGE, icon);
 		}
 		
 		this.selShape=null;

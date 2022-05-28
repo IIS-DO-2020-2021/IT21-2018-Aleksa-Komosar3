@@ -2,6 +2,9 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Area;
+import java.awt.geom.Ellipse2D;
 
 public class Donut extends Circle implements Cloneable{
 	/**
@@ -35,9 +38,35 @@ public class Donut extends Circle implements Cloneable{
 	}
 	
 	public void draw(Graphics g) {
-		super.draw(g);
-		g.setColor(getColor());
-		g.drawOval(getCenter().getX() - this.innerRadius, getCenter().getY() - this.innerRadius, getInnerRadius() * 2, getInnerRadius() * 2);
+		Ellipse2D outsideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
+				this.getCenter().getY() - this.getRadius(), this.getRadius() * 2, this.getRadius() * 2);
+		Ellipse2D insideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius(),
+				this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius() * 2, 
+				this.getInnerRadius() * 2);
+		Area bigArea = new Area(outsideCircle);
+		bigArea.subtract(new Area(insideCircle));
+
+		Graphics2D graph = (Graphics2D) g;
+		graph.setColor(getInnerColor());
+		graph.fill(bigArea);
+		graph.setColor(getColor());
+		graph.draw(bigArea);
+
+		if (isSelected()) {
+			g.setColor(Color.BLUE);
+			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
+			g.drawRect(getCenter().getX() + getInnerRadius() - 3, getCenter().getY() - 3, 6, 6);
+			g.drawRect(getCenter().getX() - getInnerRadius() - 3, getCenter().getY() - 3, 6, 6);
+			g.drawRect(getCenter().getX() - 3, getCenter().getY() + getInnerRadius() - 3, 6, 6);
+			g.drawRect(getCenter().getX() - 3, getCenter().getY() - getInnerRadius() - 3, 6, 6);
+
+			g.drawRect(this.getCenter().getX() + getRadius() - 3, this.getCenter().getY() - 3, 6, 6);
+			g.drawRect(this.getCenter().getX() - getRadius() - 3, this.getCenter().getY() - 3, 6, 6);
+			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() + getRadius() - 3, 6, 6);
+			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() - getRadius() - 3, 6, 6);
+
+			g.setColor(Color.BLACK);
+		}
 	}
 	
 	
