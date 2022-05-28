@@ -31,7 +31,7 @@ public class DlgRectangle extends JDialog {
 	private JTextField txtY;
 	private JTextField txtHeight;
 	private JTextField txtWidth;
-	private Color c = Color.BLACK, innerColor = new Color(0f,0f,0f,0f);
+	private Color color = Color.BLACK, innerColor = new Color(0f,0f,0f,0f);
 	private Color picked, innerPc;
 	private boolean isOK;
 	private boolean colorChosen=false, innerColorChosen=false;
@@ -154,7 +154,7 @@ public class DlgRectangle extends JDialog {
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",picked);
+					color = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen=true;
 				}
 			});
@@ -243,14 +243,14 @@ public class DlgRectangle extends JDialog {
 	}
 
 	public Color getColor() {
-		return c;
+		return color;
 	}
 
 	public void setColor(Color c) {
-		this.c = c;
+		this.color = c;
 	}
 
-	public Color getInnerC() {
+	public Color getInnerColor() {
 		return innerColor;
 	}
 

@@ -141,7 +141,7 @@ public class FrmDrawing extends JFrame {
 					x=Integer.parseInt(dlg.getTxtX().getText());
 					y=Integer.parseInt(dlg.getTxtY().getText());
 					p = new Point(x, y);
-					p.setColor(dlg.getC());			
+					p.setColor(dlg.getColor());			
 					pnlDrawing.getShapes().set(pnlDrawing.getShapes().indexOf(selected), p);
 				}
 			} else if(selected instanceof Line){
@@ -189,7 +189,7 @@ public class FrmDrawing extends JFrame {
 						r.setColor(dlg.getPicked());
 					}
 					if(dlg.isInnerColorChosen()){
-						r.setInnerColor(dlg.getInnerC());
+						r.setInnerColor(dlg.getInnerColor());
 					}else{
 						r.setInnerColor(dlg.getInnerPc());
 					}
@@ -214,12 +214,12 @@ public class FrmDrawing extends JFrame {
 					Point p=new Point(x,y);
 					d=new Donut(p,r,iR);
 					if(dlg.isColorChosen()){
-						d.setColor(dlg.getC());
+						d.setColor(dlg.getColor());
 					}else{
 						d.setColor(dlg.getPc());
 					}
 					if(dlg.isInnerColorChosen()){
-						d.setInnerColor(dlg.getInnerC());
+						d.setInnerColor(dlg.getInnerColor());
 					}else{
 						d.setInnerColor(dlg.getInnerPc());
 					}
@@ -242,7 +242,7 @@ public class FrmDrawing extends JFrame {
 					Point p=new Point(x,y);
 					c=new Circle(p,r);
 					if(dlg.isColorChosen()){
-						c.setColor(dlg.getC());
+						c.setColor(dlg.getColor());
 					}else{
 						c.setColor(dlg.getPc());
 					}

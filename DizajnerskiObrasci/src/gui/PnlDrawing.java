@@ -72,7 +72,7 @@ public class PnlDrawing extends JPanel{
 			}
 			r = new Rectangle(new Point(e.getX(),e.getY()), v1, v2);
 			r.setColor(dlg.getColor());
-			r.setInnerColor(dlg.getInnerC());
+			r.setInnerColor(dlg.getInnerColor());
 			try {
 				newShape = r;
 			} catch (Exception ex){
@@ -90,7 +90,7 @@ public class PnlDrawing extends JPanel{
 				v1=Integer.parseInt(dlg.getTxtRadius().getText());
 			}
 			c = new Circle(new Point(e.getX(),e.getY()), v1);
-			c.setColor(dlg.getC());
+			c.setColor(dlg.getColor());
 			c.setInnerColor(dlg.getInnerC());
 			try {
 				newShape= c;
@@ -109,8 +109,8 @@ public class PnlDrawing extends JPanel{
 				v2=Integer.parseInt(dlg.getTxtInnerRadius().getText());
 			}
 			d = new Donut(new Point(e.getX(),e.getY()), v1,v2);
-			d.setColor(dlg.getC());
-			d.setInnerColor(dlg.getInnerC());
+			d.setColor(dlg.getColor());
+			d.setInnerColor(dlg.getInnerColor());
 			try {
 				newShape= d;
 			} catch (Exception ex){

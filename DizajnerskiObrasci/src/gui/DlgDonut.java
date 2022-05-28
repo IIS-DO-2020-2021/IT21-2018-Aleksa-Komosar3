@@ -31,7 +31,7 @@ public class DlgDonut extends JDialog {
 	private JTextField txtY;
 	private JTextField txtRadius;
 	private JTextField txtInnerRadius;
-	private Color c=Color.BLACK, innerC=Color.BLACK;
+	private Color color=Color.BLACK, innerC=Color.BLACK;
 	private Color pc, innerPc;
 	private boolean isOK;
 	private boolean colorChosen=false, innerColorChosen=false;
@@ -158,7 +158,7 @@ public class DlgDonut extends JDialog {
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",pc);
+					color = JColorChooser.showDialog(null, "Choose color",pc);
 					colorChosen=true;
 				}
 			});
@@ -247,19 +247,19 @@ public class DlgDonut extends JDialog {
 		this.txtInnerRadius = txtInnerRadius;
 	}
 
-	public Color getC() {
-		return c;
+	public Color getColor() {
+		return color;
 	}
 
-	public void setC(Color c) {
-		this.c = c;
+	public void setColor(Color c) {
+		this.color = c;
 	}
 
-	public Color getInnerC() {
+	public Color getInnerColor() {
 		return innerC;
 	}
 
-	public void setInnerC(Color innerC) {
+	public void setInnerColor(Color innerC) {
 		this.innerC = innerC;
 	}
 

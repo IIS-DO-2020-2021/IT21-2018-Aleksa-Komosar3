@@ -22,22 +22,17 @@ import javax.swing.border.EmptyBorder;
 
 public class DlgCircle extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtX;
 	private JTextField txtY;
 	private JTextField txtRadius;
-	private Color c=Color.BLACK, innerC=new Color(0f,0f,0f,0f);
+	private Color color=Color.BLACK, innerC=new Color(0f,0f,0f,0f);
 	private Color pc, innerPc;
 	private boolean isOK;
 	private boolean colorChosen=false, innerColorChosen=false;
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		try {
 			DlgCircle dialog = new DlgCircle();
@@ -134,7 +129,7 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",pc);
+					color = JColorChooser.showDialog(null, "Choose color",pc);
 					colorChosen=true;
 				}
 			});
@@ -214,12 +209,12 @@ public class DlgCircle extends JDialog {
 		this.txtRadius = txtRadius;
 	}
 
-	public Color getC() {
-		return c;
+	public Color getColor() {
+		return color;
 	}
 
-	public void setC(Color c) {
-		this.c = c;
+	public void setColor(Color c) {
+		this.color = c;
 	}
 
 	public Color getInnerC() {

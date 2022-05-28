@@ -34,7 +34,7 @@ public class DlgPoint extends JDialog {
 	private JTextField txtX;
 	private JTextField txtY;
 	private boolean isOK;
-	private Color c=Color.BLACK;
+	private Color color=Color.BLACK;
 	private Color picked=Color.BLACK;
 	private boolean colorChosen;
 	
@@ -120,7 +120,7 @@ public class DlgPoint extends JDialog {
 			btnColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",picked);
+					color = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen = true;
 				}
 			});
@@ -187,12 +187,12 @@ public class DlgPoint extends JDialog {
 		this.isOK = isOK;
 	}
 
-	public Color getC() {
-		return c;
+	public Color getColor() {
+		return color;
 	}
 
 	public void setColor(Color c) {
-		this.c = c;
+		this.color = c;
 	}
 
 	public Color getPicked() {
