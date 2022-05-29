@@ -23,9 +23,6 @@ import javax.swing.border.EmptyBorder;
 
 public class DlgLine extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private final JPanel contentPanel2 = new JPanel();
@@ -33,13 +30,11 @@ public class DlgLine extends JDialog {
 	private JTextField txtYs;
 	private JTextField txtXe;
 	private JTextField txtYe;
-	private Color c= Color.BLACK;
+	private Color color= Color.BLACK;
 	private boolean isOK;
 	private Color picked= Color.BLACK;
 	private boolean colorChosen;
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		try {
 			DlgLine dialog = new DlgLine();
@@ -50,9 +45,6 @@ public class DlgLine extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public DlgLine() {
 		setBounds(100, 100, 300, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -164,7 +156,7 @@ public class DlgLine extends JDialog {
 			btnColor.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					c = JColorChooser.showDialog(null, "Choose color",picked);
+					color = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen = true;
 				}
 			});
@@ -239,11 +231,11 @@ public class DlgLine extends JDialog {
 	}
 
 	public Color getColor() {
-		return c;
+		return color;
 	}
 
 	public void setColor(Color c) {
-		this.c = c;
+		this.color = c;
 	}
 
 	public boolean isOK() {

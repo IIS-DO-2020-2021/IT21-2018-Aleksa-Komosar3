@@ -27,10 +27,13 @@ public class DlgCircle extends JDialog {
 	private JTextField txtX;
 	private JTextField txtY;
 	private JTextField txtRadius;
-	private Color color=Color.BLACK, innerC=new Color(0f,0f,0f,0f);
-	private Color pc, innerPc;
+	private Color color=Color.BLACK;
+	private Color innerColor=Color.BLACK;
+	private Color picked;
+	private Color innerPickedColor;
 	private boolean isOK;
-	private boolean colorChosen=false, innerColorChosen=false;
+	private boolean innerColorChosen=false;
+	private boolean colorChosen=false;
 
 
 	public static void main(String[] args) {
@@ -43,9 +46,6 @@ public class DlgCircle extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
 	public DlgCircle() {
 		setBounds(100, 100, 300, 275);
 		getContentPane().setLayout(new BorderLayout());
@@ -129,7 +129,7 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					color = JColorChooser.showDialog(null, "Choose color",pc);
+					color = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen=true;
 				}
 			});
@@ -140,7 +140,7 @@ public class DlgCircle extends JDialog {
 			contentPanel.add(btnInnerColor);
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					innerC = JColorChooser.showDialog(null, "Choose color",innerPc);
+					innerColor = JColorChooser.showDialog(null, "Choose color",innerPickedColor);
 					innerColorChosen=true;
 				}
 			});
@@ -218,11 +218,11 @@ public class DlgCircle extends JDialog {
 	}
 
 	public Color getInnerC() {
-		return innerC;
+		return innerColor;
 	}
 
 	public void setInnerC(Color innerC) {
-		this.innerC = innerC;
+		this.innerColor = innerC;
 	}
 
 	public boolean isOK() {
@@ -234,19 +234,19 @@ public class DlgCircle extends JDialog {
 	}
 
 	public Color getPc() {
-		return pc;
+		return picked;
 	}
 
 	public void setPc(Color pc) {
-		this.pc = pc;
+		this.picked = pc;
 	}
 
 	public Color getInnerPc() {
-		return innerPc;
+		return innerPickedColor;
 	}
 
 	public void setInnerPc(Color innerPc) {
-		this.innerPc = innerPc;
+		this.innerPickedColor = innerPc;
 	}
 
 	public boolean isColorChosen() {

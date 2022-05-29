@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import geometry.Circle;
 import geometry.Donut;
+import geometry.HexagonAdapter;
 import geometry.Line;
 import geometry.Point;
 import geometry.Rectangle;
@@ -18,6 +19,7 @@ import gui.DlgDonut;
 import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
+import hexagon.Hexagon;
 
 public class DrawingController {
 	private DrawingModel model;
@@ -62,6 +64,7 @@ public class DrawingController {
 		this.frame = frame;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void mouseClicked(MouseEvent e) {
 		
 		Shape newShape=null;
@@ -111,6 +114,7 @@ public class DrawingController {
 						Integer.parseInt(dlgRectangle.getTxtWidth().getText()));
 				if(dlgRectangle.isColorChosen())
 					rectangle.setColor(dlgRectangle.getColor());
+					rectangle.setInnerColor(dlgRectangle.getInnerColor());
 				try {
 					newShape = rectangle;
 				} catch (Exception ex){
@@ -151,7 +155,8 @@ public class DrawingController {
 			if(dlgDonut.isOK()){
 				if(Integer.parseInt(dlgDonut.getTxtRadius().getText())==
 						Integer.parseInt(dlgDonut.getTxtInnerRadius().getText())){
-					JOptionPane.showMessageDialog(frame, "Radius and inner radius cannot be the same!", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Radius and inner radius cannot be the same!",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 				donut = new Donut(new Point(e.getX(),e.getY()),
 						Integer.parseInt(dlgDonut.getTxtRadius().getText()),
@@ -161,10 +166,35 @@ public class DrawingController {
 				try {
 					newShape= donut;
 				} catch (Exception ex){
-					JOptionPane.showMessageDialog(frame, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		} 
+		} else if (frame.getBtnHexagon().isSelected()){
+			DlgCircle dlgHexagon= new DlgCircle();
+			HexagonAdapter hexagon = new HexagonAdapter();
+			dlgHexagon.setModal(true);
+			dlgHexagon.getTxtX().setText("" + e.getX());
+			dlgHexagon.getTxtY().setText("" + e.getY());
+			dlgHexagon.setTitle("Hexagon");
+			dlgHexagon.setVisible(true);
+			
+			if(dlgHexagon.isOK()){
+			}
+				hexagon = new HexagonAdapter(new Point(e.getX(),e.getY()), 
+						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
+				hexagon.getHexagon().setAreaColor(dlgHexagon.getColor());
+				hexagon.getHexagon().setBorderColor(dlgHexagon.getInnerC());
+				try {
+					newShape= hexagon;
+				} catch (Exception ex){
+					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(frame, "No shapes", "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		if (newShape!=null) {
 			model.getShapes().add(newShape);
 		}
@@ -244,7 +274,7 @@ public class DrawingController {
 					}
 					model.getShapes().set(model.getShapes().indexOf(selShape), rectangle);
 				}
-			}else if(selShape instanceof Donut){
+			} else if (selShape instanceof Donut){
 				Donut donut= (Donut) selShape;
 				DlgDonut dlgDonut = new DlgDonut();
 				dlgDonut.getTxtX().setText("" + donut.getCenter().getX());
@@ -265,7 +295,7 @@ public class DrawingController {
 							Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
 					if(dlgDonut.isColorChosen()){
 						donut.setColor(dlgDonut.getColor());
-					}else{
+					} else {
 						donut.setColor(dlgDonut.getPc());
 					}
 					if(dlgDonut.isInnerColorChosen()){
@@ -294,15 +324,47 @@ public class DrawingController {
 					circle=new Circle(point,Integer.parseInt(dlgCircle.getTxtRadius().getText()));
 					if(dlgCircle.isColorChosen()){
 						circle.setColor(dlgCircle.getColor());
-					}else{
+					}else
+					{
 						circle.setColor(dlgCircle.getPc());
 					}
 					if(dlgCircle.isInnerColorChosen()){
 						circle.setInnerColor(dlgCircle.getInnerC());
-					}else{
+					} else 
+					{
 						circle.setInnerColor(dlgCircle.getInnerPc());
 					}
 					model.getShapes().set(model.getShapes().indexOf(selShape), circle);
+				}
+			} 	
+			else if(selShape instanceof HexagonAdapter){
+				HexagonAdapter hexagon= (HexagonAdapter) selShape;
+				DlgCircle dlgHexagon= new DlgCircle();
+				dlgHexagon.getTxtX().setText("" + hexagon.getHexagon().getX());
+				dlgHexagon.getTxtY().setText("" + hexagon.getHexagon().getY());
+				dlgHexagon.getTxtRadius().setText("" + hexagon.getHexagon().getR());
+				dlgHexagon.setPc(hexagon.getHexagon().getBorderColor());
+				dlgHexagon.setInnerPc(hexagon.getHexagon().getAreaColor());
+				dlgHexagon.setModal(true);
+				dlgHexagon.setTitle("Edit hexagon");
+				dlgHexagon.setVisible(true);
+				
+				if(dlgHexagon.isOK()){
+					Point point=new Point(Integer.parseInt(dlgHexagon.getTxtX().getText()),
+							Integer.parseInt(dlgHexagon.getTxtY().getText()));
+					hexagon=new HexagonAdapter(point, Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
+					if(dlgHexagon.isColorChosen()){
+						hexagon.getHexagon().setBorderColor(dlgHexagon.getColor());
+					}else{
+						hexagon.getHexagon().setBorderColor(dlgHexagon.getPc());
+					}
+					if(dlgHexagon.isInnerColorChosen()){
+						hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerC());
+					} else
+					{
+						hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerPc());
+					}
+					model.getShapes().set(model.getShapes().indexOf(selShape), hexagon);
 				}
 			} 	
 			frame.repaint();

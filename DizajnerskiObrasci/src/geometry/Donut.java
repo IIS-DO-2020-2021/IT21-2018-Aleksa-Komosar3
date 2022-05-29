@@ -37,7 +37,7 @@ public class Donut extends Circle implements Cloneable{
 		setInnerColor(innerColor);
 	}
 	
-	public void draw(Graphics g) {
+	public void draw(Graphics g) {		
 		Ellipse2D outsideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
 				this.getCenter().getY() - this.getRadius(), this.getRadius() * 2, this.getRadius() * 2);
 		Ellipse2D insideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius(),
@@ -53,19 +53,20 @@ public class Donut extends Circle implements Cloneable{
 		graph.draw(bigArea);
 
 		if (isSelected()) {
-			g.setColor(Color.BLUE);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() - 3, 6, 6);
-			g.drawRect(getCenter().getX() + getInnerRadius() - 3, getCenter().getY() - 3, 6, 6);
-			g.drawRect(getCenter().getX() - getInnerRadius() - 3, getCenter().getY() - 3, 6, 6);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() + getInnerRadius() - 3, 6, 6);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() - getInnerRadius() - 3, 6, 6);
+			super.putCirclePoint(g, this.getRadius());
+			super.putCirclePoint(g, this.innerRadius);
+			/*g.setColor(Color.BLUE);
+			g.drawRect(getCenter().getX(), getCenter().getY(), 3, 3);
+			g.drawRect(getCenter().getX() + getInnerRadius() - 3, getCenter().getY() - 3, 3,3);
+			g.drawRect(getCenter().getX() - getInnerRadius() - 3, getCenter().getY() - 3, 3,3);
+			g.drawRect(getCenter().getX() - 3, getCenter().getY() + getInnerRadius() - 3, 3,3);
+			g.drawRect(getCenter().getX() - 3, getCenter().getY() - getInnerRadius() - 3, 3,3);
 
-			g.drawRect(this.getCenter().getX() + getRadius() - 3, this.getCenter().getY() - 3, 6, 6);
-			g.drawRect(this.getCenter().getX() - getRadius() - 3, this.getCenter().getY() - 3, 6, 6);
-			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() + getRadius() - 3, 6, 6);
-			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() - getRadius() - 3, 6, 6);
-
-			g.setColor(Color.BLACK);
+			g.drawRect(this.getCenter().getX() + getRadius() - 3, this.getCenter().getY() - 3, 3,3);
+			g.drawRect(this.getCenter().getX() - getRadius() - 3, this.getCenter().getY() - 3, 3,3);
+			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() + getRadius() - 3, 3,3);
+			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() - getRadius() - 3, 3,3);
+			g.setColor(Color.BLACK);*/
 		}
 	}
 	

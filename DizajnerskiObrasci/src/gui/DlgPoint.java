@@ -25,9 +25,6 @@ import javax.swing.border.EmptyBorder;
 
 public class DlgPoint extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private final JPanel contentPanel2 = new JPanel();
@@ -38,10 +35,6 @@ public class DlgPoint extends JDialog {
 	private Color picked=Color.BLACK;
 	private boolean colorChosen;
 	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			DlgPoint dialog = new DlgPoint();

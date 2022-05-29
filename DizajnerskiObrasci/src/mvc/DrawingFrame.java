@@ -24,7 +24,18 @@ public class DrawingFrame extends JFrame{
 	private JToggleButton btnCircle = new JToggleButton("Circle");
 	private JToggleButton btnDonut = new JToggleButton("Donut");
 	private JToggleButton btnSelect = new JToggleButton("Selection");
+	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
 	
+	
+	
+	public JToggleButton getBtnHexagon() {
+		return btnHexagon;
+	}
+
+	public void setBtnHexagon(JToggleButton btnHexagon) {
+		this.btnHexagon = btnHexagon;
+	}
+
 	public DrawingView getView() {
 		return view;
 	}
@@ -130,9 +141,11 @@ public class DrawingFrame extends JFrame{
 		pnlNorth.add(btnLine);
 		pnlNorth.add(btnRectangle);
 		pnlNorth.add(btnCircle);
-		pnlNorth.add(btnDonut);	
-		pnlSouth.add(btnSelect);
+		pnlNorth.add(btnDonut);
+		pnlNorth.add(btnHexagon);
 		
+		
+		pnlSouth.add(btnSelect);
 		pnlSouth.add(btnModification);
 		pnlSouth.add(btnDelete);	
 		
@@ -142,6 +155,7 @@ public class DrawingFrame extends JFrame{
 		btnGroup.add(btnCircle);
 		btnGroup.add(btnDonut);
 		btnGroup.add(btnSelect);
+		btnGroup.add(btnHexagon);
 			
 	}
 
