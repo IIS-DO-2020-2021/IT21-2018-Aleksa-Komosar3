@@ -5,11 +5,7 @@ import java.awt.Graphics;
 import java.util.Objects;
 
 public class Circle extends SurfaceShape implements Cloneable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	//kod komanda se mora inicijalizovati novi objekat tacke inace ne radi modify
 	private Point center=new Point();
 	private int radius;
 	private boolean selected;
@@ -51,7 +47,8 @@ public class Circle extends SurfaceShape implements Cloneable{
 	
 	public void draw(Graphics g) {
 		g.setColor(getColor());
-		g.drawOval(this.center.getX() - this.radius, this.center.getY() - this.radius, this.radius * 2, this.radius * 2);
+		g.drawOval(this.center.getX() - this.radius, this.center.getY() - this.radius, 
+				this.radius * 2, this.radius * 2);
 		
 		fill(g);
 		
@@ -71,7 +68,8 @@ public class Circle extends SurfaceShape implements Cloneable{
 	@Override
 	public void fill(Graphics g) {
 		g.setColor(getInnerColor());
-		g.fillOval(this.center.getX() - radius + 1, this.center.getY() - radius + 1, (radius * 2) - 2, (radius * 2) - 2);	
+		g.fillOval(this.center.getX() - radius + 1, this.center.getY() - radius + 1,
+				(radius * 2) - 2, (radius * 2) - 2);	
 	}
 	
 	public boolean contains(Point p) {
@@ -125,5 +123,18 @@ public class Circle extends SurfaceShape implements Cloneable{
 			return false;
 		Circle other = (Circle) obj;
 		return Objects.equals(center, other.center) && radius == other.radius && selected == other.selected;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		Circle circle =new Circle();
+		
+		circle.setCenter(this.getCenter());
+		circle.setRadius(this.getRadius());
+
+		circle.setColor(this.getColor());
+		circle.setInnerColor(this.getInnerColor());
+		circle.setSelected(this.isSelected());
+
+		return circle;
 	}
 }

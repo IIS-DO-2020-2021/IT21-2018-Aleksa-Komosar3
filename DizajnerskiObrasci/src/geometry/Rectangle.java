@@ -138,7 +138,20 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 		if (getClass() != obj.getClass())
 			return false;
 		Rectangle other = (Rectangle) obj;
-		return height == other.height && selected == other.selected && Objects.equals(upperLeft, other.upperLeft)
-				&& width == other.width;
+		return height == other.height && selected == other.selected && Objects.equals(upperLeft,
+				other.upperLeft) && width == other.width;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		Rectangle rectangle =new Rectangle();
+		rectangle.setUpperLeft(this.getUpperLeft());
+		rectangle.setHeight(this.getHeight());
+		rectangle.setWidth(this.getWidth());
+
+		rectangle.setColor(this.getColor());
+		rectangle.setInnerColor(this.getInnerColor());
+		rectangle.setSelected(this.isSelected());
+
+		return rectangle;
 	}
 }

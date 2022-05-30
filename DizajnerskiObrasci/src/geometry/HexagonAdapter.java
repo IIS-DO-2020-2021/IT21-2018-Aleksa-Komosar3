@@ -116,7 +116,18 @@ public class HexagonAdapter extends Shape {
 		if (getClass() != obj.getClass())
 			return false;
 		HexagonAdapter other = (HexagonAdapter) obj;
-		return Objects.equals(hexagon.getX(), other.getHexagon().getX()) && hexagon.getY() == other.getHexagon().getY() && hexagon.getR() == other.getHexagon().getR() && hexagon.isSelected() == other.getHexagon().isSelected();
+		return Objects.equals(hexagon.getX(), other.getHexagon().getX()) 
+				&& hexagon.getY() == other.getHexagon().getY() 
+				&& hexagon.getR() == other.getHexagon().getR() 
+				&& hexagon.isSelected() == other.getHexagon().isSelected();
 	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		HexagonAdapter hex =new HexagonAdapter();
+		hex.setHexagon(this.getHexagon());
+		hex.setColor(this.getColor());
+		hex.setSelected(this.isSelected());
 
+		return hex;
+	}
 }

@@ -5,9 +5,6 @@ import java.awt.Graphics;
 
 
 public class Point extends Shape implements Moveable, Cloneable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private int x;
 	private int y;
@@ -88,6 +85,8 @@ public class Point extends Shape implements Moveable, Cloneable{
 	public boolean isSelected() {
 		return selected;
 	}
+
+
 	public void setSelected(boolean selected) {
 		this.selected = selected;
 	}
@@ -106,5 +105,16 @@ public class Point extends Shape implements Moveable, Cloneable{
 			return false;
 		Point other = (Point) obj;
 		return selected == other.selected && x == other.x && y == other.y;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		Point point=new Point();
+		point.setX(this.getX());
+		point.setY(this.getY());
+		
+		point.setColor(this.getColor());
+		point.setSelected(this.isSelected());
+		
+		return point;
 	}
 }

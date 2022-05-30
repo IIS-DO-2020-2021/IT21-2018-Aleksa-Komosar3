@@ -7,9 +7,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 public class Donut extends Circle implements Cloneable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private int innerRadius;
 	
@@ -55,18 +53,6 @@ public class Donut extends Circle implements Cloneable{
 		if (isSelected()) {
 			super.putCirclePoint(g, this.getRadius());
 			super.putCirclePoint(g, this.innerRadius);
-			/*g.setColor(Color.BLUE);
-			g.drawRect(getCenter().getX(), getCenter().getY(), 3, 3);
-			g.drawRect(getCenter().getX() + getInnerRadius() - 3, getCenter().getY() - 3, 3,3);
-			g.drawRect(getCenter().getX() - getInnerRadius() - 3, getCenter().getY() - 3, 3,3);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() + getInnerRadius() - 3, 3,3);
-			g.drawRect(getCenter().getX() - 3, getCenter().getY() - getInnerRadius() - 3, 3,3);
-
-			g.drawRect(this.getCenter().getX() + getRadius() - 3, this.getCenter().getY() - 3, 3,3);
-			g.drawRect(this.getCenter().getX() - getRadius() - 3, this.getCenter().getY() - 3, 3,3);
-			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() + getRadius() - 3, 3,3);
-			g.drawRect(this.getCenter().getX() - 3, this.getCenter().getY() - getRadius() - 3, 3,3);
-			g.setColor(Color.BLACK);*/
 		}
 	}
 	
@@ -117,5 +103,19 @@ public class Donut extends Circle implements Cloneable{
 			return false;
 		Donut other = (Donut) obj;
 		return innerRadius == other.innerRadius;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		Donut donut =new Donut();
+		
+		donut.setCenter(this.getCenter());
+		donut.setRadius(this.getRadius());
+		donut.setInnerRadius(this.getInnerRadius());
+
+		donut.setColor(this.getColor());
+		donut.setInnerColor(this.getInnerColor());
+		donut.setSelected(this.isSelected());
+
+		return donut;
 	}
 }

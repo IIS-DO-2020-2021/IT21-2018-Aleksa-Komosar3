@@ -104,4 +104,17 @@ public class Line extends Shape implements Cloneable{
 		return Objects.equals(endPoint, other.endPoint) && selected == other.selected
 				&& Objects.equals(startPoint, other.startPoint);
 	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		Line line=new Line();
+		line.getStartPoint().setX(this.getStartPoint().getX());
+		line.getStartPoint().setY(this.getStartPoint().getY());
+		line.getEndPoint().setX(this.getEndPoint().getX());
+		line.getEndPoint().setY(this.getEndPoint().getY());
+		
+		line.setColor(this.getColor());
+		line.setSelected(this.isSelected());
+		
+		return line;
+	}
 }

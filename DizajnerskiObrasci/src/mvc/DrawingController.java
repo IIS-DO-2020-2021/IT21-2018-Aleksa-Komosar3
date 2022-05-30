@@ -19,7 +19,6 @@ import gui.DlgDonut;
 import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
-import hexagon.Hexagon;
 
 public class DrawingController {
 	private DrawingModel model;
@@ -64,7 +63,6 @@ public class DrawingController {
 		this.frame = frame;
 	}
 
-	@SuppressWarnings("deprecation")
 	public void mouseClicked(MouseEvent e) {
 		
 		Shape newShape=null;
