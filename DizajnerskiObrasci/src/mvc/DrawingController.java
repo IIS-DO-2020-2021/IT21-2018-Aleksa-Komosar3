@@ -7,6 +7,10 @@ import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import command.CmdAddShape;
+import command.CmdDeleteShape;
+import command.CmdSelectShape;
+import command.Command;
 import geometry.Circle;
 import geometry.Donut;
 import geometry.HexagonAdapter;
@@ -25,6 +29,7 @@ public class DrawingController {
 	private DrawingFrame frame;
 	private Shape selShape;
 	private Point startPoint;
+	private Command command;
 	
 	public DrawingModel getModel() {
 		return model;
@@ -64,7 +69,7 @@ public class DrawingController {
 	}
 
 	public void mouseClicked(MouseEvent e) {
-		
+		command=null;
 		Shape newShape=null;
 		if (frame.getBtnSelect().isSelected() && model.getShapes()!=null){
 			
@@ -78,14 +83,18 @@ public class DrawingController {
 					selShape = shape;
 			}
 			if (selShape != null) {
-				selShape.setSelected(true);
-				model.getSelectedShapes().add(selShape);
+				//selShape.setSelected(true);
+				command=new CmdSelectShape(model, selShape);
+				command.execute();
+				//model.getSelectedShapes().add(selShape);
 			}
 
 		} else if(frame.getBtnPoint().isSelected()){
 				Point point = new Point(e.getX(), e.getY());
 				point.setColor(Color.BLACK);
-				newShape = point;
+				command=new CmdAddShape(model, point);
+				command.execute();
+				//newShape = point;
 			} else if (frame.getBtnLine().isSelected()){
 				if (startPoint==null) {
 					startPoint = new Point (e.getX(), e.getY());
@@ -115,6 +124,8 @@ public class DrawingController {
 					rectangle.setInnerColor(dlgRectangle.getInnerColor());
 				try {
 					newShape = rectangle;
+					command=new CmdAddShape(model, rectangle);
+					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -136,6 +147,8 @@ public class DrawingController {
 				circle.setInnerColor(dlgCircle.getInnerC());
 				try {
 					newShape= circle;
+					command=new CmdAddShape(model, circle);
+					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -163,6 +176,8 @@ public class DrawingController {
 				donut.setInnerColor(dlgDonut.getInnerColor());
 				try {
 					newShape= donut;
+					command=new CmdAddShape(model, donut);
+					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -179,16 +194,18 @@ public class DrawingController {
 			
 			if(dlgHexagon.isOK()){
 			}
+				try {
 				hexagon = new HexagonAdapter(new Point(e.getX(),e.getY()), 
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 				hexagon.getHexagon().setAreaColor(dlgHexagon.getColor());
 				hexagon.getHexagon().setBorderColor(dlgHexagon.getInnerC());
-				try {
 					newShape= hexagon;
+					command=new CmdAddShape(model, hexagon);
+					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
 							JOptionPane.ERROR_MESSAGE);
-				}
+					}
 			} else {
 				JOptionPane.showMessageDialog(frame, "No shapes", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -350,7 +367,8 @@ public class DrawingController {
 				if(dlgHexagon.isOK()){
 					Point point=new Point(Integer.parseInt(dlgHexagon.getTxtX().getText()),
 							Integer.parseInt(dlgHexagon.getTxtY().getText()));
-					hexagon=new HexagonAdapter(point, Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
+					hexagon=new HexagonAdapter(point, 
+							Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					if(dlgHexagon.isColorChosen()){
 						hexagon.getHexagon().setBorderColor(dlgHexagon.getColor());
 					}else{
@@ -377,10 +395,12 @@ public class DrawingController {
 	protected void deleteShape() {
 		
 		if (selShape != null) {
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?", "Warning message",
-					JOptionPane.YES_NO_OPTION);
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
+					"Warning message", JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				model.getShapes().remove(selShape);
+				command=new CmdDeleteShape(model, selShape);
+				command.execute();
+				//model.getShapes().remove(selShape);
 			}
 		} else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
@@ -388,7 +408,7 @@ public class DrawingController {
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
 		
-		this.selShape=null;
+		//this.selShape=null;
 		frame.repaint();
 		
 		frame.getBtnSelect().setSelected(false);

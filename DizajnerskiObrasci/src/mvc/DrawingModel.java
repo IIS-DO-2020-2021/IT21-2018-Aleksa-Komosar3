@@ -21,13 +21,19 @@ public class DrawingModel {
 	public void setSelectedShapes(ArrayList<Shape> selectedShapes) {
 		this.selectedShapes = selectedShapes;
 	}
+	public void addShapeToListOfSelected (Shape shape){
+		selectedShapes.add(shape);
+	}
+	public void deleteShapeFromSelectedList(Shape shape){
+		selectedShapes.remove(shape);
+	}
 	
-	public void addShape (Shape shape) {
+	public void addShapeToList (Shape shape) {
 		shapes.add(shape);
 	}
 	
-	public void removeShape(Shape shape){
-		selectedShapes.remove(shape);
+	public void deleteShapeFromList(Shape shape){
+		shapes.remove(shape);
 	}
 	
 }
