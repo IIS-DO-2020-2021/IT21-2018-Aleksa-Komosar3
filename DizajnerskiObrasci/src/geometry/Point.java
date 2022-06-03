@@ -107,14 +107,14 @@ public class Point extends Shape implements Moveable, Cloneable{
 		return selected == other.selected && x == other.x && y == other.y;
 	}
 	
-	public Object clone() throws CloneNotSupportedException {
-		Point point=new Point();
-		point.setX(this.getX());
-		point.setY(this.getY());
+	public Point clone (Point p) throws CloneNotSupportedException {
+
+		p.setX(this.getX());
+		p.setY(this.getY());
+		p.setColor(this.getColor());
+
+		p.setSelected(this.isSelected());
 		
-		point.setColor(this.getColor());
-		point.setSelected(this.isSelected());
-		
-		return point;
+		return p;
 	}
 }

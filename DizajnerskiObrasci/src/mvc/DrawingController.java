@@ -8,8 +8,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
+import command.CmdDeleteOneShape;
 import command.CmdDeleteShape;
 import command.CmdDeselectShape;
+import command.CmdModifyPoint;
 import command.CmdSelectShape;
 import command.Command;
 import geometry.Circle;
@@ -210,7 +212,7 @@ public class DrawingController {
 	}
 
 	protected void editShape(){
-		
+		command=null;
 		if (selShape != null && model.getSelectedShapes().size()>0) {
 			if (selShape instanceof Point) {
 				Point point = (Point) selShape;
@@ -227,7 +229,9 @@ public class DrawingController {
 					point = new Point(Integer.parseInt(dlgPoint.getTxtX().getText()),
 							Integer.parseInt(dlgPoint.getTxtY().getText()));
 					point.setColor(dlgPoint.getColor());			
-					model.getShapes().set(model.getShapes().indexOf(selShape), point);	
+					//model.getShapes().set(model.getShapes().indexOf(selShape), point);
+					command=new CmdModifyPoint((Point)selShape, point);
+					command.execute();
 				}
 			} else if(selShape instanceof Line){
 				Line line= (Line)selShape;
@@ -387,14 +391,23 @@ public class DrawingController {
 	
 	protected void deleteShape() {
 		command=null;
-		if (selShape !=null && model.getSelectedShapes().size()>0) {
+		if (selShape !=null && model.getSelectedShapes().size()==1) {
 			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
 					"Warning message", JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				command=new CmdDeleteShape(model.getSelectedShapes(),model.getSelectedShapes(), model);
+				command=new CmdDeleteOneShape(model, selShape);
 				command.execute();
 			}
-		} else {
+		} else if (model.getSelectedShapes().size()>1){
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
+					"Warning message", JOptionPane.YES_NO_OPTION);
+			if (selectedOption == JOptionPane.YES_OPTION) {
+				command=new CmdDeleteShape(model, model.getSelectedShapes());
+				command.execute();
+			}
+			frame.repaint();
+		}
+		else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
 			JOptionPane.showMessageDialog(null, "You did not select any shape!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);

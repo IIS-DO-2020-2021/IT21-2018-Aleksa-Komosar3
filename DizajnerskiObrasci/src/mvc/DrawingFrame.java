@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
+import javax.swing.JLabel;
 
 public class DrawingFrame extends JFrame{
 	
@@ -25,6 +26,10 @@ public class DrawingFrame extends JFrame{
 	private JToggleButton btnDonut = new JToggleButton("Donut");
 	private JToggleButton btnSelect = new JToggleButton("Selection");
 	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
+	private final JLabel lblNewLabel = new JLabel("New label");
+	private final JLabel lblNewLabel_1 = new JLabel("New label");
+	private final JButton btnNewButton = new JButton("New button");
+	private final JButton btnNewButton_1 = new JButton("New button");
 	
 	
 	
@@ -156,6 +161,14 @@ public class DrawingFrame extends JFrame{
 		btnGroup.add(btnDonut);
 		btnGroup.add(btnSelect);
 		btnGroup.add(btnHexagon);
+		
+		pnlNorth.add(lblNewLabel);
+		
+		pnlNorth.add(btnNewButton);
+		
+		pnlNorth.add(lblNewLabel_1);
+		
+		pnlNorth.add(btnNewButton_1);
 			
 	}
 

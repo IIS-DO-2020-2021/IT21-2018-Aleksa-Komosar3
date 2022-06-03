@@ -39,5 +39,11 @@ public class DrawingModel {
 	public void deleteAll(ArrayList<Shape> shapes){
 		shapes.removeAll(shapes);
 	}
+	public void addAll(ArrayList<Shape> shapes){
+		shapes.addAll(shapes);
+	}
+	public void deleteAllFromSelected(ArrayList<Shape> shapes){
+		shapes.removeAll(shapes);
+	}
 	
 }
