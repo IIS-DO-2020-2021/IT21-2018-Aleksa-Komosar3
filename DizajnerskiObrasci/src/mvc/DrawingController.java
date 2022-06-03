@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
 import command.CmdDeleteShape;
+import command.CmdDeselectShape;
 import command.CmdSelectShape;
 import command.Command;
 import geometry.Circle;
@@ -72,29 +73,28 @@ public class DrawingController {
 		command=null;
 		Shape newShape=null;
 		if (frame.getBtnSelect().isSelected() && model.getShapes()!=null){
-			
-			selShape=null;
 			Iterator<Shape> iterate=model.getShapes().iterator();
-			
 			while (iterate.hasNext()){
 				Shape shape = iterate.next();
-				shape.setSelected(false);
-				if(shape.contains(e.getX(), e.getY()))
+			if(shape.contains(e.getX(), e.getY())) {
 					selShape = shape;
-			}
-			if (selShape != null) {
-				//selShape.setSelected(true);
-				command=new CmdSelectShape(model, selShape);
+			
+			if (!selShape.isSelected()) {
+				command=new CmdSelectShape(model, selShape );
 				command.execute();
-				//model.getSelectedShapes().add(selShape);
+			} else if (selShape.isSelected()){
+				command=new CmdDeselectShape(model, selShape);
+				command.execute();
 			}
+			
+			break;
+			}
+		}
 
 		} else if(frame.getBtnPoint().isSelected()){
 				Point point = new Point(e.getX(), e.getY());
 				point.setColor(Color.BLACK);
-				command=new CmdAddShape(model, point);
-				command.execute();
-				//newShape = point;
+				newShape = point;
 			} else if (frame.getBtnLine().isSelected()){
 				if (startPoint==null) {
 					startPoint = new Point (e.getX(), e.getY());
@@ -124,8 +124,6 @@ public class DrawingController {
 					rectangle.setInnerColor(dlgRectangle.getInnerColor());
 				try {
 					newShape = rectangle;
-					command=new CmdAddShape(model, rectangle);
-					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -147,8 +145,6 @@ public class DrawingController {
 				circle.setInnerColor(dlgCircle.getInnerC());
 				try {
 					newShape= circle;
-					command=new CmdAddShape(model, circle);
-					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -176,8 +172,6 @@ public class DrawingController {
 				donut.setInnerColor(dlgDonut.getInnerColor());
 				try {
 					newShape= donut;
-					command=new CmdAddShape(model, donut);
-					command.execute();
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -195,13 +189,11 @@ public class DrawingController {
 			if(dlgHexagon.isOK()){
 			}
 				try {
-				hexagon = new HexagonAdapter(new Point(e.getX(),e.getY()), 
+					hexagon = new HexagonAdapter(new Point(e.getX(),e.getY()), 
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
-				hexagon.getHexagon().setAreaColor(dlgHexagon.getColor());
-				hexagon.getHexagon().setBorderColor(dlgHexagon.getInnerC());
-					newShape= hexagon;
-					command=new CmdAddShape(model, hexagon);
-					command.execute();
+					hexagon.getHexagon().setAreaColor(dlgHexagon.getColor());
+					hexagon.getHexagon().setBorderColor(dlgHexagon.getInnerC());
+					newShape = hexagon;
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
 							JOptionPane.ERROR_MESSAGE);
@@ -211,14 +203,15 @@ public class DrawingController {
 						JOptionPane.ERROR_MESSAGE);
 			}
 		if (newShape!=null) {
-			model.getShapes().add(newShape);
+			command=new CmdAddShape(model, newShape);
+			command.execute();
 		}
 		frame.repaint();
 	}
 
 	protected void editShape(){
 		
-		if (selShape != null) {
+		if (selShape != null && model.getSelectedShapes().size()>0) {
 			if (selShape instanceof Point) {
 				Point point = (Point) selShape;
 				DlgPoint dlgPoint = new DlgPoint();
@@ -393,22 +386,19 @@ public class DrawingController {
 	}
 	
 	protected void deleteShape() {
-		
-		if (selShape != null) {
+		command=null;
+		if (selShape !=null && model.getSelectedShapes().size()>0) {
 			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
 					"Warning message", JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				command=new CmdDeleteShape(model, selShape);
+				command=new CmdDeleteShape(model.getSelectedShapes(),model.getSelectedShapes(), model);
 				command.execute();
-				//model.getShapes().remove(selShape);
 			}
 		} else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
 			JOptionPane.showMessageDialog(null, "You did not select any shape!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
-		
-		//this.selShape=null;
 		frame.repaint();
 		
 		frame.getBtnSelect().setSelected(false);
