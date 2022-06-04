@@ -1,40 +1,41 @@
 package command;
 
-import geometry.Point;
+import geometry.Circle;
 
-public class CmdModifyPoint implements Command {
+public class CmdModifyCircle implements Command {
 	
-	private Point oldPoint, newPoint;
-	private Point original=new Point();
+	private Circle oldCircle, newCircle;
+	private Circle original=new Circle();
 	
-	public CmdModifyPoint(Point oldPoint, Point newPoint) {
+	public CmdModifyCircle(Circle oldCircle, Circle newCircle) {
 		super();
-		this.oldPoint = oldPoint;
-		this.newPoint = newPoint;
+		this.oldCircle = oldCircle;
+		this.newCircle = newCircle;
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {
-			original = oldPoint.clone(original);
+			original=oldCircle.clone(original);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			oldPoint = newPoint.clone(oldPoint);
+			oldCircle=newCircle.clone(oldCircle);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			oldPoint = original.clone(oldPoint);
+			oldCircle=original.clone(oldCircle);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,29 +1,29 @@
 package command;
 
-import geometry.Point;
+import geometry.HexagonAdapter;
 
-public class CmdModifyPoint implements Command {
+public class CmdModifyHexagon implements Command {
 	
-	private Point oldPoint, newPoint;
-	private Point original=new Point();
-	
-	public CmdModifyPoint(Point oldPoint, Point newPoint) {
+	private HexagonAdapter oldHex,newHex;
+	private HexagonAdapter original=new HexagonAdapter();
+
+	public CmdModifyHexagon(HexagonAdapter oldHex, HexagonAdapter newHex) {
 		super();
-		this.oldPoint = oldPoint;
-		this.newPoint = newPoint;
+		this.oldHex = oldHex;
+		this.newHex = newHex;
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {
-			original = oldPoint.clone(original);
+			original=oldHex.clone(newHex);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			oldPoint = newPoint.clone(oldPoint);
+			oldHex=newHex.clone(oldHex);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class CmdModifyPoint implements Command {
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			oldPoint = original.clone(oldPoint);
+			newHex=original.clone(newHex);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

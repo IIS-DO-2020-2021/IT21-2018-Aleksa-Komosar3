@@ -125,8 +125,7 @@ public class Circle extends SurfaceShape implements Cloneable{
 		return Objects.equals(center, other.center) && radius == other.radius && selected == other.selected;
 	}
 	
-	public Object clone() throws CloneNotSupportedException {
-		Circle circle =new Circle();
+	public Circle clone(Circle circle) throws CloneNotSupportedException {
 		
 		circle.setCenter(this.getCenter());
 		circle.setRadius(this.getRadius());

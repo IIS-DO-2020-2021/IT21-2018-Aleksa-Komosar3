@@ -122,8 +122,7 @@ public class HexagonAdapter extends Shape {
 				&& hexagon.isSelected() == other.getHexagon().isSelected();
 	}
 	
-	public Object clone() throws CloneNotSupportedException {
-		HexagonAdapter hex =new HexagonAdapter();
+	public HexagonAdapter clone(HexagonAdapter hex) throws CloneNotSupportedException {
 		hex.setHexagon(this.getHexagon());
 		hex.setColor(this.getColor());
 		hex.setSelected(this.isSelected());

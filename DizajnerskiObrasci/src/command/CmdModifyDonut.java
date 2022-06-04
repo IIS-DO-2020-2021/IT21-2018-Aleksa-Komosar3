@@ -1,29 +1,29 @@
 package command;
 
-import geometry.Point;
+import geometry.Donut;
 
-public class CmdModifyPoint implements Command {
+public class CmdModifyDonut implements Command {
 	
-	private Point oldPoint, newPoint;
-	private Point original=new Point();
+	private Donut oldDonut,newDonut;
+	private Donut original=new Donut();
 	
-	public CmdModifyPoint(Point oldPoint, Point newPoint) {
+	public CmdModifyDonut(Donut oldDonut, Donut newDonut) {
 		super();
-		this.oldPoint = oldPoint;
-		this.newPoint = newPoint;
+		this.oldDonut = oldDonut;
+		this.newDonut = newDonut;
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {
-			original = oldPoint.clone(original);
+			original=oldDonut.clone(original);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			oldPoint = newPoint.clone(oldPoint);
+			oldDonut=newDonut.clone(oldDonut);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class CmdModifyPoint implements Command {
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			oldPoint = original.clone(oldPoint);
+			newDonut=original.clone(newDonut);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

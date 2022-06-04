@@ -1,40 +1,41 @@
 package command;
 
-import geometry.Point;
+import geometry.Line;
 
-public class CmdModifyPoint implements Command {
+public class CmdModifyLine implements Command {
 	
-	private Point oldPoint, newPoint;
-	private Point original=new Point();
-	
-	public CmdModifyPoint(Point oldPoint, Point newPoint) {
+	private Line oldLine, newLine;
+	private Line original=new Line();
+
+	public CmdModifyLine(Line oldLine, Line newLine) {
 		super();
-		this.oldPoint = oldPoint;
-		this.newPoint = newPoint;
+		this.oldLine = oldLine;
+		this.newLine = newLine;
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {
-			original = oldPoint.clone(original);
+			original = oldLine.clone(original);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			oldPoint = newPoint.clone(oldPoint);
+			oldLine = newLine.clone(oldLine);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	@Override
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			oldPoint = original.clone(oldPoint);
+			oldLine = original.clone(oldLine);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

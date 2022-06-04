@@ -142,8 +142,7 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 				other.upperLeft) && width == other.width;
 	}
 	
-	public Object clone() throws CloneNotSupportedException {
-		Rectangle rectangle =new Rectangle();
+	public Rectangle clone(Rectangle rectangle) throws CloneNotSupportedException {
 		rectangle.setUpperLeft(this.getUpperLeft());
 		rectangle.setHeight(this.getHeight());
 		rectangle.setWidth(this.getWidth());

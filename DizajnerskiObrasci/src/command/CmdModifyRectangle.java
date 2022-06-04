@@ -1,29 +1,29 @@
 package command;
 
-import geometry.Point;
+import geometry.Rectangle;
 
-public class CmdModifyPoint implements Command {
+public class CmdModifyRectangle implements Command {
 	
-	private Point oldPoint, newPoint;
-	private Point original=new Point();
-	
-	public CmdModifyPoint(Point oldPoint, Point newPoint) {
+	private Rectangle oldRectangle, newRectangle;
+	private Rectangle original=new Rectangle();
+
+	public CmdModifyRectangle(Rectangle oldRectangle, Rectangle newRectangle) {
 		super();
-		this.oldPoint = oldPoint;
-		this.newPoint = newPoint;
+		this.oldRectangle = oldRectangle;
+		this.newRectangle = newRectangle;
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {
-			original = oldPoint.clone(original);
+			original = oldRectangle.clone(original);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			oldPoint = newPoint.clone(oldPoint);
+			oldRectangle = newRectangle.clone(oldRectangle);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -34,7 +34,7 @@ public class CmdModifyPoint implements Command {
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			oldPoint = original.clone(oldPoint);
+			oldRectangle = original.clone(oldRectangle);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

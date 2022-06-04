@@ -105,8 +105,7 @@ public class Donut extends Circle implements Cloneable{
 		return innerRadius == other.innerRadius;
 	}
 	
-	public Object clone() throws CloneNotSupportedException {
-		Donut donut =new Donut();
+	public Donut clone(Donut donut) throws CloneNotSupportedException {
 		
 		donut.setCenter(this.getCenter());
 		donut.setRadius(this.getRadius());

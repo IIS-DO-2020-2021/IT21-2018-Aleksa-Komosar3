@@ -11,7 +11,12 @@ import command.CmdAddShape;
 import command.CmdDeleteOneShape;
 import command.CmdDeleteShape;
 import command.CmdDeselectShape;
+import command.CmdModifyCircle;
+import command.CmdModifyDonut;
+import command.CmdModifyHexagon;
+import command.CmdModifyLine;
 import command.CmdModifyPoint;
+import command.CmdModifyRectangle;
 import command.CmdSelectShape;
 import command.Command;
 import geometry.Circle;
@@ -253,7 +258,9 @@ public class DrawingController {
 							Integer.parseInt(dlgLine.getTxtYe().getText()));
 					line = new Line(startPoint,endPoint);
 					line.setColor(dlgLine.getColor());
-					model.getShapes().set(model.getShapes().indexOf(selShape), line);
+					//model.getShapes().set(model.getShapes().indexOf(selShape), line);
+					command=new CmdModifyLine((Line)selShape, line);
+					command.execute();
 				}
 			} else if (selShape instanceof Rectangle){
 				Rectangle rectangle= (Rectangle) selShape;
@@ -284,7 +291,9 @@ public class DrawingController {
 					} else {
 						rectangle.setInnerColor(dlgRec.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selShape), rectangle);
+					//model.getShapes().set(model.getShapes().indexOf(selShape), rectangle);
+					command=new CmdModifyRectangle((Rectangle)selShape, rectangle);
+					command.execute();
 				}
 			} else if (selShape instanceof Donut){
 				Donut donut= (Donut) selShape;
@@ -315,7 +324,9 @@ public class DrawingController {
 					}else{
 						donut.setInnerColor(dlgDonut.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selShape), donut);
+					//model.getShapes().set(model.getShapes().indexOf(selShape), donut);
+					command=new CmdModifyDonut((Donut)selShape, donut);
+					command.execute();
 				}
 			}
 			else if(selShape instanceof Circle){
@@ -346,7 +357,9 @@ public class DrawingController {
 					{
 						circle.setInnerColor(dlgCircle.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selShape), circle);
+					//model.getShapes().set(model.getShapes().indexOf(selShape), circle);
+					command=new CmdModifyCircle((Circle)selShape, circle);
+					command.execute();
 				}
 			} 	
 			else if(selShape instanceof HexagonAdapter){
@@ -377,7 +390,9 @@ public class DrawingController {
 					{
 						hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerPc());
 					}
-					model.getShapes().set(model.getShapes().indexOf(selShape), hexagon);
+					//model.getShapes().set(model.getShapes().indexOf(selShape), hexagon);
+					command=new CmdModifyHexagon((HexagonAdapter)selShape, hexagon);
+					command.execute();
 				}
 			} 	
 			frame.repaint();

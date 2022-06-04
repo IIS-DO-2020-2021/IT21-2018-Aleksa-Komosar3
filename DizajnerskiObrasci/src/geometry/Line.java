@@ -105,8 +105,7 @@ public class Line extends Shape implements Cloneable{
 				&& Objects.equals(startPoint, other.startPoint);
 	}
 	
-	public Object clone() throws CloneNotSupportedException {
-		Line line=new Line();
+	public Line clone(Line line) throws CloneNotSupportedException {
 		line.getStartPoint().setX(this.getStartPoint().getX());
 		line.getStartPoint().setY(this.getStartPoint().getY());
 		line.getEndPoint().setX(this.getEndPoint().getX());
