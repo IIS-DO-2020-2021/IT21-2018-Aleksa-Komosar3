@@ -28,6 +28,7 @@ import geometry.Rectangle;
 import geometry.Shape;
 import gui.DlgCircle;
 import gui.DlgDonut;
+import gui.DlgHexagon;
 import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
@@ -185,7 +186,7 @@ public class DrawingController {
 				}
 			}
 		} else if (frame.getBtnHexagon().isSelected()){
-			DlgCircle dlgHexagon= new DlgCircle();
+			DlgHexagon dlgHexagon= new DlgHexagon();
 			HexagonAdapter hexagon = new HexagonAdapter();
 			dlgHexagon.setModal(true);
 			dlgHexagon.getTxtX().setText("" + e.getX());
@@ -194,21 +195,18 @@ public class DrawingController {
 			dlgHexagon.setVisible(true);
 			
 			if(dlgHexagon.isOK()){
-			}
 				try {
 					hexagon = new HexagonAdapter(new Point(e.getX(),e.getY()), 
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
-					hexagon.getHexagon().setAreaColor(dlgHexagon.getColor());
-					hexagon.getHexagon().setBorderColor(dlgHexagon.getInnerC());
+					hexagon.setHexagonBorderColor(dlgHexagon.getColor());
+					hexagon.setHexagonInnerColor(dlgHexagon.getInnerC());
 					newShape = hexagon;
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
 							JOptionPane.ERROR_MESSAGE);
 					}
-			} else {
-				JOptionPane.showMessageDialog(frame, "No shapes", "Error",
-						JOptionPane.ERROR_MESSAGE);
 			}
+		}
 		if (newShape!=null) {
 			command=new CmdAddShape(model, newShape);
 			command.execute();
@@ -364,12 +362,12 @@ public class DrawingController {
 			} 	
 			else if(selShape instanceof HexagonAdapter){
 				HexagonAdapter hexagon= (HexagonAdapter) selShape;
-				DlgCircle dlgHexagon= new DlgCircle();
+				DlgHexagon dlgHexagon= new DlgHexagon();
 				dlgHexagon.getTxtX().setText("" + hexagon.getHexagon().getX());
 				dlgHexagon.getTxtY().setText("" + hexagon.getHexagon().getY());
 				dlgHexagon.getTxtRadius().setText("" + hexagon.getHexagon().getR());
-				dlgHexagon.setPc(hexagon.getHexagon().getBorderColor());
-				dlgHexagon.setInnerPc(hexagon.getHexagon().getAreaColor());
+				dlgHexagon.setPc(hexagon.getHexagonBorderColor());
+				dlgHexagon.setInnerPc(hexagon.getHexagonBorderColor());
 				dlgHexagon.setModal(true);
 				dlgHexagon.setTitle("Edit hexagon");
 				dlgHexagon.setVisible(true);
@@ -380,15 +378,15 @@ public class DrawingController {
 					hexagon=new HexagonAdapter(point, 
 							Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					if(dlgHexagon.isColorChosen()){
-						hexagon.getHexagon().setBorderColor(dlgHexagon.getColor());
+						hexagon.setHexagonBorderColor(dlgHexagon.getColor());
 					}else{
-						hexagon.getHexagon().setBorderColor(dlgHexagon.getPc());
+						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
 					}
 					if(dlgHexagon.isInnerColorChosen()){
-						hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerC());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerC());
 					} else
 					{
-						hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerPc());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
 					}
 					//model.getShapes().set(model.getShapes().indexOf(selShape), hexagon);
 					command=new CmdModifyHexagon((HexagonAdapter)selShape, hexagon);

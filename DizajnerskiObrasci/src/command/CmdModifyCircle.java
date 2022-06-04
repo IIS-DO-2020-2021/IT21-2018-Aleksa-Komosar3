@@ -41,5 +41,4 @@ public class CmdModifyCircle implements Command {
 			e.printStackTrace();
 		}
 	}
-
 }

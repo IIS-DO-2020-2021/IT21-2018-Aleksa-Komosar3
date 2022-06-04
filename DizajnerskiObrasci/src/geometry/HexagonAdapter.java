@@ -18,6 +18,39 @@ public class HexagonAdapter extends Shape {
 	public void setHexagon(Hexagon hexagon) {
 		this.hexagon = hexagon;
 	}
+	
+	public Point getHexagonCenter() {
+		return new Point(this.hexagon.getX(), this.hexagon.getY());
+	}
+
+	public void setHexagonCenter(Point center) {
+		this.hexagon.setX(center.getX());
+		this.hexagon.setY(center.getY());
+	}
+
+	public void setHexagonRadius(int radius) {
+		this.hexagon.setR(radius);
+	}
+
+	public int getHexagonRadius() {
+		return this.hexagon.getR();
+	}
+	
+	public void setHexagonBorderColor(Color edgeColor) {
+		this.hexagon.setBorderColor(edgeColor);
+	}
+	
+	public Color getHexagonBorderColor() {
+		return this.hexagon.getBorderColor();
+	}
+
+	public void setHexagonInnerColor(Color innerColor) {
+		this.hexagon.setAreaColor(innerColor);
+	}
+	
+	public Color getHexagonInnerColor() {
+		return this.hexagon.getAreaColor();
+	}
 
 	public HexagonAdapter()
 	{
@@ -122,11 +155,12 @@ public class HexagonAdapter extends Shape {
 				&& hexagon.isSelected() == other.getHexagon().isSelected();
 	}
 	
-	public HexagonAdapter clone(HexagonAdapter hex) throws CloneNotSupportedException {
-		hex.setHexagon(this.getHexagon());
-		hex.setColor(this.getColor());
-		hex.setSelected(this.isSelected());
+	public HexagonAdapter clone(HexagonAdapter hexagon) throws CloneNotSupportedException {
+		hexagon.setHexagonCenter(this.getHexagonCenter());
+		hexagon.setHexagonRadius(this.getHexagonRadius());
+		hexagon.setHexagonBorderColor(this.getHexagonBorderColor());
+		hexagon.setHexagonInnerColor(this.getHexagonInnerColor());
 
-		return hex;
+		return hexagon;
 	}
 }

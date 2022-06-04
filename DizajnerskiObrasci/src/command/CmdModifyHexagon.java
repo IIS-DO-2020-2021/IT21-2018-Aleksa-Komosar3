@@ -1,11 +1,12 @@
 package command;
 
 import geometry.HexagonAdapter;
+import geometry.Point;
 
 public class CmdModifyHexagon implements Command {
 	
 	private HexagonAdapter oldHex,newHex;
-	private HexagonAdapter original=new HexagonAdapter();
+	private HexagonAdapter original=new HexagonAdapter(new Point(0, 0), 0);
 
 	public CmdModifyHexagon(HexagonAdapter oldHex, HexagonAdapter newHex) {
 		super();
@@ -17,7 +18,7 @@ public class CmdModifyHexagon implements Command {
 	public void execute() {
 		// TODO Auto-generated method stub
 		try {
-			original=oldHex.clone(newHex);
+			original=oldHex.clone(original);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -8,7 +8,10 @@ public class DrawingModel {
 
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
-	
+
+	public DrawingModel() {
+		
+	}
 	public ArrayList<Shape> getShapes() {
 		return shapes;
 	}
