@@ -1,16 +1,33 @@
 package mvc;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
+import command.Command;
 import geometry.Shape;
 
 public class DrawingModel {
 
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
 	private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
-
+	private Stack<Command> undo=new Stack<Command>();
+	private Stack<Command> redo=new Stack<Command>();
+	
 	public DrawingModel() {
 		
+	}
+
+	public Stack<Command> getUndo() {
+		return undo;
+	}
+	public void setUndo(Stack<Command> undo) {
+		this.undo = undo;
+	}
+	public Stack<Command> getRedo() {
+		return redo;
+	}
+	public void setRedo(Stack<Command> redo) {
+		this.redo = redo;
 	}
 	public ArrayList<Shape> getShapes() {
 		return shapes;
@@ -48,5 +65,4 @@ public class DrawingModel {
 	public void deleteAllFromSelected(ArrayList<Shape> shapes){
 		shapes.removeAll(shapes);
 	}
-	
 }

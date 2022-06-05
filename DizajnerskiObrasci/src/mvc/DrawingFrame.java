@@ -30,8 +30,8 @@ public class DrawingFrame extends JFrame{
 	private final JLabel lblNewLabel_1 = new JLabel("New label");
 	private final JButton btnNewButton = new JButton("New button");
 	private final JButton btnNewButton_1 = new JButton("New button");
-	
-	
+	private final JButton btnNewButton_2 = new JButton("Undo");
+	private final JButton btnNewButton_3 = new JButton("Redo");
 	
 	public JToggleButton getBtnHexagon() {
 		return btnHexagon;
@@ -160,6 +160,21 @@ public class DrawingFrame extends JFrame{
 		btnGroup.add(btnCircle);
 		btnGroup.add(btnDonut);
 		btnGroup.add(btnSelect);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.undo();
+			}
+		});
+		
+		
+		pnlSouth.add(btnNewButton_2);
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.redo();
+			}
+		});
+		
+		pnlSouth.add(btnNewButton_3);
 		btnGroup.add(btnHexagon);
 		
 		pnlNorth.add(lblNewLabel);

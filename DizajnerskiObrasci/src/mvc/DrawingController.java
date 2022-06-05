@@ -210,6 +210,7 @@ public class DrawingController {
 		if (newShape!=null) {
 			command=new CmdAddShape(model, newShape);
 			command.execute();
+			model.getUndo().add(command);
 		}
 		frame.repaint();
 	}
@@ -232,7 +233,6 @@ public class DrawingController {
 					point = new Point(Integer.parseInt(dlgPoint.getTxtX().getText()),
 							Integer.parseInt(dlgPoint.getTxtY().getText()));
 					point.setColor(dlgPoint.getColor());			
-					//model.getShapes().set(model.getShapes().indexOf(selShape), point);
 					command=new CmdModifyPoint((Point)selShape, point);
 					command.execute();
 				}
@@ -256,7 +256,6 @@ public class DrawingController {
 							Integer.parseInt(dlgLine.getTxtYe().getText()));
 					line = new Line(startPoint,endPoint);
 					line.setColor(dlgLine.getColor());
-					//model.getShapes().set(model.getShapes().indexOf(selShape), line);
 					command=new CmdModifyLine((Line)selShape, line);
 					command.execute();
 				}
@@ -289,7 +288,6 @@ public class DrawingController {
 					} else {
 						rectangle.setInnerColor(dlgRec.getInnerPc());
 					}
-					//model.getShapes().set(model.getShapes().indexOf(selShape), rectangle);
 					command=new CmdModifyRectangle((Rectangle)selShape, rectangle);
 					command.execute();
 				}
@@ -322,7 +320,6 @@ public class DrawingController {
 					}else{
 						donut.setInnerColor(dlgDonut.getInnerPc());
 					}
-					//model.getShapes().set(model.getShapes().indexOf(selShape), donut);
 					command=new CmdModifyDonut((Donut)selShape, donut);
 					command.execute();
 				}
@@ -355,7 +352,6 @@ public class DrawingController {
 					{
 						circle.setInnerColor(dlgCircle.getInnerPc());
 					}
-					//model.getShapes().set(model.getShapes().indexOf(selShape), circle);
 					command=new CmdModifyCircle((Circle)selShape, circle);
 					command.execute();
 				}
@@ -388,7 +384,6 @@ public class DrawingController {
 					{
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
 					}
-					//model.getShapes().set(model.getShapes().indexOf(selShape), hexagon);
 					command=new CmdModifyHexagon((HexagonAdapter)selShape, hexagon);
 					command.execute();
 				}
@@ -428,5 +423,25 @@ public class DrawingController {
 		frame.repaint();
 		
 		frame.getBtnSelect().setSelected(false);
+	}
+	
+	public void undo(){
+		if(model.getUndo().size()!=0){
+		Command command = model.getUndo().pop();
+		command.unexecute();
+		model.getRedo().add(command);
+		frame.repaint();
+		}
+		frame.repaint();
+	}
+	
+	public void redo(){
+		if(model.getRedo().size()!=0){
+		Command command = model.getRedo().pop();
+		command.execute();
+		model.getUndo().add(command);
+		frame.repaint();
+		}
+		frame.repaint();
 	}
 }
