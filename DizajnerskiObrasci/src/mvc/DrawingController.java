@@ -239,6 +239,8 @@ public class DrawingController {
 					command=new CmdModifyPoint((Point)selShape, point);
 					command.execute();
 					model.getUndo().add(command);
+					
+					selShape.setSelected(true);
 				}
 			} else if(selShape instanceof Line){
 				Line line= (Line)selShape;
@@ -263,6 +265,8 @@ public class DrawingController {
 					command=new CmdModifyLine((Line)selShape, line);
 					command.execute();
 					model.getUndo().add(command);
+					
+					selShape.setSelected(true);
 				}
 			} else if (selShape instanceof Rectangle){
 				Rectangle rectangle= (Rectangle) selShape;
@@ -296,6 +300,8 @@ public class DrawingController {
 					command=new CmdModifyRectangle((Rectangle)selShape, rectangle);
 					command.execute();
 					model.getUndo().add(command);
+					
+					selShape.setSelected(true);
 				}
 			} else if (selShape instanceof Donut){
 				Donut donut= (Donut) selShape;
@@ -329,6 +335,8 @@ public class DrawingController {
 					command=new CmdModifyDonut((Donut)selShape, donut);
 					command.execute();
 					model.getUndo().add(command);
+					
+					selShape.setSelected(true);
 				}
 			}
 			else if(selShape instanceof Circle){
@@ -395,9 +403,13 @@ public class DrawingController {
 					command=new CmdModifyHexagon((HexagonAdapter)selShape, hexagon);
 					command.execute();
 					model.getUndo().add(command);
+					
+					selShape.setSelected(true);
 				}
 			} 	
 			frame.repaint();
+			
+			selShape.setSelected(true);
 		}
 		else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
@@ -445,6 +457,10 @@ public class DrawingController {
 		frame.repaint();
 		}
 		frame.repaint();
+		frame.getBtnRedo().setEnabled(true);
+			if(model.getUndo().size()==0){
+				frame.getBtnUndo().setEnabled(false);
+			}
 	}
 	
 	public void redo(){
@@ -455,5 +471,9 @@ public class DrawingController {
 		frame.repaint();
 		}
 		frame.repaint();
+		frame.getBtnUndo().setEnabled(true);
+			if(model.getRedo().size()==0){
+				frame.getBtnRedo().setEnabled(false);
+			}
 	}
 }

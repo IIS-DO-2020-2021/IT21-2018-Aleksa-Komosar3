@@ -35,7 +35,7 @@ public class DrawingFrame extends JFrame{
 	private JToggleButton btnDonut = new JToggleButton("Donut   ");
 	private JToggleButton btnSelect = new JToggleButton("Selection");
 	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
-	private final JButton btnUndo = new JButton("Undo         ");
+	private JButton btnUndo = new JButton("Undo         ");
 	private final JButton btnRedo = new JButton("Redo");
 	ButtonGroup btnGroup = new ButtonGroup();
 	private final JButton btnOuterColor = new JButton("Outer color");
@@ -124,6 +124,60 @@ public class DrawingFrame extends JFrame{
 		this.btnSelect = btnSelect;
 	}
 	
+	public JButton getBtnUndo() {
+		return btnUndo;
+	}
+	
+	public void setBtnUndo(JButton btnUndo){
+		this.btnUndo=btnUndo;
+	}
+
+	public JButton getBtnRedo() {
+		return btnRedo;
+	}
+
+	public JButton getBtnOuterColor() {
+		return btnOuterColor;
+	}
+
+	public JButton getBtnLoadCommands() {
+		return btnLoadCommands;
+	}
+
+	public JButton getBtnToFront() {
+		return btnToFront;
+	}
+
+	public JButton getBtnToBack() {
+		return btnToBack;
+	}
+
+	public JButton getBtnBringToFront() {
+		return btnBringToFront;
+	}
+
+	public JButton getBtnBringToBack() {
+		return btnBringToBack;
+	}
+
+	public JButton getBtnNext() {
+		return btnNext;
+	}
+
+	public JButton getBtnSaveCommands() {
+		return btnSaveCommands;
+	}
+
+	public JButton getBtnSaveDrawing() {
+		return btnSaveDrawing;
+	}
+
+	public JButton getBtnLoadDrawing() {
+		return btnLoadDrawing;
+	}
+	
+	
+
 	public DrawingFrame() {
 		setBounds(150, 150, 1000, 700);
 		getContentPane().setLayout(new BorderLayout(0, 0));
