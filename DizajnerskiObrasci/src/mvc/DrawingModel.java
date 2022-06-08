@@ -65,4 +65,13 @@ public class DrawingModel {
 	public void deleteAllFromSelected(ArrayList<Shape> shapes){
 		shapes.removeAll(shapes);
 	}
+	public int getIndexOfShape(Shape shape){
+		return shapes.indexOf(shape);
+	}
+	public void deleteAtIndex(int index){
+		shapes.remove(index);
+	}
+	public void addOnIndex(Shape shape, int index){
+		shapes.add(index, shape);
+	}
 }

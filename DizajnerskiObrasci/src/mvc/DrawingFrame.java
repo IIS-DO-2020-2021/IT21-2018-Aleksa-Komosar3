@@ -409,6 +409,11 @@ public class DrawingFrame extends JFrame{
 		GridBagConstraints gbc_btnBringToBack = new GridBagConstraints();
 		gbc_btnBringToBack.gridx = 1;
 		gbc_btnBringToBack.gridy = 5;
+		btnBringToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.fullBringToBack();
+			}
+		});
 		pnlEast.add(btnBringToBack, gbc_btnBringToBack);
 		btnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

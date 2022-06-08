@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
+import command.CmdBringToBack;
 import command.CmdDeleteOneShape;
 import command.CmdDeleteShape;
 import command.CmdDeselectShape;
@@ -215,7 +216,7 @@ public class DrawingController {
 			model.getUndo().add(command);
 		}
 		frame.repaint();
-		selShape.setSelected(true);
+		//selShape.setSelected(true);
 	}
 
 	protected void editShape(){
@@ -475,5 +476,15 @@ public class DrawingController {
 			if(model.getRedo().size()==0){
 				frame.getBtnRedo().setEnabled(false);
 			}
+	}
+	
+	public void fullBringToBack(){
+		command=null;
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		command = new CmdBringToBack(model, shape, index);
+		command.execute();
+		model.getUndo().add(command);
+		frame.repaint();
 	}
 }
