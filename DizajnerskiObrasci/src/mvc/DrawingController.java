@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
 import command.CmdBringToBack;
+import command.CmdBringToFront;
 import command.CmdDeleteOneShape;
 import command.CmdDeleteShape;
 import command.CmdDeselectShape;
@@ -19,6 +20,8 @@ import command.CmdModifyLine;
 import command.CmdModifyPoint;
 import command.CmdModifyRectangle;
 import command.CmdSelectShape;
+import command.CmdToBackByOne;
+import command.CmdToFrontByOne;
 import command.Command;
 import geometry.Circle;
 import geometry.Donut;
@@ -221,7 +224,7 @@ public class DrawingController {
 
 	protected void editShape(){
 		command=null;
-		if (selShape != null && model.getSelectedShapes().size()>0) {
+		if (selShape != null && model.getSelectedShapes().size()==1) {
 			if (selShape instanceof Point) {
 				Point point = (Point) selShape;
 				DlgPoint dlgPoint = new DlgPoint();
@@ -412,7 +415,7 @@ public class DrawingController {
 			
 			selShape.setSelected(true);
 		}
-		else {
+		else if (model.getSelectedShapes().size()==0){
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
 			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
@@ -449,6 +452,45 @@ public class DrawingController {
 		
 		frame.getBtnSelect().setSelected(false);
 	}
+	public void fullBringToBack(){
+		command=null;
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		command = new CmdBringToBack(model, shape, index);
+		command.execute();
+		model.getUndo().add(command);
+		frame.repaint();
+	}
+	
+	public void bringToBackByOne(){
+		command=null;
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		command = new CmdToBackByOne(model, shape, index);
+		command.execute();
+		model.getUndo().add(command);
+		frame.repaint();
+	}
+	
+	public void fullBringToFront(){
+		command=null;
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		command = new CmdBringToFront(model, shape, index);
+		command.execute();
+		model.getUndo().add(command);
+		frame.repaint();
+	}
+	
+	public void bringToFrontByOne(){
+		command=null;
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		command = new CmdToFrontByOne(model, shape, index);
+		command.execute();
+		model.getUndo().add(command);
+		frame.repaint();
+	}
 	
 	public void undo(){
 		if(model.getUndo().size()!=0){
@@ -477,14 +519,5 @@ public class DrawingController {
 				frame.getBtnRedo().setEnabled(false);
 			}
 	}
-	
-	public void fullBringToBack(){
-		command=null;
-		Shape shape = model.getSelectedShapes().get(0);
-		int index= model.getShapes().indexOf(shape);
-		command = new CmdBringToBack(model, shape, index);
-		command.execute();
-		model.getUndo().add(command);
-		frame.repaint();
-	}
+
 }

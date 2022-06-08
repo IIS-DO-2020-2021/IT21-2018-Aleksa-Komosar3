@@ -3,27 +3,27 @@ package command;
 import geometry.Shape;
 import mvc.DrawingModel;
 
-public class CmdBringToBack implements Command {
+public class CmdBringToFront implements Command {
 	
 	private DrawingModel model;
 	private Shape shape;
 	private int index;
 
-	public CmdBringToBack(DrawingModel model, Shape shape, int index) {
+	public CmdBringToFront(DrawingModel model, Shape shape, int index) {
 		super();
 		this.model = model;
 		this.shape = shape;
-		this.index=index;
+		this.index = index;
 	}
 
 	@Override
 	public void execute() {
 		// TODO Auto-generated method stub
-		try {
+		try{
 		model.deleteAtIndex(index);
-		model.addOnIndex(shape, 0);
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
+		model.getShapes().add(shape);
+	} catch (IndexOutOfBoundsException e) {
+		e.printStackTrace();
 		}
 	}
 
@@ -31,10 +31,10 @@ public class CmdBringToBack implements Command {
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-		model.deleteAtIndex(0);
+		model.deleteAtIndex(model.getShapes().size()-1);
 		model.addOnIndex(shape, index);
-		} catch (IndexOutOfBoundsException e) {
-			e.printStackTrace();
+	} catch (IndexOutOfBoundsException e) {
+		e.printStackTrace();
 		}
 	}
 

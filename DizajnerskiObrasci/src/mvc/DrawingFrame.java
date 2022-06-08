@@ -35,6 +35,7 @@ public class DrawingFrame extends JFrame{
 	private JToggleButton btnDonut = new JToggleButton("Donut   ");
 	private JToggleButton btnSelect = new JToggleButton("Selection");
 	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
+	private JButton btnModification = new JButton("Modification");
 	private JButton btnUndo = new JButton("Undo         ");
 	private final JButton btnRedo = new JButton("Redo");
 	ButtonGroup btnGroup = new ButtonGroup();
@@ -119,6 +120,9 @@ public class DrawingFrame extends JFrame{
 	public JToggleButton getBtnSelect() {
 		return btnSelect;
 	}
+	public JButton getbtnModification(){
+		return btnModification;
+	}
 
 	public void setBtnSelect(JToggleButton btnSelect) {
 		this.btnSelect = btnSelect;
@@ -197,7 +201,6 @@ public class DrawingFrame extends JFrame{
 		gbc_btnSelect.gridy = 0;
 		pnlNorth.add(btnSelect, gbc_btnSelect);
 		
-		JButton btnModification = new JButton("Modification");
 		GridBagConstraints gbc_btnModification = new GridBagConstraints();
 		gbc_btnModification.insets = new Insets(0, 0, 5, 5);
 		gbc_btnModification.gridx = 2;
@@ -392,18 +395,33 @@ public class DrawingFrame extends JFrame{
 		gbc_btnToFront.insets = new Insets(0, 0, 5, 5);
 		gbc_btnToFront.gridx = 0;
 		gbc_btnToFront.gridy = 3;
+		btnToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.bringToFrontByOne();
+			}
+		});
 		pnlEast.add(btnToFront, gbc_btnToFront);
 		
 		GridBagConstraints gbc_btnToBack = new GridBagConstraints();
 		gbc_btnToBack.insets = new Insets(0, 0, 5, 0);
 		gbc_btnToBack.gridx = 1;
 		gbc_btnToBack.gridy = 3;
+		btnToBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.bringToBackByOne();
+			}
+		});
 		pnlEast.add(btnToBack, gbc_btnToBack);
 		
 		GridBagConstraints gbc_btnBringToFront = new GridBagConstraints();
 		gbc_btnBringToFront.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBringToFront.gridx = 0;
 		gbc_btnBringToFront.gridy = 5;
+		btnBringToFront.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.fullBringToFront();
+			}
+		});
 		pnlEast.add(btnBringToFront, gbc_btnBringToFront);
 		
 		GridBagConstraints gbc_btnBringToBack = new GridBagConstraints();
