@@ -90,9 +90,11 @@ public class DrawingController {
 			if (!selShape.isSelected()) {
 				command=new CmdSelectShape(model, selShape );
 				command.execute();
+				model.getUndo().add(command);
 			} else if (selShape.isSelected()){
 				command=new CmdDeselectShape(model, selShape);
 				command.execute();
+				model.getUndo().add(command);
 			}
 			
 			break;
@@ -213,6 +215,7 @@ public class DrawingController {
 			model.getUndo().add(command);
 		}
 		frame.repaint();
+		selShape.setSelected(true);
 	}
 
 	protected void editShape(){
@@ -235,6 +238,7 @@ public class DrawingController {
 					point.setColor(dlgPoint.getColor());			
 					command=new CmdModifyPoint((Point)selShape, point);
 					command.execute();
+					model.getUndo().add(command);
 				}
 			} else if(selShape instanceof Line){
 				Line line= (Line)selShape;
@@ -258,6 +262,7 @@ public class DrawingController {
 					line.setColor(dlgLine.getColor());
 					command=new CmdModifyLine((Line)selShape, line);
 					command.execute();
+					model.getUndo().add(command);
 				}
 			} else if (selShape instanceof Rectangle){
 				Rectangle rectangle= (Rectangle) selShape;
@@ -290,6 +295,7 @@ public class DrawingController {
 					}
 					command=new CmdModifyRectangle((Rectangle)selShape, rectangle);
 					command.execute();
+					model.getUndo().add(command);
 				}
 			} else if (selShape instanceof Donut){
 				Donut donut= (Donut) selShape;
@@ -322,6 +328,7 @@ public class DrawingController {
 					}
 					command=new CmdModifyDonut((Donut)selShape, donut);
 					command.execute();
+					model.getUndo().add(command);
 				}
 			}
 			else if(selShape instanceof Circle){
@@ -354,6 +361,7 @@ public class DrawingController {
 					}
 					command=new CmdModifyCircle((Circle)selShape, circle);
 					command.execute();
+					model.getUndo().add(command);
 				}
 			} 	
 			else if(selShape instanceof HexagonAdapter){
@@ -386,6 +394,7 @@ public class DrawingController {
 					}
 					command=new CmdModifyHexagon((HexagonAdapter)selShape, hexagon);
 					command.execute();
+					model.getUndo().add(command);
 				}
 			} 	
 			frame.repaint();
@@ -395,6 +404,7 @@ public class DrawingController {
 			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
+		frame.repaint();
 	}
 	
 	protected void deleteShape() {
@@ -405,13 +415,15 @@ public class DrawingController {
 			if (selectedOption == JOptionPane.YES_OPTION) {
 				command=new CmdDeleteOneShape(model, selShape);
 				command.execute();
+				model.getUndo().add(command);
 			}
 		} else if (model.getSelectedShapes().size()>1){
 			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
 					"Warning message", JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				command=new CmdDeleteShape(model, model.getSelectedShapes());
+				command=new CmdDeleteShape(model.getSelectedShapes(), model);
 				command.execute();
+				model.getUndo().add(command);
 			}
 			frame.repaint();
 		}
