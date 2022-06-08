@@ -1,5 +1,7 @@
 package mvc;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 public class Application {
@@ -10,6 +12,8 @@ public class Application {
 		frame.getView().setModel(model);
 		DrawingController controller=new DrawingController(model, frame);
 		frame.setController(controller);
+		frame.getBtnInnerColor().setBackground(Color.BLACK);
+		frame.getBtnOuterColor().setBackground(Color.BLACK);
 		
 		
 		frame.setTitle("Aleksa Komosar");

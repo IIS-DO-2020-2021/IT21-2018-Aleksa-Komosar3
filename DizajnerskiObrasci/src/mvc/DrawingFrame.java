@@ -22,21 +22,23 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import java.awt.Font;
+import javax.swing.UIManager;
 
 public class DrawingFrame extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
 	private DrawingView view=new DrawingView();
 	private DrawingController controller;
-	private JToggleButton btnPoint = new JToggleButton("Point     ");
-	private JToggleButton btnLine = new JToggleButton("Line      ");
+	private JToggleButton btnPoint = new JToggleButton("Point");
+	private JToggleButton btnLine = new JToggleButton("Line");
 	private JToggleButton btnRectangle = new JToggleButton("Rectangle");
-	private JToggleButton btnCircle = new JToggleButton("Circle    ");
-	private JToggleButton btnDonut = new JToggleButton("Donut   ");
+	private JToggleButton btnCircle = new JToggleButton("Circle");
+	private JToggleButton btnDonut = new JToggleButton("Donut");
 	private JToggleButton btnSelect = new JToggleButton("Selection");
 	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
 	private JButton btnModification = new JButton("Modification");
-	private JButton btnUndo = new JButton("Undo         ");
+	private JButton btnUndo = new JButton("Undo ");
 	private final JButton btnRedo = new JButton("Redo");
 	ButtonGroup btnGroup = new ButtonGroup();
 	private final JButton btnOuterColor = new JButton("Outer color");
@@ -52,6 +54,7 @@ public class DrawingFrame extends JFrame{
 	private final JPanel panel = new JPanel();
 	private final JButton btnSaveDrawing = new JButton("Save drawing");
 	private final JButton btnLoadDrawing = new JButton("Load drawing");
+	private JButton btnInnerColor = new JButton("Inner color");
 	
 	public JToggleButton getBtnHexagon() {
 		return btnHexagon;
@@ -179,14 +182,31 @@ public class DrawingFrame extends JFrame{
 	public JButton getBtnLoadDrawing() {
 		return btnLoadDrawing;
 	}
-	
-	
+	public JButton getBtnModification() {
+		return btnModification;
+	}
+
+	public void setBtnModification(JButton btnModification) {
+		this.btnModification = btnModification;
+	}
+
+	public JButton getBtnInnerColor() {
+		return btnInnerColor;
+	}
+
+	public void setBtnInnerColor(JButton btnInnerColor) {
+		this.btnInnerColor = btnInnerColor;
+	}
 
 	public DrawingFrame() {
+		setFont(new Font("Bahnschrift", Font.PLAIN, 12));
+		setBackground(UIManager.getColor("Tree.selectionForeground"));
 		setBounds(150, 150, 1000, 700);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnlNorth = new JPanel();
+		pnlNorth.setBackground(UIManager.getColor("activeCaption"));
+		pnlNorth.setForeground(UIManager.getColor("activeCaption"));
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
 		GridBagLayout gbl_pnlNorth = new GridBagLayout();
 		gbl_pnlNorth.columnWidths = new int[]{433, 0, 61, 61, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -219,6 +239,15 @@ public class DrawingFrame extends JFrame{
 		gbc_btnDelete.gridy = 0;
 		pnlNorth.add(btnDelete, gbc_btnDelete);
 		
+		JLabel lblInnerColor = new JLabel("Inner color:");
+		lblInnerColor.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblInnerColor = new GridBagConstraints();
+		gbc_lblInnerColor.anchor = GridBagConstraints.SOUTH;
+		gbc_lblInnerColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblInnerColor.gridx = 6;
+		gbc_lblInnerColor.gridy = 0;
+		pnlNorth.add(lblInnerColor, gbc_lblInnerColor);
+		
 		JLabel lblColors = new JLabel("COLORS:");
 		GridBagConstraints gbc_lblColors = new GridBagConstraints();
 		gbc_lblColors.insets = new Insets(0, 0, 5, 5);
@@ -226,7 +255,21 @@ public class DrawingFrame extends JFrame{
 		gbc_lblColors.gridy = 0;
 		pnlNorth.add(lblColors, gbc_lblColors);
 		
-		JButton btnInnerColor = new JButton("Inner color");
+		btnInnerColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.innerColor();
+				getBtnInnerColor().setSelected(false);
+			}
+		});
+		
+		JLabel lblOuterColor = new JLabel("Outer color:");
+		lblOuterColor.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblOuterColor = new GridBagConstraints();
+		gbc_lblOuterColor.anchor = GridBagConstraints.SOUTH;
+		gbc_lblOuterColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblOuterColor.gridx = 8;
+		gbc_lblOuterColor.gridy = 0;
+		pnlNorth.add(lblOuterColor, gbc_lblOuterColor);
 		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
 		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
 		gbc_btnInnerColor.gridx = 6;
@@ -237,6 +280,11 @@ public class DrawingFrame extends JFrame{
 		gbc_btnOuterColor.insets = new Insets(0, 0, 5, 5);
 		gbc_btnOuterColor.gridx = 8;
 		gbc_btnOuterColor.gridy = 1;
+		btnOuterColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.outerColor();
+			}
+		});
 		pnlNorth.add(btnOuterColor, gbc_btnOuterColor);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -285,6 +333,7 @@ public class DrawingFrame extends JFrame{
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 1;
+		panel.setBackground(UIManager.getColor("activeCaption"));
 		pnlSouth.add(panel, gbc_panel);
 		panel.add(btnSaveCommands);
 		btnLoadCommands.addActionListener(new ActionListener() {
@@ -316,6 +365,7 @@ public class DrawingFrame extends JFrame{
 		getContentPane().setBackground(Color.WHITE);
 		
 		JPanel pnlWest = new JPanel();
+		pnlWest.setBackground(UIManager.getColor("activeCaption"));
 		getContentPane().add(pnlWest, BorderLayout.WEST);
 		GridBagLayout gbl_pnlWest = new GridBagLayout();
 		gbl_pnlWest.columnWidths = new int[]{33, 55, -1, 0};
@@ -330,6 +380,10 @@ public class DrawingFrame extends JFrame{
 		gbc_btnPoint.insets = new Insets(0, 0, 5, 5);
 		gbc_btnPoint.gridx = 1;
 		gbc_btnPoint.gridy = 0;
+		btnPoint.setBackground(Color.WHITE);
+		btnPoint.setVerticalAlignment(SwingConstants.BOTTOM);
+		btnPoint.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		btnPoint.setHorizontalAlignment(SwingConstants.LEFT);
 		pnlWest.add(btnPoint, gbc_btnPoint);
 		btnGroup.add(btnLine);
 		GridBagConstraints gbc_btnLine = new GridBagConstraints();
@@ -337,34 +391,54 @@ public class DrawingFrame extends JFrame{
 		gbc_btnLine.insets = new Insets(0, 0, 5, 5);
 		gbc_btnLine.gridx = 1;
 		gbc_btnLine.gridy = 1;
+		btnLine.setBackground(Color.WHITE);
+		btnLine.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		btnLine.setHorizontalAlignment(SwingConstants.LEFT);
 		pnlWest.add(btnLine, gbc_btnLine);
 		GridBagConstraints gbc_btnRectangle = new GridBagConstraints();
+		gbc_btnRectangle.anchor = GridBagConstraints.WEST;
 		gbc_btnRectangle.insets = new Insets(0, 0, 5, 5);
 		gbc_btnRectangle.gridx = 1;
 		gbc_btnRectangle.gridy = 2;
+		btnRectangle.setBackground(Color.WHITE);
+		btnRectangle.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		btnRectangle.setHorizontalAlignment(SwingConstants.LEFT);
 		pnlWest.add(btnRectangle, gbc_btnRectangle);
 		btnGroup.add(btnRectangle);
 		GridBagConstraints gbc_btnCircle = new GridBagConstraints();
+		gbc_btnCircle.anchor = GridBagConstraints.WEST;
 		gbc_btnCircle.insets = new Insets(0, 0, 5, 5);
 		gbc_btnCircle.gridx = 1;
 		gbc_btnCircle.gridy = 3;
+		btnCircle.setBackground(Color.WHITE);
+		btnCircle.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		btnCircle.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCircle.setVerticalAlignment(SwingConstants.TOP);
 		pnlWest.add(btnCircle, gbc_btnCircle);
 		btnGroup.add(btnCircle);
 		GridBagConstraints gbc_btnDonut = new GridBagConstraints();
+		gbc_btnDonut.anchor = GridBagConstraints.WEST;
 		gbc_btnDonut.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDonut.gridx = 1;
 		gbc_btnDonut.gridy = 4;
+		btnDonut.setBackground(Color.WHITE);
+		btnDonut.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		btnDonut.setHorizontalAlignment(SwingConstants.LEFT);
 		pnlWest.add(btnDonut, gbc_btnDonut);
 		btnGroup.add(btnDonut);
 		GridBagConstraints gbc_btnHexagon = new GridBagConstraints();
+		gbc_btnHexagon.anchor = GridBagConstraints.WEST;
 		gbc_btnHexagon.insets = new Insets(0, 0, 5, 5);
 		gbc_btnHexagon.gridx = 1;
 		gbc_btnHexagon.gridy = 5;
+		btnHexagon.setBackground(Color.WHITE);
+		btnHexagon.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		btnHexagon.setHorizontalAlignment(SwingConstants.LEFT);
 		pnlWest.add(btnHexagon, gbc_btnHexagon);
 		btnGroup.add(btnHexagon);
 		
 		JPanel pnlEast = new JPanel();
+		pnlEast.setBackground(UIManager.getColor("activeCaption"));
 		getContentPane().add(pnlEast, BorderLayout.EAST);
 		GridBagLayout gbl_pnlEast = new GridBagLayout();
 		gbl_pnlEast.columnWidths = new int[]{135, 61, 0};
@@ -373,7 +447,7 @@ public class DrawingFrame extends JFrame{
 		gbl_pnlEast.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlEast.setLayout(gbl_pnlEast);
 		GridBagConstraints gbc_btnUndo = new GridBagConstraints();
-		gbc_btnUndo.anchor = GridBagConstraints.NORTHWEST;
+		gbc_btnUndo.anchor = GridBagConstraints.NORTHEAST;
 		gbc_btnUndo.insets = new Insets(0, 0, 5, 5);
 		gbc_btnUndo.gridx = 0;
 		gbc_btnUndo.gridy = 1;
@@ -414,6 +488,7 @@ public class DrawingFrame extends JFrame{
 		pnlEast.add(btnToBack, gbc_btnToBack);
 		
 		GridBagConstraints gbc_btnBringToFront = new GridBagConstraints();
+		gbc_btnBringToFront.anchor = GridBagConstraints.EAST;
 		gbc_btnBringToFront.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBringToFront.gridx = 0;
 		gbc_btnBringToFront.gridy = 5;
@@ -425,6 +500,7 @@ public class DrawingFrame extends JFrame{
 		pnlEast.add(btnBringToFront, gbc_btnBringToFront);
 		
 		GridBagConstraints gbc_btnBringToBack = new GridBagConstraints();
+		gbc_btnBringToBack.anchor = GridBagConstraints.WEST;
 		gbc_btnBringToBack.gridx = 1;
 		gbc_btnBringToBack.gridy = 5;
 		btnBringToBack.addActionListener(new ActionListener() {
