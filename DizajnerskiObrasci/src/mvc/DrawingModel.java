@@ -74,4 +74,7 @@ public class DrawingModel {
 	public void addOnIndex(Shape shape, int index){
 		shapes.add(index, shape);
 	}
+	public void getShapeFromIndex (int index){
+		shapes.get(index);
+	}
 }

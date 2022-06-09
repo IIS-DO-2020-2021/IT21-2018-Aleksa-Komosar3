@@ -37,6 +37,8 @@ import gui.DlgHexagon;
 import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
+import observer.BtnUpdate;
+import observer.BtnUpdateObserver;
 
 public class DrawingController {
 	private DrawingModel model;
@@ -46,7 +48,9 @@ public class DrawingController {
 	private Command command;
 	public Color color;
 	public Color innerColor;
-	
+	private BtnUpdateObserver btnUpdateObserver;
+	private BtnUpdate btnUpdate=new BtnUpdate();
+
 	public DrawingModel getModel() {
 		return model;
 	}
@@ -98,6 +102,78 @@ public class DrawingController {
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
 		this.frame = frame;
+		btnUpdateObserver= new BtnUpdateObserver(frame);
+		btnUpdate.addPropertyChangeListener(btnUpdateObserver);
+		
+	}
+	
+	public void checkBtnState() {
+		if (model.getShapes().size() != 0) {
+			btnUpdate.setBtnSelectAct(true);
+			if (model.getSelectedShapes().size() > 0) {
+				if (model.getSelectedShapes().size() == 1) {
+					btnUpdate.setBtnModificationAct(true);
+					btnUpdate.setBtnDeleteAct(true);
+					btnsUpdate();
+				} else {
+					btnUpdate.setBtnModificationAct(false);
+					btnUpdate.setBtnToBackAct(false);
+					btnUpdate.setBtnToFrontAct(false);
+					btnUpdate.setBtnBringFullFrontAct(false);
+					btnUpdate.setBtnBringFullBackAct(false);
+					btnUpdate.setBtnDeleteAct(true);
+				}
+				btnUpdate.setBtnDeleteAct(true);
+			}else{
+				btnUpdate.setBtnDeleteAct(false);
+				btnUpdate.setBtnModificationAct(false);
+				btnUpdate.setBtnBringFullBackAct(false);
+				btnUpdate.setBtnBringFullFrontAct(false);
+				btnUpdate.setBtnToBackAct(false);
+				btnUpdate.setBtnToFrontAct(false);
+			}
+		}else{
+			btnUpdate.setBtnModificationAct(false);
+			btnUpdate.setBtnDeleteAct(false);
+			btnUpdate.setBtnSelectAct(false);
+			btnUpdate.setBtnBringFullBackAct(false);
+			btnUpdate.setBtnBringFullFrontAct(false);
+			btnUpdate.setBtnToBackAct(false);
+			btnUpdate.setBtnToFrontAct(false);
+		}
+	}
+
+	public void btnsUpdate() {
+		int i=0;
+		if(model.getSelectedShapes().size() == 1) {
+			i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+			if (model.getShapes().size() == 1) {
+				btnUpdate.setBtnBringFullBackAct(false);
+				btnUpdate.setBtnBringFullFrontAct(false);
+				btnUpdate.setBtnToBackAct(false);
+				btnUpdate.setBtnToFrontAct(false);
+			} else if (i == 0) {
+				btnUpdate.setBtnToBackAct(false);
+				btnUpdate.setBtnBringFullBackAct(false);
+				btnUpdate.setBtnBringFullFrontAct(true);
+				btnUpdate.setBtnToFrontAct(true);
+			} else if(model.getShapes().size() == i + 1) {
+					btnUpdate.setBtnToFrontAct(false);
+					btnUpdate.setBtnBringFullFrontAct(false);
+					btnUpdate.setBtnToBackAct(true);
+					btnUpdate.setBtnBringFullBackAct(true);
+			} else if (i>0 && model.getShapes().size() > i + 1) {
+				btnUpdate.setBtnBringFullBackAct(true);
+				btnUpdate.setBtnBringFullFrontAct(true);
+				btnUpdate.setBtnToBackAct(true);
+				btnUpdate.setBtnToFrontAct(true);
+			}
+		}else{
+			btnUpdate.setBtnBringFullBackAct(false);
+			btnUpdate.setBtnBringFullFrontAct(false);
+			btnUpdate.setBtnToBackAct(false);
+			btnUpdate.setBtnToFrontAct(false);
+		}
 	}
 	
 	public void outerColor() {
@@ -283,6 +359,7 @@ public class DrawingController {
 			command.execute();
 			model.getUndo().add(command);
 		}
+		checkBtnState();
 		frame.repaint();
 	}
 
@@ -406,8 +483,7 @@ public class DrawingController {
 					
 					selShape.setSelected(true);
 				}
-			}
-			else if(selShape instanceof Circle){
+			} else if(selShape instanceof Circle){
 				Circle circle= (Circle) selShape;
 				DlgCircle dlgCircle= new DlgCircle();
 				dlgCircle.getTxtX().setText("" + circle.getCenter().getX());
@@ -439,8 +515,7 @@ public class DrawingController {
 					command.execute();
 					model.getUndo().add(command);
 				}
-			} 	
-			else if(selShape instanceof HexagonAdapter){
+			}else if(selShape instanceof HexagonAdapter){
 				HexagonAdapter hexagon= (HexagonAdapter) selShape;
 				DlgHexagon dlgHexagon= new DlgHexagon();
 				dlgHexagon.getTxtX().setText("" + hexagon.getHexagon().getX());
@@ -484,6 +559,7 @@ public class DrawingController {
 			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
+		checkBtnState();
 		frame.repaint();
 	}
 	
@@ -512,9 +588,10 @@ public class DrawingController {
 			JOptionPane.showMessageDialog(null, "You did not select any shape!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
+		checkBtnState();
 		frame.repaint();
 		
-		frame.getBtnSelect().setSelected(false);
+		//frame.getBtnSelect().setSelected(false);
 	}
 	public void fullBringToBack(){
 		command=null;
@@ -523,6 +600,7 @@ public class DrawingController {
 		command = new CmdBringToBack(model, shape, index);
 		command.execute();
 		model.getUndo().add(command);
+		checkBtnState();
 		frame.repaint();
 	}
 	
@@ -533,6 +611,7 @@ public class DrawingController {
 		command = new CmdToBackByOne(model, shape, index);
 		command.execute();
 		model.getUndo().add(command);
+		checkBtnState();
 		frame.repaint();
 	}
 	
@@ -543,6 +622,7 @@ public class DrawingController {
 		command = new CmdBringToFront(model, shape, index);
 		command.execute();
 		model.getUndo().add(command);
+		checkBtnState();
 		frame.repaint();
 	}
 	
@@ -553,6 +633,7 @@ public class DrawingController {
 		command = new CmdToFrontByOne(model, shape, index);
 		command.execute();
 		model.getUndo().add(command);
+		checkBtnState();
 		frame.repaint();
 	}
 	
@@ -568,6 +649,7 @@ public class DrawingController {
 			if(model.getUndo().size()==0){
 				frame.getBtnUndo().setEnabled(false);
 			}
+			checkBtnState();
 	}
 	
 	public void redo(){
@@ -582,7 +664,7 @@ public class DrawingController {
 			if(model.getRedo().size()==0){
 				frame.getBtnRedo().setEnabled(false);
 			}
+			checkBtnState();
 	}
 	
-
 }

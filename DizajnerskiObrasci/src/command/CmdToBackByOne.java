@@ -26,7 +26,6 @@ public class CmdToBackByOne implements Command {
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override

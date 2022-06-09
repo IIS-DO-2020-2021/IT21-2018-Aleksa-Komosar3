@@ -55,7 +55,17 @@ public class DrawingFrame extends JFrame{
 	private final JButton btnSaveDrawing = new JButton("Save drawing");
 	private final JButton btnLoadDrawing = new JButton("Load drawing");
 	private JButton btnInnerColor = new JButton("Inner color");
+	private JButton btnDelete = new JButton("Delete");
+
 	
+	public JButton getBtnDelete() {
+		return btnDelete;
+	}
+
+	public void setBtnDelete(JButton btnDelete) {
+		this.btnDelete = btnDelete;
+	}
+
 	public JToggleButton getBtnHexagon() {
 		return btnHexagon;
 	}
@@ -122,9 +132,6 @@ public class DrawingFrame extends JFrame{
 
 	public JToggleButton getBtnSelect() {
 		return btnSelect;
-	}
-	public JButton getbtnModification(){
-		return btnModification;
 	}
 
 	public void setBtnSelect(JToggleButton btnSelect) {
@@ -226,13 +233,13 @@ public class DrawingFrame extends JFrame{
 		gbc_btnModification.gridx = 2;
 		gbc_btnModification.gridy = 0;
 		pnlNorth.add(btnModification, gbc_btnModification);
+		btnModification.setEnabled(false);
 		btnModification.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.editShape();
 			}
 		});
 		
-		JButton btnDelete = new JButton("Delete");
 		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
 		gbc_btnDelete.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDelete.gridx = 3;
@@ -286,12 +293,15 @@ public class DrawingFrame extends JFrame{
 			}
 		});
 		pnlNorth.add(btnOuterColor, gbc_btnOuterColor);
+		
+		btnDelete.setEnabled(false);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.deleteShape();
 			}
 		});
 		
+		btnSelect.setEnabled(false);
 		view.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -453,6 +463,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnUndo.gridy = 1;
 		btnUndo.setHorizontalAlignment(SwingConstants.RIGHT);
 		pnlEast.add(btnUndo, gbc_btnUndo);
+		btnUndo.setEnabled(false);
 		btnUndo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.undo();
@@ -469,6 +480,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnToFront.insets = new Insets(0, 0, 5, 5);
 		gbc_btnToFront.gridx = 0;
 		gbc_btnToFront.gridy = 3;
+		btnToFront.setEnabled(false);
 		btnToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToFrontByOne();
@@ -480,6 +492,8 @@ public class DrawingFrame extends JFrame{
 		gbc_btnToBack.insets = new Insets(0, 0, 5, 0);
 		gbc_btnToBack.gridx = 1;
 		gbc_btnToBack.gridy = 3;
+		
+		btnToBack.setEnabled(false);
 		btnToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.bringToBackByOne();
@@ -492,6 +506,8 @@ public class DrawingFrame extends JFrame{
 		gbc_btnBringToFront.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBringToFront.gridx = 0;
 		gbc_btnBringToFront.gridy = 5;
+		
+		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.fullBringToFront();
@@ -503,12 +519,16 @@ public class DrawingFrame extends JFrame{
 		gbc_btnBringToBack.anchor = GridBagConstraints.WEST;
 		gbc_btnBringToBack.gridx = 1;
 		gbc_btnBringToBack.gridy = 5;
+		
+		btnBringToBack.setEnabled(false);
 		btnBringToBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				controller.fullBringToBack();
 			}
 		});
 		pnlEast.add(btnBringToBack, gbc_btnBringToBack);
+		
+		btnRedo.setEnabled(false);
 		btnRedo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.redo();
