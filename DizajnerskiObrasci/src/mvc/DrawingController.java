@@ -176,7 +176,6 @@ public class DrawingController {
 		} else {
 			frame.getBtnOuterColor().setBackground(Color.BLACK);
 		}
-		
 	}
 	
 	public void innerColor(){
@@ -333,11 +332,11 @@ public class DrawingController {
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					
 					if(dlgHexagon.isColorChosen()) {
-						hexagon.setHexagonBorderColor(dlgHexagon.getColor());
+						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
 					} else {
 						hexagon.setColor(frame.getBtnOuterColor().getBackground());
 					}if (dlgHexagon.isInnerColorChosen()){
-						hexagon.setHexagonInnerColor(dlgHexagon.getInnerC());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
 					} else {
 						hexagon.setHexagonInnerColor(frame.getBtnInnerColor().getBackground());
 					}
@@ -543,12 +542,12 @@ public class DrawingController {
 					hexagon=new HexagonAdapter(point, 
 							Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					if(dlgHexagon.isColorChosen()){
-						hexagon.setHexagonBorderColor(dlgHexagon.getColor());
+						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
 					}else{
 						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
 					}
 					if(dlgHexagon.isInnerColorChosen()){
-						hexagon.setHexagonInnerColor(dlgHexagon.getInnerC());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
 					} else
 					{
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
