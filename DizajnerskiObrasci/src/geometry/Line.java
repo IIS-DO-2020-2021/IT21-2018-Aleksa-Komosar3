@@ -94,15 +94,16 @@ public class Line extends Shape implements Cloneable{
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+		if (obj instanceof Line) {
+			Line l = (Line) obj;
+			if (this.startPoint.equals(l.getStartPoint()) && this.endPoint.equals(l.getEndPoint())) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Line other = (Line) obj;
-		return Objects.equals(endPoint, other.endPoint) && selected == other.selected
-				&& Objects.equals(startPoint, other.startPoint);
+		}
 	}
 	
 	public Line clone(Line line) throws CloneNotSupportedException {

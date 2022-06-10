@@ -95,14 +95,17 @@ public class Donut extends Circle implements Cloneable{
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+		if (obj instanceof Donut) {
+			Donut d = (Donut) obj;
+			if (this.getCenter().equals(d.getCenter()) && this.getRadius() == d.getRadius()
+					&& this.innerRadius == d.getInnerRadius()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Donut other = (Donut) obj;
-		return innerRadius == other.innerRadius;
+		}
 	}
 	
 	public Donut clone(Donut donut) throws CloneNotSupportedException {

@@ -131,15 +131,17 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+		if (obj instanceof Rectangle) {
+			Rectangle r = (Rectangle) obj;
+			if (this.upperLeft.equals(r.getUpperLeft()) && this.height == r.getHeight()
+					&& this.width == r.getWidth()) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Rectangle other = (Rectangle) obj;
-		return height == other.height && selected == other.selected && Objects.equals(upperLeft,
-				other.upperLeft) && width == other.width;
+		}
 	}
 	
 	public Rectangle clone(Rectangle rectangle) throws CloneNotSupportedException {

@@ -7,22 +7,6 @@ public class CmdSelectShape implements Command {
 	
 	private DrawingModel model;
 	private Shape shape;
-	
-	public DrawingModel getModel() {
-		return model;
-	}
-
-	public void setModel(DrawingModel model) {
-		this.model = model;
-	}
-
-	public Shape getShape() {
-		return shape;
-	}
-
-	public void setShape(Shape shape) {
-		this.shape = shape;
-	}
 
 	public CmdSelectShape(DrawingModel model, Shape shape) {
 		super();

@@ -2,6 +2,7 @@ package mvc;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
@@ -46,8 +47,8 @@ public class DrawingController {
 	private Shape selShape;
 	private Point startPoint;
 	private Command command;
-	public Color color;
-	public Color innerColor;
+	public Color colorFrame;
+	public Color innerColorFrame;
 	private BtnUpdateObserver btnUpdateObserver;
 	private BtnUpdate btnUpdate=new BtnUpdate();
 
@@ -83,20 +84,12 @@ public class DrawingController {
 		this.startPoint = startPoint;
 	}
 
-	public Color getColor() {
-		return color;
+	public Color getColorFrame() {
+		return colorFrame;
 	}
-
-	public void setColor(Color color) {
-		this.color = color;
-	}
-
-	public Color getInnerColor() {
-		return innerColor;
-	}
-
-	public void setInnerColor(Color innerColor) {
-		this.innerColor = innerColor;
+	
+	public Color getInnerColorFrame() {
+		return innerColorFrame;
 	}
 
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
@@ -177,9 +170,9 @@ public class DrawingController {
 	}
 	
 	public void outerColor() {
-		color = JColorChooser.showDialog(null, "Choose color", frame.getBtnOuterColor().getBackground());
-		if (color != null){
-			frame.getBtnOuterColor().setBackground(color);
+		colorFrame = JColorChooser.showDialog(null, "Choose color", frame.getBtnOuterColor().getBackground());
+		if (colorFrame != null){
+			frame.getBtnOuterColor().setBackground(colorFrame);
 		} else {
 			frame.getBtnOuterColor().setBackground(Color.BLACK);
 		}
@@ -187,9 +180,9 @@ public class DrawingController {
 	}
 	
 	public void innerColor(){
-		innerColor = JColorChooser.showDialog(null, "Choose inner color", frame.getBtnInnerColor().getBackground());
-		if (innerColor != null){
-			frame.getBtnInnerColor().setBackground(innerColor);
+		innerColorFrame = JColorChooser.showDialog(null, "Choose inner color", frame.getBtnInnerColor().getBackground());
+		if (innerColorFrame != null){
+			frame.getBtnInnerColor().setBackground(innerColorFrame);
 	} else {
 		frame.getBtnInnerColor().setBackground(Color.BLACK);
 		}
@@ -198,22 +191,23 @@ public class DrawingController {
 	public void mouseClicked(MouseEvent e) {
 		command=null;
 		Shape newShape=null;
-		if (frame.getBtnSelect().isSelected() && model.getShapes()!=null){
+		selShape=null;
+		//model.getShapes()!=null
+		if (frame.getBtnSelect().isSelected()){
 			Iterator<Shape> iterate=model.getShapes().iterator();
 			while (iterate.hasNext()){
 				Shape shape = iterate.next();
-			if(shape.contains(e.getX(), e.getY())) {
-					selShape = shape;
-			
-			if (!selShape.isSelected()) {
-				command=new CmdSelectShape(model, selShape );
-				command.execute();
-				model.getUndo().add(command);
-			} else if (selShape.isSelected()){
-				command=new CmdDeselectShape(model, selShape);
-				command.execute();
-				model.getUndo().add(command);
-			}
+				if(shape.contains(e.getX(), e.getY())) {
+					if (!shape.isSelected()) {
+						command=new CmdSelectShape(model, shape);
+						command.execute();
+						model.getUndo().add(command);
+						selShape=shape;
+				} else if (shape.isSelected()){
+					command=new CmdDeselectShape(model, shape);
+					command.execute();
+					model.getUndo().add(command);
+				}
 			
 			break;
 			}
@@ -365,9 +359,11 @@ public class DrawingController {
 
 	protected void editShape(){
 		command=null;
-		if (selShape != null && model.getSelectedShapes().size()==1) {
-			if (selShape instanceof Point) {
-				Point point = (Point) selShape;
+		if (model.getSelectedShapes().size()==1) {
+			Shape sel = model.getSelectedShapes().get(0);
+			selShape=sel;
+			if (sel instanceof Point) {
+				Point point = (Point) sel;
 				DlgPoint dlgPoint = new DlgPoint();
 				dlgPoint.getTxtX().setText("" + point.getX());
 				dlgPoint.getTxtY().setText("" + point.getY());
@@ -381,14 +377,14 @@ public class DrawingController {
 					point = new Point(Integer.parseInt(dlgPoint.getTxtX().getText()),
 							Integer.parseInt(dlgPoint.getTxtY().getText()));
 					point.setColor(dlgPoint.getColor());			
-					command=new CmdModifyPoint((Point)selShape, point);
+					command=new CmdModifyPoint((Point)sel, point);
 					command.execute();
 					model.getUndo().add(command);
 					
-					selShape.setSelected(true);
+					//model.getSelectedShapes().get(0).setSelected(true);
 				}
-			} else if(selShape instanceof Line){
-				Line line= (Line)selShape;
+			} else if(sel instanceof Line){
+				Line line= (Line)sel;
 				DlgLine dlgLine = new DlgLine();
 				dlgLine.getTxtXs().setText("" + line.getStartPoint().getX());
 				dlgLine.getTxtYs().setText("" + line.getStartPoint().getY());
@@ -407,14 +403,14 @@ public class DrawingController {
 							Integer.parseInt(dlgLine.getTxtYe().getText()));
 					line = new Line(startPoint,endPoint);
 					line.setColor(dlgLine.getColor());
-					command=new CmdModifyLine((Line)selShape, line);
+					command=new CmdModifyLine((Line)sel, line);
 					command.execute();
 					model.getUndo().add(command);
 					
-					selShape.setSelected(true);
+					//model.getSelectedShapes().get(0).setSelected(true);
 				}
-			} else if (selShape instanceof Rectangle){
-				Rectangle rectangle= (Rectangle) selShape;
+			} else if (model.getSelectedShapes().get(0) instanceof Rectangle){
+				Rectangle rectangle= (Rectangle) model.getSelectedShapes().get(0);
 				DlgRectangle dlgRec=new DlgRectangle();
 				dlgRec.getTxtX().setText("" + rectangle.getUpperLeft().getX());
 				dlgRec.getTxtY().setText("" + rectangle.getUpperLeft().getY());
@@ -442,14 +438,21 @@ public class DrawingController {
 					} else {
 						rectangle.setInnerColor(dlgRec.getInnerPc());
 					}
-					command=new CmdModifyRectangle((Rectangle)selShape, rectangle);
+					command=new CmdModifyRectangle((Rectangle)model.getSelectedShapes().get(0), rectangle);
 					command.execute();
 					model.getUndo().add(command);
 					
-					selShape.setSelected(true);
+					ArrayList<Shape> selected = new ArrayList<>();
+					for(Shape s: model.getSelectedShapes()) {
+						Shape sh = s;
+						s.setSelected(false);
+						selected.add(sh);
+					}
+					model.setSelectedShapes(selected);
+					model.getSelectedShapes().get(0).setSelected(true);
 				}
-			} else if (selShape instanceof Donut){
-				Donut donut= (Donut) selShape;
+			} else if (model.getSelectedShapes().get(0) instanceof Donut){
+				Donut donut= (Donut)model.getSelectedShapes().get(0);
 				DlgDonut dlgDonut = new DlgDonut();
 				dlgDonut.getTxtX().setText("" + donut.getCenter().getX());
 				dlgDonut.getTxtY().setText("" + donut.getCenter().getY());
@@ -477,14 +480,21 @@ public class DrawingController {
 					}else{
 						donut.setInnerColor(dlgDonut.getInnerPc());
 					}
-					command=new CmdModifyDonut((Donut)selShape, donut);
+					command=new CmdModifyDonut((Donut)model.getSelectedShapes().get(0), donut);
 					command.execute();
 					model.getUndo().add(command);
 					
-					selShape.setSelected(true);
+					ArrayList<Shape> selected = new ArrayList<>();
+					for(Shape s: model.getSelectedShapes()) {
+						Shape sh = s;
+						s.setSelected(false);
+						selected.add(sh);
+					}
+					model.setSelectedShapes(selected);
+					model.getSelectedShapes().get(0).setSelected(true);
 				}
-			} else if(selShape instanceof Circle){
-				Circle circle= (Circle) selShape;
+			} else if(model.getSelectedShapes().get(0) instanceof Circle){
+				Circle circle= (Circle) model.getSelectedShapes().get(0);
 				DlgCircle dlgCircle= new DlgCircle();
 				dlgCircle.getTxtX().setText("" + circle.getCenter().getX());
 				dlgCircle.getTxtY().setText("" + circle.getCenter().getY());
@@ -511,12 +521,12 @@ public class DrawingController {
 					{
 						circle.setInnerColor(dlgCircle.getInnerPc());
 					}
-					command=new CmdModifyCircle((Circle)selShape, circle);
+					command=new CmdModifyCircle((Circle)model.getSelectedShapes().get(0), circle);
 					command.execute();
 					model.getUndo().add(command);
 				}
-			}else if(selShape instanceof HexagonAdapter){
-				HexagonAdapter hexagon= (HexagonAdapter) selShape;
+			}else if(model.getSelectedShapes().get(0) instanceof HexagonAdapter){
+				HexagonAdapter hexagon= (HexagonAdapter) model.getSelectedShapes().get(0);
 				DlgHexagon dlgHexagon= new DlgHexagon();
 				dlgHexagon.getTxtX().setText("" + hexagon.getHexagon().getX());
 				dlgHexagon.getTxtY().setText("" + hexagon.getHexagon().getY());
@@ -543,11 +553,18 @@ public class DrawingController {
 					{
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
 					}
-					command=new CmdModifyHexagon((HexagonAdapter)selShape, hexagon);
+					command=new CmdModifyHexagon((HexagonAdapter)model.getSelectedShapes().get(0), hexagon);
 					command.execute();
 					model.getUndo().add(command);
 					
-					selShape.setSelected(true);
+					ArrayList<Shape> selected = new ArrayList<>();
+					for(Shape s: model.getSelectedShapes()) {
+						Shape sh = s;
+						s.setSelected(false);
+						selected.add(sh);
+					}
+					model.setSelectedShapes(selected);
+					model.getSelectedShapes().get(0).setSelected(true);
 				}
 			} 	
 			frame.repaint();
