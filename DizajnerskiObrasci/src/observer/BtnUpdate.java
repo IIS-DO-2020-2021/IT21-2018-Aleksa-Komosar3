@@ -19,10 +19,23 @@ public class BtnUpdate {
 	private boolean btnBringFullFrontAct;
 	private boolean btnToBackAct;
 	private boolean btnToFrontAct;
+	
+	private boolean btnUndoAct;
+	private boolean btnRedoAct;
 
 	public BtnUpdate() {
 		super();
 		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
+	
+	public void setBtnUndoAct(boolean btnUndoAct) {
+		propertyChangeSupport.firePropertyChange("btnUndo", this.btnUndoAct, btnUndoAct);
+		this.btnUndoAct = btnUndoAct;
+	}
+	
+	public void setBtnRedoAct(boolean btnRedoAct) {
+		propertyChangeSupport.firePropertyChange("btnRedo", this.btnRedoAct, btnRedoAct);
+		this.btnRedoAct = btnRedoAct;
 	}
 	
 	public void setBtnSelectAct(boolean btnSelectAct) {

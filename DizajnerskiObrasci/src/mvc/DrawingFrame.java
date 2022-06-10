@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -46,7 +47,7 @@ public class DrawingFrame extends JFrame{
 	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
 	private JButton btnModification = new JButton("Modification");
 	private JButton btnUndo = new JButton("Undo ");
-	private final JButton btnRedo = new JButton("Redo");
+	private JButton btnRedo = new JButton("Redo");
 	ButtonGroup btnGroup = new ButtonGroup();
 	private final JButton btnOuterColor = new JButton("Outer color");
 	private final JScrollPane scrollPane = new JScrollPane();
@@ -63,6 +64,8 @@ public class DrawingFrame extends JFrame{
 	private final JButton btnLoadDrawing = new JButton("Load drawing");
 	private JButton btnInnerColor = new JButton("Inner color");
 	private JButton btnDelete = new JButton("Delete");
+	public Color colorFrame;
+	public Color innerColorFrame;
 
 	public DrawingFrame() {
 		setFont(new Font("Bahnschrift", Font.PLAIN, 12));
@@ -123,7 +126,7 @@ public class DrawingFrame extends JFrame{
 		
 		btnInnerColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.innerColor();
+				innerColor();
 				getBtnInnerColor().setSelected(false);
 			}
 		});
@@ -148,7 +151,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnOuterColor.gridy = 1;
 		btnOuterColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.outerColor();
+				borderColor();
 			}
 		});
 		pnlNorth.add(btnOuterColor, gbc_btnOuterColor);
@@ -393,5 +396,23 @@ public class DrawingFrame extends JFrame{
 				controller.redo();
 			}
 		});	
+	}
+	
+	public void borderColor() {
+		colorFrame = JColorChooser.showDialog(null, "Choose color", getBtnOuterColor().getBackground());
+		if (colorFrame != null){
+			getBtnOuterColor().setBackground(colorFrame);
+		} else {
+			getBtnOuterColor().setBackground(Color.BLACK);
+		}
+	}
+	
+	public void innerColor(){
+		innerColorFrame = JColorChooser.showDialog(null, "Choose inner color", getBtnInnerColor().getBackground());
+		if (innerColorFrame != null){
+			getBtnInnerColor().setBackground(innerColorFrame);
+	} else {
+		getBtnInnerColor().setBackground(Color.BLACK);
+		}
 	}
 }

@@ -1,12 +1,9 @@
 package mvc;
-
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.ImageIcon;
-import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
@@ -54,8 +51,6 @@ public class DrawingController {
 	private Shape selShape;
 	private Point startPoint;
 	private Command command;
-	public Color colorFrame;
-	public Color innerColorFrame;
 	private BtnUpdateObserver btnUpdateObserver;
 	private BtnUpdate btnUpdate=new BtnUpdate();
 
@@ -67,14 +62,27 @@ public class DrawingController {
 		
 	}
 	
+	public void btnsUndoRedo(){
+		if (model.getUndo().size()==0 && model.getUndo().isEmpty()){
+			btnUpdate.setBtnUndoAct(false);
+		} else {
+			btnUpdate.setBtnUndoAct(true);
+		}
+		if(model.getRedo().size()==0 && model.getRedo().isEmpty()) {
+			btnUpdate.setBtnRedoAct(false);
+		} else {
+			btnUpdate.setBtnRedoAct(true);
+		}
+	}
+	
 	public void checkBtnState() {
+		btnsUndoRedo();
 		if (model.getShapes().size() != 0) {
 			btnUpdate.setBtnSelectAct(true);
 			if (model.getSelectedShapes().size() > 0) {
 				if (model.getSelectedShapes().size() == 1) {
 					btnUpdate.setBtnModificationAct(true);
 					btnUpdate.setBtnDeleteAct(true);
-					btnsUpdate();
 				} else {
 					btnUpdate.setBtnModificationAct(false);
 					btnUpdate.setBtnToBackAct(false);
@@ -83,7 +91,6 @@ public class DrawingController {
 					btnUpdate.setBtnBringFullBackAct(false);
 					btnUpdate.setBtnDeleteAct(true);
 				}
-				btnUpdate.setBtnDeleteAct(true);
 			}else{
 				btnUpdate.setBtnDeleteAct(false);
 				btnUpdate.setBtnModificationAct(false);
@@ -101,12 +108,13 @@ public class DrawingController {
 			btnUpdate.setBtnToBackAct(false);
 			btnUpdate.setBtnToFrontAct(false);
 		}
+		btnsUpdate();
 	}
 
 	public void btnsUpdate() {
 		int i=0;
 		if(model.getSelectedShapes().size() == 1) {
-			i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
+				i = model.getShapes().indexOf(model.getSelectedShapes().get(0));
 			if (model.getShapes().size() == 1) {
 				btnUpdate.setBtnBringFullBackAct(false);
 				btnUpdate.setBtnBringFullFrontAct(false);
@@ -122,7 +130,7 @@ public class DrawingController {
 					btnUpdate.setBtnBringFullFrontAct(false);
 					btnUpdate.setBtnToBackAct(true);
 					btnUpdate.setBtnBringFullBackAct(true);
-			} else if (i>0 && model.getShapes().size() > i + 1) {
+			} else if (model.getShapes().size() > i + 1 && i>0) {
 				btnUpdate.setBtnBringFullBackAct(true);
 				btnUpdate.setBtnBringFullFrontAct(true);
 				btnUpdate.setBtnToBackAct(true);
@@ -135,31 +143,13 @@ public class DrawingController {
 			btnUpdate.setBtnToFrontAct(false);
 		}
 	}
-	
-	public void outerColor() {
-		colorFrame = JColorChooser.showDialog(null, "Choose color", frame.getBtnOuterColor().getBackground());
-		if (colorFrame != null){
-			frame.getBtnOuterColor().setBackground(colorFrame);
-		} else {
-			frame.getBtnOuterColor().setBackground(Color.BLACK);
-		}
-	}
-	
-	public void innerColor(){
-		innerColorFrame = JColorChooser.showDialog(null, "Choose inner color", frame.getBtnInnerColor().getBackground());
-		if (innerColorFrame != null){
-			frame.getBtnInnerColor().setBackground(innerColorFrame);
-	} else {
-		frame.getBtnInnerColor().setBackground(Color.BLACK);
-		}
-	}
 
 	public void mouseClicked(MouseEvent e) {
 		command=null;
 		Shape newShape=null;
 		selShape=null;
-		//model.getShapes()!=null
-		if (frame.getBtnSelect().isSelected()){
+		
+		if (frame.getBtnSelect().isSelected() && model.getShapes()!= null){
 			Iterator<Shape> iterate=model.getShapes().iterator();
 			while (iterate.hasNext()){
 				Shape shape = iterate.next();
@@ -450,14 +440,7 @@ public class DrawingController {
 					command.execute();
 					model.getUndo().add(command);
 					
-					ArrayList<Shape> selected = new ArrayList<>();
-					for(Shape s: model.getSelectedShapes()) {
-						Shape sh = s;
-						s.setSelected(false);
-						selected.add(sh);
-					}
-					model.setSelectedShapes(selected);
-					model.getSelectedShapes().get(0).setSelected(true);
+					//model.getSelectedShapes().get(0).setSelected(true);
 				}
 			} else if(model.getSelectedShapes().get(0) instanceof Circle){
 				Circle circle= (Circle) model.getSelectedShapes().get(0);

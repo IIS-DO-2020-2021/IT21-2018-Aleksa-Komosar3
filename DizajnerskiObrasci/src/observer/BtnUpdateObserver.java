@@ -12,11 +12,6 @@ import mvc.DrawingFrame;
 @AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class BtnUpdateObserver implements PropertyChangeListener {
 	private DrawingFrame frame;
-
-	/*public BtnUpdateObserver(DrawingFrame frame) {
-		super();
-		this.frame = frame;
-	}*/
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -34,6 +29,10 @@ public class BtnUpdateObserver implements PropertyChangeListener {
 			frame.getBtnToBack().setEnabled((boolean) evt.getNewValue());
 		} if (evt.getPropertyName().equals("btnBringToBack")) {
 			frame.getBtnBringToBack().setEnabled((boolean) evt.getNewValue());
+		} if (evt.getPropertyName().equals("btnUndo")) {
+			frame.getBtnUndo().setEnabled((boolean) evt.getNewValue());
+		} if (evt.getPropertyName().equals("btnRedo")) {
+			frame.getBtnRedo().setEnabled((boolean) evt.getNewValue());
 		}
 	}
 }
