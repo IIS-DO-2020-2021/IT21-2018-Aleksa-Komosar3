@@ -21,6 +21,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
+@AllArgsConstructor @Getter @Setter @ToString
 public class DlgLine extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -197,69 +204,4 @@ public class DlgLine extends JDialog {
 			}
 		}
 	}
-
-	public JTextField getTxtXs() {
-		return txtXs;
-	}
-
-	public void setTxtXs(JTextField txtXs) {
-		this.txtXs = txtXs;
-	}
-
-	public JTextField getTxtYs() {
-		return txtYs;
-	}
-
-	public void setTxtYs(JTextField txtYs) {
-		this.txtYs = txtYs;
-	}
-
-	public JTextField getTxtXe() {
-		return txtXe;
-	}
-
-	public void setTxtXe(JTextField txtXe) {
-		this.txtXe = txtXe;
-	}
-
-	public JTextField getTxtYe() {
-		return txtYe;
-	}
-
-	public void setTxtYe(JTextField txtYe) {
-		this.txtYe = txtYe;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color c) {
-		this.color = c;
-	}
-
-	public boolean isOK() {
-		return isOK;
-	}
-
-	public void setOK(boolean isOK) {
-		this.isOK = isOK;
-	}
-
-	public Color getPicked() {
-		return picked;
-	}
-
-	public void setPicked(Color picked) {
-		this.picked = picked;
-	}
-	
-	public boolean isColorChosen() {
-		return colorChosen;
-	}
-
-	public void setColorChosen(boolean colorChosen) {
-		this.colorChosen = colorChosen;
-	}
-	
 }

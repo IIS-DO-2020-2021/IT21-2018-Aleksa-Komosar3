@@ -20,6 +20,13 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+
+@AllArgsConstructor @Getter @Setter @ToString
 public class DlgHexagon extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -183,85 +190,4 @@ public class DlgHexagon extends JDialog {
 			}
 		}
 	}
-
-	public JTextField getTxtX() {
-		return txtX;
-	}
-
-	public void setTxtX(JTextField txtX) {
-		this.txtX = txtX;
-	}
-
-	public JTextField getTxtY() {
-		return txtY;
-	}
-
-	public void setTxtY(JTextField txtY) {
-		this.txtY = txtY;
-	}
-
-	public JTextField getTxtRadius() {
-		return txtRadius;
-	}
-
-	public void setTxtRadius(JTextField txtRadius) {
-		this.txtRadius = txtRadius;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color c) {
-		this.color = c;
-	}
-
-	public Color getInnerC() {
-		return innerColor;
-	}
-
-	public void setInnerC(Color innerC) {
-		this.innerColor = innerC;
-	}
-
-	public boolean isOK() {
-		return isOK;
-	}
-
-	public void setOK(boolean isOK) {
-		this.isOK = isOK;
-	}
-
-	public Color getPc() {
-		return picked;
-	}
-
-	public void setPc(Color pc) {
-		this.picked = pc;
-	}
-
-	public Color getInnerPc() {
-		return innerPickedColor;
-	}
-
-	public void setInnerPc(Color innerPc) {
-		this.innerPickedColor = innerPc;
-	}
-
-	public boolean isColorChosen() {
-		return colorChosen;
-	}
-
-	public void setColorChosen(boolean colorChosen) {
-		this.colorChosen = colorChosen;
-	}
-
-	public boolean isInnerColorChosen() {
-		return innerColorChosen;
-	}
-
-	public void setInnerColorChosen(boolean innerColorChosen) {
-		this.innerColorChosen = innerColorChosen;
-	}
-
 }

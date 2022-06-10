@@ -2,16 +2,21 @@ package observer;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import mvc.DrawingFrame;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class BtnUpdateObserver implements PropertyChangeListener {
 	private DrawingFrame frame;
 
-	public BtnUpdateObserver(DrawingFrame frame) {
+	/*public BtnUpdateObserver(DrawingFrame frame) {
 		super();
 		this.frame = frame;
-	}
+	}*/
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {

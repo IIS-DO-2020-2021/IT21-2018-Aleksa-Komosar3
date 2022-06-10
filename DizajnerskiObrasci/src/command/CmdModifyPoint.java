@@ -1,7 +1,13 @@
 package command;
 
 import geometry.Point;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class CmdModifyPoint implements Command {
 	
 	private Point oldPoint, newPoint;

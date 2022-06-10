@@ -5,7 +5,13 @@ import java.util.Stack;
 
 import command.Command;
 import geometry.Shape;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class DrawingModel {
 
 	private ArrayList<Shape> shapes = new ArrayList<Shape>();
@@ -13,49 +19,18 @@ public class DrawingModel {
 	private Stack<Command> undo=new Stack<Command>();
 	private Stack<Command> redo=new Stack<Command>();
 	
-	public DrawingModel() {
-		
-	}
-
-	public Stack<Command> getUndo() {
-		return undo;
-	}
-	public void setUndo(Stack<Command> undo) {
-		this.undo = undo;
-	}
-	public Stack<Command> getRedo() {
-		return redo;
-	}
-	public void setRedo(Stack<Command> redo) {
-		this.redo = redo;
-	}
-	public ArrayList<Shape> getShapes() {
-		return shapes;
-	}
-	public void setShapes(ArrayList<Shape> shapes) {
-		this.shapes = shapes;
-	}
-	public ArrayList<Shape> getSelectedShapes() {
-		return selectedShapes;
-	}
-	public void setSelectedShapes(ArrayList<Shape> selectedShapes) {
-		this.selectedShapes = selectedShapes;
-	}
 	public void addShapeToListOfSelected (Shape shape){
 		selectedShapes.add(shape);
 	}
 	public void deleteShapeFromSelectedList(Shape shape){
 		selectedShapes.remove(shape);
 	}
-	
 	public void addShapeToList (Shape shape) {
 		shapes.add(shape);
 	}
-	
 	public void deleteShapeFromList(Shape shape){
 		shapes.remove(shape);
 	}
-	
 	public void deleteAll(ArrayList<Shape> shapes){
 		shapes.removeAll(shapes);
 	}

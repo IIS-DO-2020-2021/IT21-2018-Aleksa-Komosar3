@@ -38,10 +38,17 @@ import gui.DlgHexagon;
 import gui.DlgLine;
 import gui.DlgPoint;
 import gui.DlgRectangle;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import observer.BtnUpdate;
 import observer.BtnUpdateObserver;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class DrawingController {
+	
 	private DrawingModel model;
 	private DrawingFrame frame;
 	private Shape selShape;
@@ -51,46 +58,6 @@ public class DrawingController {
 	public Color innerColorFrame;
 	private BtnUpdateObserver btnUpdateObserver;
 	private BtnUpdate btnUpdate=new BtnUpdate();
-
-	public DrawingModel getModel() {
-		return model;
-	}
-
-	public void setModel(DrawingModel model) {
-		this.model = model;
-	}
-
-	public DrawingFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(DrawingFrame frame) {
-		this.frame = frame;
-	}
-
-	public Shape getSelected() {
-		return selShape;
-	}
-
-	public void setSelected(Shape selected) {
-		this.selShape = selected;
-	}
-
-	public Point getStartPoint() {
-		return startPoint;
-	}
-
-	public void setStartPoint(Point startPoint) {
-		this.startPoint = startPoint;
-	}
-
-	public Color getColorFrame() {
-		return colorFrame;
-	}
-	
-	public Color getInnerColorFrame() {
-		return innerColorFrame;
-	}
 
 	public DrawingController(DrawingModel model, DrawingFrame frame) {
 		this.model = model;
@@ -272,7 +239,7 @@ public class DrawingController {
 				}else {
 					circle.setColor(frame.getBtnOuterColor().getBackground());
 				}if (dlgCircle.isInnerColorChosen()){
-					circle.setInnerColor(dlgCircle.getInnerC());
+					circle.setInnerColor(dlgCircle.getInnerColor());
 				} else {
 					circle.setInnerColor(frame.getBtnInnerColor().getBackground());
 				}
@@ -332,11 +299,11 @@ public class DrawingController {
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					
 					if(dlgHexagon.isColorChosen()) {
-						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
+						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					} else {
 						hexagon.setColor(frame.getBtnOuterColor().getBackground());
 					}if (dlgHexagon.isInnerColorChosen()){
-						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
 					} else {
 						hexagon.setHexagonInnerColor(frame.getBtnInnerColor().getBackground());
 					}
@@ -416,7 +383,7 @@ public class DrawingController {
 				dlgRec.getTxtHeight().setText("" + rectangle.getHeight());
 				dlgRec.getTxtWidth().setText("" + rectangle.getWidth());
 				dlgRec.setPicked(rectangle.getColor());
-				dlgRec.setInnerPc(rectangle.getInnerColor());
+				dlgRec.setInnerPickedColor(rectangle.getInnerColor());
 				dlgRec.setModal(true);
 				dlgRec.setTitle("Edit rectangle");
 				dlgRec.setVisible(true);
@@ -435,7 +402,7 @@ public class DrawingController {
 					if(dlgRec.isInnerColorChosen()){
 						rectangle.setInnerColor(dlgRec.getInnerColor());
 					} else {
-						rectangle.setInnerColor(dlgRec.getInnerPc());
+						rectangle.setInnerColor(dlgRec.getInnerPickedColor());
 					}
 					command=new CmdModifyRectangle((Rectangle)model.getSelectedShapes().get(0), rectangle);
 					command.execute();
@@ -457,8 +424,8 @@ public class DrawingController {
 				dlgDonut.getTxtY().setText("" + donut.getCenter().getY());
 				dlgDonut.getTxtRadius().setText("" + donut.getRadius());
 				dlgDonut.getTxtInnerRadius().setText("" + donut.getInnerRadius());
-				dlgDonut.setPc(donut.getColor());
-				dlgDonut.setInnerPc(donut.getInnerColor());
+				dlgDonut.setPicked(donut.getColor());
+				dlgDonut.setInnerPickedColor(donut.getInnerColor());
 				dlgDonut.setModal(true);
 				dlgDonut.setTitle("Edit donut");
 				dlgDonut.setVisible(true);
@@ -472,12 +439,12 @@ public class DrawingController {
 					if(dlgDonut.isColorChosen()){
 						donut.setColor(dlgDonut.getColor());
 					} else {
-						donut.setColor(dlgDonut.getPc());
+						donut.setColor(dlgDonut.getPicked());
 					}
 					if(dlgDonut.isInnerColorChosen()){
 						donut.setInnerColor(dlgDonut.getInnerColor());
 					}else{
-						donut.setInnerColor(dlgDonut.getInnerPc());
+						donut.setInnerColor(dlgDonut.getInnerPickedColor());
 					}
 					command=new CmdModifyDonut((Donut)model.getSelectedShapes().get(0), donut);
 					command.execute();
@@ -498,8 +465,8 @@ public class DrawingController {
 				dlgCircle.getTxtX().setText("" + circle.getCenter().getX());
 				dlgCircle.getTxtY().setText("" + circle.getCenter().getY());
 				dlgCircle.getTxtRadius().setText("" + circle.getRadius());
-				dlgCircle.setPc(circle.getColor());
-				dlgCircle.setInnerPc(circle.getInnerColor());
+				dlgCircle.setPicked(circle.getColor());
+				dlgCircle.setInnerPickedColor(circle.getInnerColor());
 				dlgCircle.setModal(true);
 				dlgCircle.setTitle("Edit circle");
 				dlgCircle.setVisible(true);
@@ -512,13 +479,13 @@ public class DrawingController {
 						circle.setColor(dlgCircle.getColor());
 					}else
 					{
-						circle.setColor(dlgCircle.getPc());
+						circle.setColor(dlgCircle.getPicked());
 					}
 					if(dlgCircle.isInnerColorChosen()){
-						circle.setInnerColor(dlgCircle.getInnerC());
+						circle.setInnerColor(dlgCircle.getInnerColor());
 					} else 
 					{
-						circle.setInnerColor(dlgCircle.getInnerPc());
+						circle.setInnerColor(dlgCircle.getInnerPickedColor());
 					}
 					command=new CmdModifyCircle((Circle)model.getSelectedShapes().get(0), circle);
 					command.execute();
@@ -530,8 +497,8 @@ public class DrawingController {
 				dlgHexagon.getTxtX().setText("" + hexagon.getHexagon().getX());
 				dlgHexagon.getTxtY().setText("" + hexagon.getHexagon().getY());
 				dlgHexagon.getTxtRadius().setText("" + hexagon.getHexagon().getR());
-				dlgHexagon.setPc(hexagon.getHexagonBorderColor());
-				dlgHexagon.setInnerPc(hexagon.getHexagonBorderColor());
+				dlgHexagon.setPicked(hexagon.getHexagonBorderColor());
+				dlgHexagon.setInnerPickedColor(hexagon.getHexagonBorderColor());
 				dlgHexagon.setModal(true);
 				dlgHexagon.setTitle("Edit hexagon");
 				dlgHexagon.setVisible(true);
@@ -542,15 +509,15 @@ public class DrawingController {
 					hexagon=new HexagonAdapter(point, 
 							Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					if(dlgHexagon.isColorChosen()){
-						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
+						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					}else{
-						hexagon.setHexagonBorderColor(dlgHexagon.getPc());
+						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					}
 					if(dlgHexagon.isInnerColorChosen()){
-						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
 					} else
 					{
-						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPc());
+						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
 					}
 					command=new CmdModifyHexagon((HexagonAdapter)model.getSelectedShapes().get(0), hexagon);
 					command.execute();

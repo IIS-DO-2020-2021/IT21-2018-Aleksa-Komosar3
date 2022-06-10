@@ -23,10 +23,6 @@ import geometry.Donut;
 import geometry.Shape;
 
 public class FrmDrawing extends JFrame {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private PnlDrawing pnlDrawing= new PnlDrawing(this);
 	private JPanel contentPane;
@@ -38,9 +34,6 @@ public class FrmDrawing extends JFrame {
 	private JToggleButton tglbtnDonut = new JToggleButton("Donut");
 	private JToggleButton tglbtnSelection = new JToggleButton("Selection");
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -53,10 +46,6 @@ public class FrmDrawing extends JFrame {
 			}
 		});
 	}
-
-	/**
-	 * Create the frame.
-	 */
 	public FrmDrawing() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 700);
@@ -173,7 +162,7 @@ public class FrmDrawing extends JFrame {
 				dlg.getTxtHeight().setText(""+r.getHeight());
 				dlg.getTxtWidth().setText(""+r.getWidth());
 				dlg.setPicked(r.getColor());
-				dlg.setInnerPc(r.getInnerColor());
+				dlg.setInnerPickedColor(r.getInnerColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if(dlg.isOK()){
@@ -191,7 +180,7 @@ public class FrmDrawing extends JFrame {
 					if(dlg.isInnerColorChosen()){
 						r.setInnerColor(dlg.getInnerColor());
 					}else{
-						r.setInnerColor(dlg.getInnerPc());
+						r.setInnerColor(dlg.getInnerPickedColor());
 					}
 					pnlDrawing.getShapes().set(pnlDrawing.getShapes().indexOf(selected), r);
 				}
@@ -202,8 +191,8 @@ public class FrmDrawing extends JFrame {
 				dlg.getTxtY().setText("" + d.getCenter().getY());
 				dlg.getTxtRadius().setText(""+d.getRadius());
 				dlg.getTxtInnerRadius().setText(""+d.getInnerRadius());
-				dlg.setPc(d.getColor());
-				dlg.setInnerPc(d.getInnerColor());
+				dlg.setPicked(d.getColor());
+				dlg.setInnerPickedColor(d.getInnerColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if(dlg.isOK()){
@@ -216,12 +205,12 @@ public class FrmDrawing extends JFrame {
 					if(dlg.isColorChosen()){
 						d.setColor(dlg.getColor());
 					}else{
-						d.setColor(dlg.getPc());
+						d.setColor(dlg.getPicked());
 					}
 					if(dlg.isInnerColorChosen()){
 						d.setInnerColor(dlg.getInnerColor());
 					}else{
-						d.setInnerColor(dlg.getInnerPc());
+						d.setInnerColor(dlg.getInnerPickedColor());
 					}
 					pnlDrawing.getShapes().set(pnlDrawing.getShapes().indexOf(selected), d);
 				}
@@ -231,8 +220,8 @@ public class FrmDrawing extends JFrame {
 				dlg.getTxtX().setText("" + c.getCenter().getX());
 				dlg.getTxtY().setText("" + c.getCenter().getY());
 				dlg.getTxtRadius().setText(""+c.getRadius());
-				dlg.setPc(c.getColor());
-				dlg.setInnerPc(c.getInnerColor());
+				dlg.setPicked(c.getColor());
+				dlg.setInnerPickedColor(c.getInnerColor());
 				dlg.setModal(true);
 				dlg.setVisible(true);
 				if(dlg.isOK()){
@@ -244,12 +233,12 @@ public class FrmDrawing extends JFrame {
 					if(dlg.isColorChosen()){
 						c.setColor(dlg.getColor());
 					}else{
-						c.setColor(dlg.getPc());
+						c.setColor(dlg.getPicked());
 					}
 					if(dlg.isInnerColorChosen()){
-						c.setInnerColor(dlg.getInnerC());
+						c.setInnerColor(dlg.getInnerColor());
 					}else{
-						c.setInnerColor(dlg.getInnerPc());
+						c.setInnerColor(dlg.getInnerPickedColor());
 					}
 					pnlDrawing.getShapes().set(pnlDrawing.getShapes().indexOf(selected), c);
 				}

@@ -6,14 +6,17 @@ import java.awt.Graphics2D;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class Donut extends Circle implements Cloneable{
 	
 	private static final long serialVersionUID = 1L;
 	private int innerRadius;
-	
-	public Donut() {
-		
-	}
 	
 	public Donut(Point center, int radius, int innerRadius) {
 		super(center, radius);
@@ -83,14 +86,6 @@ public class Donut extends Circle implements Cloneable{
 	
 	public void moveOn(int onX, int onY){
 		super.moveOn(onX, onY);
-	}
-	
-	public int getInnerRadius() {
-		return innerRadius;
-	}
-
-	public void setInnerRadius(int innerRadius) {
-		this.innerRadius=innerRadius;
 	}
 	
 	@Override

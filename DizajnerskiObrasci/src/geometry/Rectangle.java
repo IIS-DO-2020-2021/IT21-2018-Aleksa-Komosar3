@@ -2,32 +2,25 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class Rectangle extends SurfaceShape implements Cloneable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Point upperLeft=new Point();
 	private int height;
 	private int width;
 	private boolean selected;
-	
-	public Rectangle() {
 
-	}
-	
 	public Rectangle(Point upperLeftPoint, int height, int width) {
 		this.upperLeft = upperLeftPoint;
 		this.height = height;
 		this.width = width;
-	}
-	
-	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected) {
-		this(upperLeftPoint, height, width);
-		this.selected = selected;
 	}
 	
 	public Rectangle(Point upperLeftPoint, int height, int width, boolean selected, Color color) {
@@ -102,31 +95,6 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 	
 	public void moveOn(int onX, int onY){
 		upperLeft.moveOn(onX, onY);
-	}
-	
-	public Point getUpperLeft() {
-		return upperLeft;
-	}
-	public void setUpperLeft(Point upperLeft) {
-		this.upperLeft = upperLeft;
-	}
-	public int getHeight() {
-		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
-	public boolean isSelected() {
-		return selected;
-	}
-	public void setSelected(boolean selected) {
-		this.selected = selected;
 	}
 	
 	@Override

@@ -2,29 +2,23 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class Line extends Shape implements Cloneable{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Point startPoint=new Point();
 	private Point endPoint=new Point();
 	private boolean selected;
 	
-	public Line() {
-		
-	}
-	
 	public Line(Point startPoint, Point endPoint) {
 		this.startPoint = startPoint;
 		this.endPoint = endPoint;
-	}
-	
-	public Line(Point startPoint, Point endPoint, boolean selected) {
-		this(startPoint, endPoint);
-		this.selected = selected;
 	}
 	
 	public Line(Point startPoint, Point endPoint, boolean selected, Color color) {
@@ -71,26 +65,6 @@ public class Line extends Shape implements Cloneable{
 		startPoint.moveOn(onX, onY);
 		endPoint.moveOn(onX, onY);		
 	}
-	
-	public Point getStartPoint() {
-		return startPoint;
-	}
-	public void setStartPoint(Point startPoint) {
-		this.startPoint = startPoint;
-	}
-	public Point getEndPoint() {
-		return endPoint;
-	}
-	public void setEndPoint(Point endPoint) {
-		this.endPoint = endPoint;
-	}
-	public boolean isSelected() {
-		return selected;
-	}
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-	
 	
 	@Override
 	public boolean equals(Object obj) {

@@ -91,7 +91,7 @@ public class PnlDrawing extends JPanel{
 			}
 			c = new Circle(new Point(e.getX(),e.getY()), v1);
 			c.setColor(dlg.getColor());
-			c.setInnerColor(dlg.getInnerC());
+			c.setInnerColor(dlg.getInnerColor());
 			try {
 				newShape= c;
 			} catch (Exception ex){

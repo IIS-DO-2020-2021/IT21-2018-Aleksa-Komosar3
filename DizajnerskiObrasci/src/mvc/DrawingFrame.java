@@ -13,18 +13,25 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JLabel;
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import java.awt.Font;
 import javax.swing.UIManager;
 
+@AllArgsConstructor @Getter @Setter @ToString
 public class DrawingFrame extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
@@ -56,154 +63,6 @@ public class DrawingFrame extends JFrame{
 	private final JButton btnLoadDrawing = new JButton("Load drawing");
 	private JButton btnInnerColor = new JButton("Inner color");
 	private JButton btnDelete = new JButton("Delete");
-
-	
-	public JButton getBtnDelete() {
-		return btnDelete;
-	}
-
-	public void setBtnDelete(JButton btnDelete) {
-		this.btnDelete = btnDelete;
-	}
-
-	public JToggleButton getBtnHexagon() {
-		return btnHexagon;
-	}
-
-	public void setBtnHexagon(JToggleButton btnHexagon) {
-		this.btnHexagon = btnHexagon;
-	}
-
-	public DrawingView getView() {
-		return view;
-	}
-
-	public void setView(DrawingView view) {
-		this.view = view;
-	}
-
-	public DrawingController getController() {
-		return controller;
-	}
-
-	public void setController(DrawingController controller) {
-		this.controller = controller;
-	}
-
-	public JToggleButton getBtnPoint() {
-		return btnPoint;
-	}
-
-	public void setBtnPoint(JToggleButton btnPoint) {
-		this.btnPoint = btnPoint;
-	}
-
-	public JToggleButton getBtnLine() {
-		return btnLine;
-	}
-
-	public void setBtnLine(JToggleButton btnLine) {
-		this.btnLine = btnLine;
-	}
-
-	public JToggleButton getBtnRectangle() {
-		return btnRectangle;
-	}
-
-	public void setBtnRectangle(JToggleButton btnRectangle) {
-		this.btnRectangle = btnRectangle;
-	}
-
-	public JToggleButton getBtnCircle() {
-		return btnCircle;
-	}
-
-	public void setBtnCircle(JToggleButton btnCircle) {
-		this.btnCircle = btnCircle;
-	}
-
-	public JToggleButton getBtnDonut() {
-		return btnDonut;
-	}
-
-	public void setBtnDonut(JToggleButton btnDonut) {
-		this.btnDonut = btnDonut;
-	}
-
-	public JToggleButton getBtnSelect() {
-		return btnSelect;
-	}
-
-	public void setBtnSelect(JToggleButton btnSelect) {
-		this.btnSelect = btnSelect;
-	}
-	
-	public JButton getBtnUndo() {
-		return btnUndo;
-	}
-	
-	public void setBtnUndo(JButton btnUndo){
-		this.btnUndo=btnUndo;
-	}
-
-	public JButton getBtnRedo() {
-		return btnRedo;
-	}
-
-	public JButton getBtnOuterColor() {
-		return btnOuterColor;
-	}
-
-	public JButton getBtnLoadCommands() {
-		return btnLoadCommands;
-	}
-
-	public JButton getBtnToFront() {
-		return btnToFront;
-	}
-
-	public JButton getBtnToBack() {
-		return btnToBack;
-	}
-
-	public JButton getBtnBringToFront() {
-		return btnBringToFront;
-	}
-
-	public JButton getBtnBringToBack() {
-		return btnBringToBack;
-	}
-
-	public JButton getBtnNext() {
-		return btnNext;
-	}
-
-	public JButton getBtnSaveCommands() {
-		return btnSaveCommands;
-	}
-
-	public JButton getBtnSaveDrawing() {
-		return btnSaveDrawing;
-	}
-
-	public JButton getBtnLoadDrawing() {
-		return btnLoadDrawing;
-	}
-	public JButton getBtnModification() {
-		return btnModification;
-	}
-
-	public void setBtnModification(JButton btnModification) {
-		this.btnModification = btnModification;
-	}
-
-	public JButton getBtnInnerColor() {
-		return btnInnerColor;
-	}
-
-	public void setBtnInnerColor(JButton btnInnerColor) {
-		this.btnInnerColor = btnInnerColor;
-	}
 
 	public DrawingFrame() {
 		setFont(new Font("Bahnschrift", Font.PLAIN, 12));
@@ -533,9 +392,6 @@ public class DrawingFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				controller.redo();
 			}
-		});
-		
-	
-			
+		});	
 	}
 }

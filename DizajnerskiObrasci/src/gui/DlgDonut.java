@@ -19,7 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+
+@AllArgsConstructor @Getter @Setter @ToString
 public class DlgDonut extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -209,93 +215,4 @@ public class DlgDonut extends JDialog {
 			}
 		}
 	}
-
-	public JTextField getTxtX() {
-		return txtX;
-	}
-
-	public void setTxtX(JTextField txtX) {
-		this.txtX = txtX;
-	}
-
-	public JTextField getTxtY() {
-		return txtY;
-	}
-
-	public void setTxtY(JTextField txtY) {
-		this.txtY = txtY;
-	}
-
-	public JTextField getTxtRadius() {
-		return txtRadius;
-	}
-
-	public void setTxtRadius(JTextField txtRadius) {
-		this.txtRadius = txtRadius;
-	}
-
-	public JTextField getTxtInnerRadius() {
-		return txtInnerRadius;
-	}
-
-	public void setTxtInnerRadius(JTextField txtInnerRadius) {
-		this.txtInnerRadius = txtInnerRadius;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color c) {
-		this.color = c;
-	}
-
-	public Color getInnerColor() {
-		return innerColor;
-	}
-
-	public void setInnerColor(Color innerC) {
-		this.innerColor = innerC;
-	}
-
-	public Color getPc() {
-		return picked;
-	}
-
-	public void setPc(Color pc) {
-		this.picked = pc;
-	}
-
-	public Color getInnerPc() {
-		return innerPickedColor;
-	}
-
-	public void setInnerPc(Color innerPc) {
-		this.innerPickedColor = innerPc;
-	}
-
-	public boolean isOK() {
-		return isOK;
-	}
-
-	public void setOK(boolean isOK) {
-		this.isOK = isOK;
-	}
-
-	public boolean isColorChosen() {
-		return colorChosen;
-	}
-
-	public void setColorChosen(boolean colorChosen) {
-		this.colorChosen = colorChosen;
-	}
-
-	public boolean isInnerColorChosen() {
-		return innerColorChosen;
-	}
-
-	public void setInnerColorChosen(boolean innerColorChosen) {
-		this.innerColorChosen = innerColorChosen;
-	}
-
 }

@@ -3,8 +3,14 @@ package command;
 import java.util.ArrayList;
 
 import geometry.Shape;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import mvc.DrawingModel;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class CmdDeleteShape implements Command {
 	
 	private DrawingModel model;

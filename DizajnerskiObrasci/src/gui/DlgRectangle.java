@@ -9,6 +9,12 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -22,7 +28,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-
+@AllArgsConstructor @Getter @Setter @ToString
 public class DlgRectangle extends JDialog {
 
 	private static final long serialVersionUID = 1L;
@@ -212,109 +218,4 @@ public class DlgRectangle extends JDialog {
 			}
 		}
 	}
-	
-	public JTextField getTxtX() {
-		return txtX;
-	}
-
-	public void setTxtX(JTextField txtX) {
-		this.txtX = txtX;
-	}
-
-	public JTextField getTxtY() {
-		return txtY;
-	}
-
-	public void setTxtY(JTextField txtY) {
-		this.txtY = txtY;
-	}
-
-	public JTextField getTxtHeight() {
-		return txtHeight;
-	}
-
-	public void setTxtHeight(JTextField txtHeight) {
-		this.txtHeight = txtHeight;
-	}
-
-	public JTextField getTxtWidth() {
-		return txtWidth;
-	}
-
-	public void setTxtWidth(JTextField txtWidth) {
-		this.txtWidth = txtWidth;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color c) {
-		this.color = c;
-	}
-
-	public Color getInnerColor() {
-		return innerColor;
-	}
-
-	public void setInnerColor(Color innerC) {
-		this.innerColor = innerC;
-	}
-
-	public boolean isOK() {
-		return isOK;
-	}
-
-	public void setOK(boolean isOK) {
-		this.isOK = isOK;
-	}
-
-	public Color getPicked() {
-		return picked;
-	}
-
-	public void setPicked(Color picked) {
-		this.picked = picked;
-	}
-
-	public Color getInnerPc() {
-		return innerPickedColor;
-	}
-
-	public void setInnerPc(Color innerPc) {
-		this.innerPickedColor = innerPc;
-	}
-
-	public boolean isColorChosen() {
-		return colorChosen;
-	}
-
-	public void setColorChosen(boolean colorChosen) {
-		this.colorChosen = colorChosen;
-	}
-
-	public boolean isInnerColorChosen() {
-		return innerColorChosen;
-	}
-
-	public void setInnerColorChosen(boolean innerColorChosen) {
-		this.innerColorChosen = innerColorChosen;
-	}
-
-	public JButton getBtnColor() {
-		return btnColor;
-	}
-
-	public void setBtnColor(JButton btnColor) {
-		this.btnColor = btnColor;
-	}
-
-	public JButton getBtnInnerColor() {
-		return btnInnerColor;
-	}
-
-	public void setBtnInnerColor(JButton btnInnerColor) {
-		this.btnInnerColor = btnInnerColor;
-	}
-
 }

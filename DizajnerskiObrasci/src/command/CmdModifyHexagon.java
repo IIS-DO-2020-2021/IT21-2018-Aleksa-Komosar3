@@ -2,7 +2,13 @@ package command;
 
 import geometry.HexagonAdapter;
 import geometry.Point;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class CmdModifyHexagon implements Command {
 	
 	private HexagonAdapter oldHex,newHex;

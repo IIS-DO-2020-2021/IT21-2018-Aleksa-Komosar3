@@ -1,20 +1,18 @@
 package command;
-
 import geometry.Shape;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import mvc.DrawingModel;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class CmdToFrontByOne implements Command {
 	
 	private DrawingModel model;
 	private Shape shape;
 	private int index;
-
-	public CmdToFrontByOne(DrawingModel model, Shape shape, int index) {
-		super();
-		this.model = model;
-		this.shape = shape;
-		this.index = index;
-	}
 
 	@Override
 	public void execute() {

@@ -2,7 +2,12 @@ package observer;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@AllArgsConstructor @Getter @Setter @ToString
 public class BtnUpdate {
 	
 	private PropertyChangeSupport propertyChangeSupport;
@@ -18,34 +23,6 @@ public class BtnUpdate {
 	public BtnUpdate() {
 		super();
 		propertyChangeSupport = new PropertyChangeSupport(this);
-	}
-
-	public boolean isBtnSelectAct() {
-		return btnSelectAct;
-	}
-
-	public boolean isBtnModificationAct() {
-		return btnModificationAct;
-	}
-
-	public boolean isBtnDeleteAct() {
-		return btnDeleteAct;
-	}
-
-	public boolean isBtnBringFullBackAct() {
-		return btnBringFullBackAct;
-	}
-
-	public boolean isBtnBringFullFrontAct() {
-		return btnBringFullFrontAct;
-	}
-
-	public boolean isBtnToBackAct() {
-		return btnToBackAct;
-	}
-
-	public boolean isBtnToFrontAct() {
-		return btnToFrontAct;
 	}
 	
 	public void setBtnSelectAct(boolean btnSelectAct) {

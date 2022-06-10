@@ -2,27 +2,26 @@ package geometry;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class Circle extends SurfaceShape implements Cloneable{
 	private static final long serialVersionUID = 1L;
 	private Point center=new Point();
 	private int radius;
 	private boolean selected;
-	
-	public Circle() {
 
-	}
 	
 	public Circle(Point center, int radius) {
 		this.center = center;
 		this.radius = radius;
 	}
 	
-	public Circle(Point center, int radius, boolean selected) {
-		this(center, radius);
-		this.selected=selected;
-	}
 	
 	public Circle(Point center, int radius, boolean selected, Color color) {
 		this(center, radius, selected);
@@ -89,9 +88,9 @@ public class Circle extends SurfaceShape implements Cloneable{
 		center.moveOn(onX, onY);
 	}
 
-	public Point getCenter() {
+	/*public Point getCenter() {
 		return center;
-	}
+	}*/
 
 	public void setCenter(Point center) {
 		this.center = center;
@@ -101,9 +100,9 @@ public class Circle extends SurfaceShape implements Cloneable{
 		return radius;
 	}
 
-	public void setRadius(int radius) {
+	/*public void setRadius(int radius) {
 		this.radius = radius;
-	}
+	}*/
 
 	public boolean isSelected() {
 		return selected;

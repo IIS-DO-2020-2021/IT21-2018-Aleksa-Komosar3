@@ -1,18 +1,20 @@
 package command;
 
 import geometry.Shape;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.NoArgsConstructor;
+
 import mvc.DrawingModel;
 
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
 public class CmdAddShape implements Command {
 	
 	private DrawingModel model;
 	private Shape shape;
-
-	public CmdAddShape(DrawingModel model, Shape shape) {
-		super();
-		this.model = model;
-		this.shape = shape;
-	}
 
 	@Override
 	public void execute() {
