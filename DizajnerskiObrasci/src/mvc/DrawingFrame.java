@@ -78,7 +78,7 @@ public class DrawingFrame extends JFrame{
 		pnlNorth.setForeground(UIManager.getColor("activeCaption"));
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
 		GridBagLayout gbl_pnlNorth = new GridBagLayout();
-		gbl_pnlNorth.columnWidths = new int[]{433, 0, 61, 61, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_pnlNorth.columnWidths = new int[]{292, 0, 61, 61, 0, 92, 0, 0, 60, 0, 0, 0};
 		gbl_pnlNorth.rowHeights = new int[]{55, 0, 0, 0};
 		gbl_pnlNorth.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlNorth.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};

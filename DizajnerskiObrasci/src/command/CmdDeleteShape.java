@@ -18,27 +18,31 @@ public class CmdDeleteShape implements Command {
 	
 	private ArrayList<Shape> temp = new ArrayList<Shape>();
 
-	public CmdDeleteShape( ArrayList<Shape> shape, DrawingModel model) {
-		super();
-		this.shape = new ArrayList<Shape>(shape);
+	public CmdDeleteShape(DrawingModel model,  ArrayList<Shape> shape) {
+		//super();
 		this.model = model;
+		this.shape = new ArrayList<Shape>(shape);
 	}
 
 	@Override
 	public void execute() {
-		
 		temp.addAll(model.getShapes());
 		for(Shape s : shape) {
 			model.deleteShapeFromList(s);
 			model.deleteShapeFromSelectedList(s);
 		}
+		
 	}
 
 	@Override
 	public void unexecute() {
+		//model.getSelectedShapes().clear();
+		model.getShapes().clear();
+		//model.getSelectedShapes().clear();
 		model.getShapes().addAll(temp);
 		for (Shape s : shape) {
 			model.addShapeToListOfSelected(s);
 		}
+
 	}
 }

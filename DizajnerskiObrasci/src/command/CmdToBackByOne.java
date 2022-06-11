@@ -21,7 +21,6 @@ public class CmdToBackByOne implements Command {
 		try {
 		model.deleteAtIndex(index);
 		model.addOnIndex(shape, index-1);
-		throw new IndexOutOfBoundsException();
 		} catch (IndexOutOfBoundsException e) {
 			e.printStackTrace();
 		}

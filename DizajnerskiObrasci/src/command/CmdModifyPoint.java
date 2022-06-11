@@ -24,12 +24,14 @@ public class CmdModifyPoint implements Command {
 		// TODO Auto-generated method stub
 		try {
 			original = oldPoint.clone(original);
+			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			oldPoint = newPoint.clone(oldPoint);
+			oldPoint.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,6 +43,7 @@ public class CmdModifyPoint implements Command {
 		// TODO Auto-generated method stub
 		try {
 			oldPoint = original.clone(oldPoint);
+			oldPoint.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

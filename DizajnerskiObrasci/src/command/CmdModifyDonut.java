@@ -24,12 +24,14 @@ public class CmdModifyDonut implements Command {
 		// TODO Auto-generated method stub
 		try {
 			original=oldDonut.clone(original);
+			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			oldDonut=newDonut.clone(oldDonut);
+			oldDonut.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -40,7 +42,8 @@ public class CmdModifyDonut implements Command {
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			newDonut=original.clone(newDonut);
+			oldDonut=original.clone(oldDonut);
+			//newDonut.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

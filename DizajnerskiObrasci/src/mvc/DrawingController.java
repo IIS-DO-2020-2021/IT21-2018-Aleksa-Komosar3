@@ -63,26 +63,27 @@ public class DrawingController {
 	}
 	
 	public void btnsUndoRedo(){
-		if (model.getUndo().size()==0 && model.getUndo().isEmpty()){
+		if (model.getUndo().size()==0 || model.getUndo().isEmpty()){
 			btnUpdate.setBtnUndoAct(false);
 		} else {
 			btnUpdate.setBtnUndoAct(true);
 		}
-		if(model.getRedo().size()==0 && model.getRedo().isEmpty()) {
+		if(model.getRedo().size()==0 || model.getRedo().isEmpty()) {
 			btnUpdate.setBtnRedoAct(false);
 		} else {
 			btnUpdate.setBtnRedoAct(true);
 		}
+		frame.repaint();
 	}
 	
 	public void checkBtnState() {
-		btnsUndoRedo();
 		if (model.getShapes().size() != 0) {
 			btnUpdate.setBtnSelectAct(true);
 			if (model.getSelectedShapes().size() > 0) {
 				if (model.getSelectedShapes().size() == 1) {
 					btnUpdate.setBtnModificationAct(true);
 					btnUpdate.setBtnDeleteAct(true);
+					btnsUpdate();
 				} else {
 					btnUpdate.setBtnModificationAct(false);
 					btnUpdate.setBtnToBackAct(false);
@@ -108,7 +109,7 @@ public class DrawingController {
 			btnUpdate.setBtnToBackAct(false);
 			btnUpdate.setBtnToFrontAct(false);
 		}
-		btnsUpdate();
+		//frame.repaint();
 	}
 
 	public void btnsUpdate() {
@@ -142,6 +143,7 @@ public class DrawingController {
 			btnUpdate.setBtnToBackAct(false);
 			btnUpdate.setBtnToFrontAct(false);
 		}
+		//frame.repaint();
 	}
 
 	public void mouseClicked(MouseEvent e) {
@@ -154,17 +156,19 @@ public class DrawingController {
 			while (iterate.hasNext()){
 				Shape shape = iterate.next();
 				if(shape.contains(e.getX(), e.getY())) {
-					if (!shape.isSelected()) {
-						command=new CmdSelectShape(model, shape);
+					if (shape.isSelected()) {
+						command=new CmdDeselectShape(model, shape);
 						command.execute();
 						model.getUndo().add(command);
-						selShape=shape;
-				} else if (shape.isSelected()){
-					command=new CmdDeselectShape(model, shape);
+
+				} else if (!shape.isSelected()){
+					
+					command=new CmdSelectShape(model, shape);
 					command.execute();
 					model.getUndo().add(command);
+					selShape=shape;
 				}
-			
+			//model.getRedo().clear();
 			break;
 			}
 		}
@@ -290,12 +294,16 @@ public class DrawingController {
 					
 					if(dlgHexagon.isColorChosen()) {
 						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
+						//hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					} else {
-						hexagon.setColor(frame.getBtnOuterColor().getBackground());
+						//hexagon.setHexagonBorderColor(frame.getBtnOuterColor().getBackground());
+						hexagon.setHexagonBorderColor(frame.getBtnOuterColor().getBackground());
 					}if (dlgHexagon.isInnerColorChosen()){
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
+						//hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerPickedColor());
 					} else {
 						hexagon.setHexagonInnerColor(frame.getBtnInnerColor().getBackground());
+						//hexagon.getHexagon().setAreaColor(frame.getBtnInnerColor().getBackground());
 					}
 					newShape = hexagon;
 				} catch (Exception ex){
@@ -308,7 +316,11 @@ public class DrawingController {
 			command=new CmdAddShape(model, newShape);
 			command.execute();
 			model.getUndo().add(command);
+			
 		}
+		model.getRedo().clear();
+		//btnUpdate.setBtnRedoAct(false);
+		btnsUndoRedo();
 		checkBtnState();
 		frame.repaint();
 	}
@@ -318,8 +330,8 @@ public class DrawingController {
 		if (model.getSelectedShapes().size()==1) {
 			Shape sel = model.getSelectedShapes().get(0);
 			selShape=sel;
-			if (sel instanceof Point) {
-				Point point = (Point) sel;
+			if (model.getSelectedShapes().get(0) instanceof Point) {
+				Point point = (Point) model.getSelectedShapes().get(0);
 				DlgPoint dlgPoint = new DlgPoint();
 				dlgPoint.getTxtX().setText("" + point.getX());
 				dlgPoint.getTxtY().setText("" + point.getY());
@@ -333,14 +345,17 @@ public class DrawingController {
 					point = new Point(Integer.parseInt(dlgPoint.getTxtX().getText()),
 							Integer.parseInt(dlgPoint.getTxtY().getText()));
 					point.setColor(dlgPoint.getColor());			
-					command=new CmdModifyPoint((Point)sel, point);
+					command=new CmdModifyPoint((Point)model.getSelectedShapes().get(0), point);
 					command.execute();
 					model.getUndo().add(command);
 					
+					model.getRedo().clear();
+					btnUpdate.setBtnRedoAct(false);
+					btnsUndoRedo();
 					//model.getSelectedShapes().get(0).setSelected(true);
 				}
-			} else if(sel instanceof Line){
-				Line line= (Line)sel;
+			} else if(model.getSelectedShapes().get(0) instanceof Line){
+				Line line= (Line)model.getSelectedShapes().get(0);
 				DlgLine dlgLine = new DlgLine();
 				dlgLine.getTxtXs().setText("" + line.getStartPoint().getX());
 				dlgLine.getTxtYs().setText("" + line.getStartPoint().getY());
@@ -359,14 +374,17 @@ public class DrawingController {
 							Integer.parseInt(dlgLine.getTxtYe().getText()));
 					line = new Line(startPoint,endPoint);
 					line.setColor(dlgLine.getColor());
-					command=new CmdModifyLine((Line)sel, line);
+					command=new CmdModifyLine((Line)model.getSelectedShapes().get(0), line);
 					command.execute();
 					model.getUndo().add(command);
-					
+				
+					model.getRedo().clear();
+					btnUpdate.setBtnRedoAct(false);
+					btnsUndoRedo();
 					//model.getSelectedShapes().get(0).setSelected(true);
 				}
-			} else if (model.getSelectedShapes().get(0) instanceof Rectangle){
-				Rectangle rectangle= (Rectangle) model.getSelectedShapes().get(0);
+			} else if (sel instanceof Rectangle){
+				Rectangle rectangle= (Rectangle) sel;
 				DlgRectangle dlgRec=new DlgRectangle();
 				dlgRec.getTxtX().setText("" + rectangle.getUpperLeft().getX());
 				dlgRec.getTxtY().setText("" + rectangle.getUpperLeft().getY());
@@ -394,18 +412,23 @@ public class DrawingController {
 					} else {
 						rectangle.setInnerColor(dlgRec.getInnerPickedColor());
 					}
-					command=new CmdModifyRectangle((Rectangle)model.getSelectedShapes().get(0), rectangle);
+					sel.setSelected(true);
+					frame.repaint();
+					command=new CmdModifyRectangle((Rectangle)sel, rectangle);
 					command.execute();
 					model.getUndo().add(command);
 					
-					ArrayList<Shape> selected = new ArrayList<>();
+					model.getRedo().clear();
+					btnUpdate.setBtnRedoAct(false);
+					btnsUndoRedo();
+					/*ArrayList<Shape> selected = new ArrayList<>();
 					for(Shape s: model.getSelectedShapes()) {
 						Shape sh = s;
 						s.setSelected(false);
 						selected.add(sh);
 					}
 					model.setSelectedShapes(selected);
-					model.getSelectedShapes().get(0).setSelected(true);
+					model.getSelectedShapes().get(0).setSelected(true);*/
 				}
 			} else if (model.getSelectedShapes().get(0) instanceof Donut){
 				Donut donut= (Donut)model.getSelectedShapes().get(0);
@@ -440,6 +463,10 @@ public class DrawingController {
 					command.execute();
 					model.getUndo().add(command);
 					
+			
+					model.getRedo().clear();
+					btnUpdate.setBtnRedoAct(false);
+					btnsUndoRedo();
 					//model.getSelectedShapes().get(0).setSelected(true);
 				}
 			} else if(model.getSelectedShapes().get(0) instanceof Circle){
@@ -470,9 +497,14 @@ public class DrawingController {
 					{
 						circle.setInnerColor(dlgCircle.getInnerPickedColor());
 					}
+					//selShape.setSelected(true);
 					command=new CmdModifyCircle((Circle)model.getSelectedShapes().get(0), circle);
 					command.execute();
 					model.getUndo().add(command);
+					
+					model.getRedo().clear();
+					btnUpdate.setBtnRedoAct(false);
+					btnsUndoRedo();
 				}
 			}else if(model.getSelectedShapes().get(0) instanceof HexagonAdapter){
 				HexagonAdapter hexagon= (HexagonAdapter) model.getSelectedShapes().get(0);
@@ -492,31 +524,36 @@ public class DrawingController {
 					hexagon=new HexagonAdapter(point, 
 							Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					if(dlgHexagon.isColorChosen()){
+						//hexagon.getHexagon().setBorderColor(dlgHexagon.getPicked());
 						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					}else{
+						//hexagon.getHexagon().setBorderColor(dlgHexagon.getPicked());
 						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					}
 					if(dlgHexagon.isInnerColorChosen()){
+						//hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerPickedColor());
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
 					} else
 					{
-						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
+						hexagon.getHexagon().setAreaColor(dlgHexagon.getInnerPickedColor());
 					}
 					command=new CmdModifyHexagon((HexagonAdapter)model.getSelectedShapes().get(0), hexagon);
 					command.execute();
 					model.getUndo().add(command);
 					
-					ArrayList<Shape> selected = new ArrayList<>();
+					model.getRedo().clear();
+					btnsUndoRedo();
+					/*ArrayList<Shape> selected = new ArrayList<>();
 					for(Shape s: model.getSelectedShapes()) {
 						Shape sh = s;
 						s.setSelected(false);
 						selected.add(sh);
-					}
-					model.setSelectedShapes(selected);
-					model.getSelectedShapes().get(0).setSelected(true);
+					}*/
+					//model.setSelectedShapes(selected);
+					//model.getSelectedShapes().get(0).setSelected(true);
 				}
 			} 	
-			frame.repaint();
+			//frame.repaint();
 			
 			selShape.setSelected(true);
 		}
@@ -525,29 +562,36 @@ public class DrawingController {
 			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
+		btnsUndoRedo();
+		btnUpdate.setBtnRedoAct(false);
+		model.getRedo().clear();
 		checkBtnState();
 		frame.repaint();
 	}
 	
 	protected void deleteShape() {
 		command=null;
-		if (selShape !=null && model.getSelectedShapes().size()==1) {
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
+		if (model.getSelectedShapes().size()==1) {
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete this one shape?",
 					"Warning message", JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				command=new CmdDeleteOneShape(model, selShape);
+				Shape sh=model.getSelectedShapes().get(0);
+				command=new CmdDeleteOneShape(model, sh);
 				command.execute();
 				model.getUndo().add(command);
 			}
 		} else if (model.getSelectedShapes().size()>1){
-			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete?",
+			int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure to delete more shapes?",
 					"Warning message", JOptionPane.YES_NO_OPTION);
 			if (selectedOption == JOptionPane.YES_OPTION) {
-				command=new CmdDeleteShape(model.getSelectedShapes(), model);
-				command.execute();
-				model.getUndo().add(command);
+			for(int i=model.getSelectedShapes().size() - 1; i>=0; i-- )
+			{
+				 
+					command=new CmdDeleteOneShape(model, model.getSelectedShapes().get(i));
+					command.execute();
+					model.getUndo().add(command);
 			}
-			frame.repaint();
+			}
 		}
 		else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
@@ -555,9 +599,11 @@ public class DrawingController {
 					JOptionPane.WARNING_MESSAGE, icon);
 		}
 		checkBtnState();
+		btnUpdate.setBtnRedoAct(false);
+		//model.getRedo().clear();
+		btnsUndoRedo();
 		frame.repaint();
 		
-		//frame.getBtnSelect().setSelected(false);
 	}
 	public void fullBringToBack(){
 		command=null;
@@ -608,14 +654,16 @@ public class DrawingController {
 		Command command = model.getUndo().pop();
 		command.unexecute();
 		model.getRedo().add(command);
-		frame.repaint();
-		}
-		frame.repaint();
-		frame.getBtnRedo().setEnabled(true);
+
+		btnUpdate.setBtnRedoAct(true);
 			if(model.getUndo().size()==0){
-				frame.getBtnUndo().setEnabled(false);
+				btnUpdate.setBtnUndoAct(false);
 			}
-			checkBtnState();
+		} else {
+			btnUpdate.setBtnUndoAct(false);
+		}
+		checkBtnState();
+		frame.repaint();
 	}
 	
 	public void redo(){
@@ -623,14 +671,16 @@ public class DrawingController {
 		Command command = model.getRedo().pop();
 		command.execute();
 		model.getUndo().add(command);
-		frame.repaint();
-		}
-		frame.repaint();
-		frame.getBtnUndo().setEnabled(true);
+	
+		btnUpdate.setBtnUndoAct(true);
 			if(model.getRedo().size()==0){
-				frame.getBtnRedo().setEnabled(false);
+				btnUpdate.setBtnRedoAct(false);
 			}
-			checkBtnState();
+		} else {
+			btnUpdate.setBtnRedoAct(false);
+		}
+		checkBtnState();
+		frame.repaint();
 	}
 	
 }

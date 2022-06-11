@@ -25,12 +25,14 @@ public class CmdModifyHexagon implements Command {
 		// TODO Auto-generated method stub
 		try {
 			original=oldHex.clone(original);
+			//original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			oldHex=newHex.clone(oldHex);
+			oldHex.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,6 +44,7 @@ public class CmdModifyHexagon implements Command {
 		// TODO Auto-generated method stub
 		try {
 			newHex=original.clone(newHex);
+			//newHex.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

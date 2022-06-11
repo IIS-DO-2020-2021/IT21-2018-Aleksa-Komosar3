@@ -24,12 +24,14 @@ public class CmdModifyLine implements Command {
 		// TODO Auto-generated method stub
 		try {
 			original = oldLine.clone(original);
+			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			oldLine = newLine.clone(oldLine);
+			oldLine.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,6 +44,7 @@ public class CmdModifyLine implements Command {
 		// TODO Auto-generated method stub
 		try {
 			oldLine = original.clone(oldLine);
+			oldLine.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

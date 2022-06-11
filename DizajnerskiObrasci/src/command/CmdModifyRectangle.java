@@ -25,12 +25,14 @@ public class CmdModifyRectangle implements Command {
 		// TODO Auto-generated method stub
 		try {
 			original = oldRectangle.clone(original);
+			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			oldRectangle = newRectangle.clone(oldRectangle);
+			oldRectangle.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,6 +44,7 @@ public class CmdModifyRectangle implements Command {
 		// TODO Auto-generated method stub
 		try {
 			oldRectangle = original.clone(oldRectangle);
+			oldRectangle.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -39,7 +39,7 @@ public class Donut extends Circle implements Cloneable{
 	}
 	
 	public void draw(Graphics g) {		
-		Ellipse2D outsideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
+		/*Ellipse2D outsideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
 				this.getCenter().getY() - this.getRadius(), this.getRadius() * 2, this.getRadius() * 2);
 		Ellipse2D insideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius(),
 				this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius() * 2, 
@@ -56,15 +56,39 @@ public class Donut extends Circle implements Cloneable{
 		if (isSelected()) {
 			super.putCirclePoint(g, this.getRadius());
 			super.putCirclePoint(g, this.innerRadius);
+		}*/
+		super.draw(g);
+		g.setColor(getColor());
+		g.drawOval(getCenter().getX() - this.innerRadius, getCenter().getY() - this.innerRadius, getInnerRadius() * 2, getInnerRadius() * 2);
+		
+		if (isSelected()) {
+			g.setColor(Color.BLUE);
+			super.putCirclePoint(g, this.getRadius());
+			super.putCirclePoint(g, innerRadius);
 		}
 	}
 	
 	
 	public void fill(Graphics g) {
-		g.setColor(getInnerColor());
+		/*g.setColor(getInnerColor());
 		super.fill(g);
-		g.setColor(Color.CYAN);
-		g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() * 2, getInnerRadius() * 2);
+		g.setColor();
+		g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() * 2, getInnerRadius() * 2);*/
+		Graphics2D g2d = (Graphics2D)g;
+		g2d.setColor(getInnerColor());
+
+		Ellipse2D whole = new Ellipse2D.Double(this.getCenter().getX()-this.getRadius(),
+				this.getCenter().getY()-this.getRadius(), 
+				2* this.getRadius(), 2* this.getRadius());
+		Ellipse2D inner = new Ellipse2D.Double(this.getCenter().getX()-this.innerRadius, 
+				this.getCenter().getY()-this.innerRadius,
+				2* this.innerRadius, 2* this.innerRadius);
+		
+		Area area = new Area(whole);
+		Area innerA = new Area(inner);
+		area.subtract(innerA);
+		
+		g2d.fill(area);
 	}
 	
 	public boolean contains(int x, int y) {
