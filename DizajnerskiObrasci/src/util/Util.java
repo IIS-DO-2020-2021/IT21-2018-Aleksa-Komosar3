@@ -4,11 +4,14 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
+import command.CmdBringToBack;
+import command.CmdBringToFront;
 import command.CmdDeleteOneShape;
 import command.CmdDeselectShape;
 import command.CmdModifyCircle;
@@ -18,6 +21,8 @@ import command.CmdModifyLine;
 import command.CmdModifyPoint;
 import command.CmdModifyRectangle;
 import command.CmdSelectShape;
+import command.CmdToBackByOne;
+import command.CmdToFrontByOne;
 import command.Command;
 import geometry.Circle;
 import geometry.Donut;
@@ -183,16 +188,20 @@ public class Util implements LogUtil {
 					this.executeModifying(lineLog, splitLine, cmd);
 					break;
 				case "BringToFront:":
-					controller.fullBringToFront();
+					this.executeFullFront(lineLog);
+					//controller.fullBringToFront();
 					break;
 				case "ToFront:":
-					controller.bringToFrontByOne();
+					this.executeToFront(lineLog);
+					//controller.bringToFrontByOne();
 					break;
 				case "BringToBack:":
-					controller.fullBringToBack();
+					this.executeToBack(lineLog);
+					//controller.fullBringToBack();
 					break;
 				case "ToBack:":
-					controller.bringToBackByOne();
+					this.executeToBackByOne(lineLog);
+					//controller.bringToBackByOne();
 					break;
 				case "Undo:":
 					this.executeUndo(lineLog);
@@ -219,6 +228,8 @@ public class Util implements LogUtil {
 		
 		try {
 			if(logFile.hasNextLine()){
+				btnRedo.setBtnUndoAct(true);
+				btnRedo.setBtnRedoAct(true);
 				if (type == 0){
 					while (logFile.hasNextLine()) {
 						String lineLog = logFile.nextLine();
@@ -230,9 +241,107 @@ public class Util implements LogUtil {
 				} else if (type == 1) {
 					frame.getTextArea().append("Click next for the first step of drawing!\n");
 					frame.getBtnNext().setEnabled(true);
+					
+					frame.getBtnRedo().addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent a) {
+								frame.getBtnNext().setEnabled(false);
+								logFile.close();
+							}
+						});
+					
+					frame.getBtnUndo().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnBringToBack().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnBringToFront().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnToBack().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnToFront().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnPoint().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnRectangle().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnCircle().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnHexagon().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnDonut().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
+					frame.getBtnLine().addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent a) {
+							frame.getBtnNext().setEnabled(false);
+							logFile.close();
+						}
+					});
+					
 					frame.getBtnNext().addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent a) {
-							executeLineLog(logFile.nextLine());
+							String lineLog = logFile.nextLine();
+							String[] splited = lineLog.split(" ");
+							
+							executeLineLog(lineLog);
+							
+							if(splited[0].equals("Deleting:")) {
+								int selectedSize = model.getSelectedShapes().size() - 1;
+								while(selectedSize > 0) {
+									lineLog = logFile.nextLine();
+									splited = lineLog.split(" ");
+									selectedSize -= 1;
+								}
+							}
+							
 							if (!logFile.hasNextLine()) {
 								frame.getBtnNext().setEnabled(false);
 								JOptionPane.showMessageDialog(frame,
@@ -252,6 +361,64 @@ public class Util implements LogUtil {
 					"Try again! Something is not good.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	private void executeFullFront(String command) {
+		command=command.replace("BringToFront: ", "");
+		frame.getTextArea().append("BringToFront: ");
+		
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		Command command1 = new CmdBringToFront(model, shape, index);
+		command1.execute();
+		model.getUndo().add(command1);
+
+		frame.getTextArea().append(command + "\n");
+		frame.repaint();
+	}
+	
+	private void executeToFront(String command) {
+		command=command.replace("ToFront: ", "");
+		frame.getTextArea().append("ToFront: ");
+		
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		Command command1 = new CmdToFrontByOne(model, shape, index);
+		command1.execute();
+		model.getUndo().add(command1);
+
+		frame.getTextArea().append(command + "\n");
+		frame.repaint();
+	}
+	
+	private void executeToBack(String command) {
+		command=command.replace("BringToBack: ", "");
+		frame.getTextArea().append("BringToBack: ");
+		
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		Command command1 = new CmdBringToBack(model, shape, index);
+		command1.execute();
+		model.getUndo().add(command1);
+
+		frame.getTextArea().append(command + "\n");
+		frame.repaint();
+	}
+	
+	private void executeToBackByOne(String command) {
+		command=command.replace("ToBack: ", "");
+		frame.getTextArea().append("ToBack: ");
+		
+		Shape shape = model.getSelectedShapes().get(0);
+		int index= model.getShapes().indexOf(shape);
+		Command command1 = new CmdToBackByOne(model, shape, index);
+		command1.execute();
+		model.getUndo().add(command1);
+
+		frame.getTextArea().append(command + "\n");
+		frame.repaint();
+	}
+	
+	
 	
 	private void executeUndo(String command) {
 		command = command.replace("Undo: ", "");
@@ -301,19 +468,20 @@ public class Util implements LogUtil {
 		frame.repaint();
 	}
 
-	private void executeDeleting(String lineLog, String[] splitLineLog, Command cmd) {
+	private void executeDeleting(String lineLog, String[] splitLineLog, Command cmd) {		
+		// Shape shape = makeShapeFromLog(lineLog, splitLineLog[1], false);
+		List<Shape> shapesToDelete = new ArrayList<Shape>();
+		for(Shape s: model.getSelectedShapes()) {
+			shapesToDelete.add(s);
+		}
 		
-		frame.getTextArea().append("Deleting: " + model.getSelectedShapes().toString() + "\n");
+		for (Shape s : shapesToDelete) {
+			frame.getTextArea().append("Deleting: " + s.toString() + "\n");
+			cmd = new CmdDeleteOneShape(model, s);
+			cmd.execute();
+			model.getUndo().add(cmd);
+		}
 		
-		Shape shape = makeShapeFromLog(lineLog, splitLineLog[1], false);
-		for (Shape s : model.getSelectedShapes())
-			if (shape.equals(s)) {
-				shape = s;
-			}
-		cmd = new CmdDeleteOneShape(model, shape);
-		cmd.execute();
-		
-		model.getUndo().add(cmd);
 		controller.checkBtnState();
 		// model.getRedo().clear();
 		
@@ -322,14 +490,9 @@ public class Util implements LogUtil {
 	}
 
 	private void executeModifying(String lineLog, String[] splitLineLog, Command cmd) {
-		
-		Shape oldShape = makeShapeFromLog(lineLog, splitLineLog[1], false);
-		oldShape.setSelected(true);
 		Shape newShape = makeShapeFromLog(lineLog, splitLineLog[1], true);
-		for (Shape s : model.getShapes())
-			if (oldShape.equals(s))
-				oldShape = s;
-
+		Shape oldShape = model.getSelectedShapes().get(0);
+		
 		if (splitLineLog[1].equals("Point"))
 			cmd = new CmdModifyPoint((Point) oldShape, (Point) newShape);
 		else if (splitLineLog[1].equals("Line"))
@@ -342,8 +505,9 @@ public class Util implements LogUtil {
 			cmd = new CmdModifyDonut((Donut) oldShape, (Donut) newShape);
 		else if (splitLineLog[1].equals("Hexagon"))
 			cmd = new CmdModifyHexagon((HexagonAdapter) oldShape, (HexagonAdapter) newShape);
-		
+			
 		frame.getTextArea().append("Modifing: " + oldShape.toString() + " To: " + newShape.toString() + "\n");
+		
 		cmd.execute();
 		model.getUndo().add(cmd);
 		
