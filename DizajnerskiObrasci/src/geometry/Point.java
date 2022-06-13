@@ -7,9 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class Point extends Shape implements Moveable, Cloneable{
 	private static final long serialVersionUID = 1L;
 	private int x;
@@ -93,4 +92,9 @@ public class Point extends Shape implements Moveable, Cloneable{
 		
 		return p;
 	}
+	
+	@Override
+	public String toString() {
+		return "Point [x= " + x + ", y= " + y + ", Color= " + this.getColorRGB() + "]";
+	}	
 }

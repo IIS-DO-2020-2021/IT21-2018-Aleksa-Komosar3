@@ -43,8 +43,8 @@ public class CmdModifyHexagon implements Command {
 	public void unexecute() {
 		// TODO Auto-generated method stub
 		try {
-			newHex=original.clone(newHex);
-			//newHex.setSelected(true);
+			oldHex=original.clone(oldHex);
+			oldHex.setSelected(true);
 		} catch (CloneNotSupportedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

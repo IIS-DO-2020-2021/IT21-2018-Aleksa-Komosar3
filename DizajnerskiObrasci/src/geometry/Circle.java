@@ -7,9 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class Circle extends SurfaceShape implements Cloneable{
 	private static final long serialVersionUID = 1L;
 	private Point center=new Point();
@@ -87,11 +86,6 @@ public class Circle extends SurfaceShape implements Cloneable{
 	public void moveOn(int onX, int onY){
 		center.moveOn(onX, onY);
 	}
-
-	/*public Point getCenter() {
-		return center;
-	}*/
-
 	public void setCenter(Point center) {
 		this.center = center;
 	}
@@ -99,10 +93,6 @@ public class Circle extends SurfaceShape implements Cloneable{
 	public int getRadius() {
 		return radius;
 	}
-
-	/*public void setRadius(int radius) {
-		this.radius = radius;
-	}*/
 
 	public boolean isSelected() {
 		return selected;
@@ -136,6 +126,11 @@ public class Circle extends SurfaceShape implements Cloneable{
 		circle.setSelected(this.isSelected());
 
 		return circle;
+	}
+	
+	@Override
+	public String toString() {
+		return "Circle [center=" + center.toStringPoint() + ", radius=" + radius +  ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() + "]";
 	}
 
 }

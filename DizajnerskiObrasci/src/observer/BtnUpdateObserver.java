@@ -33,6 +33,10 @@ public class BtnUpdateObserver implements PropertyChangeListener {
 			frame.getBtnUndo().setEnabled((boolean) evt.getNewValue());
 		} if (evt.getPropertyName().equals("btnRedo")) {
 			frame.getBtnRedo().setEnabled((boolean) evt.getNewValue());
+		} if (evt.getPropertyName().equals("btnSaveCommands")) {
+			frame.getBtnSaveCommands().setEnabled((boolean) evt.getNewValue());
+		} if (evt.getPropertyName().equals("btnSaveDrawing")) {
+			frame.getBtnSaveDrawing().setEnabled((boolean) evt.getNewValue());
 		}
 	}
 }

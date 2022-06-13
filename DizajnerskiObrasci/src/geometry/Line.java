@@ -7,9 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class Line extends Shape implements Cloneable{
 	private static final long serialVersionUID = 1L;
 	private Point startPoint=new Point();
@@ -91,4 +90,12 @@ public class Line extends Shape implements Cloneable{
 		
 		return line;
 	}
+	
+	@Override
+	public String toString() {
+		return "Line [startPoint=" + startPoint.toStringPoint() 
+		+ ", endPoint=" + endPoint.toStringPoint() 
+		+ ", Color= " + this.getColorRGB() + "]";
+	}
+	
 }

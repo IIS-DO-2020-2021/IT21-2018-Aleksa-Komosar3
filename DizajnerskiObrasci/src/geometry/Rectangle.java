@@ -7,9 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class Rectangle extends SurfaceShape implements Cloneable{
 	private static final long serialVersionUID = 1L;
 	private Point upperLeft=new Point();
@@ -122,5 +121,13 @@ public class Rectangle extends SurfaceShape implements Cloneable{
 		rectangle.setSelected(this.isSelected());
 
 		return rectangle;
+	}
+	
+	@Override
+	public String toString() {
+		return "Rectangle [upperLeft=" + upperLeft.toStringPoint() 
+		+ ", height=" + height + ", width=" + width + ", Color= " 
+				+ this.getColorRGB() + ", Color= " 
+		+ this.getInnerColorRGB() + "]";
 	}
 }

@@ -135,7 +135,7 @@ public class DlgHexagon extends JDialog {
 			contentPanel.add(btnColor);
 			btnColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					picked = JColorChooser.showDialog(null, "Choose color",color);
+					color = JColorChooser.showDialog(null, "Choose color",picked);
 					colorChosen=true;
 				}
 			});
@@ -146,7 +146,7 @@ public class DlgHexagon extends JDialog {
 			contentPanel.add(btnInnerColor);
 			btnInnerColor.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					innerPickedColor = JColorChooser.showDialog(null, "Choose color",innerColor);
+					innerColor = JColorChooser.showDialog(null, "Choose color",innerPickedColor);
 					innerColorChosen=true;
 				}
 			});

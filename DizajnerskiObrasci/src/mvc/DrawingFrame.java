@@ -49,19 +49,19 @@ public class DrawingFrame extends JFrame{
 	private JButton btnUndo = new JButton("Undo ");
 	private JButton btnRedo = new JButton("Redo");
 	ButtonGroup btnGroup = new ButtonGroup();
-	private final JButton btnOuterColor = new JButton("Outer color");
-	private final JScrollPane scrollPane = new JScrollPane();
-	private final JTextArea textArea = new JTextArea();
-	private final JButton btnLoadCommands = new JButton("Load commands");
-	private final JButton btnToFront = new JButton("To front");
-	private final JButton btnToBack = new JButton("To back");
-	private final JButton btnBringToFront = new JButton("Bring to front");
-	private final JButton btnBringToBack = new JButton("Bring to back");
-	private final JButton btnNext = new JButton("Next");
-	private final JButton btnSaveCommands = new JButton("Save commands");
-	private final JPanel panel = new JPanel();
-	private final JButton btnSaveDrawing = new JButton("Save drawing");
-	private final JButton btnLoadDrawing = new JButton("Load drawing");
+	private JButton btnOuterColor = new JButton("Outer color");
+	private JTextArea textArea = new JTextArea();
+	private JScrollPane scrollPane = new JScrollPane(textArea);
+	private JButton btnLoadCommands = new JButton("Load commands");
+	private JButton btnToFront = new JButton("To front");
+	private JButton btnToBack = new JButton("To back");
+	private JButton btnBringToFront = new JButton("Bring to front");
+	private JButton btnBringToBack = new JButton("Bring to back");
+	private JButton btnNext = new JButton("Next");
+	private JButton btnSaveCommands = new JButton("Save commands");
+	private JPanel panel = new JPanel();
+	private JButton btnSaveDrawing = new JButton("Save drawing");
+	private JButton btnLoadDrawing = new JButton("Load drawing");
 	private JButton btnInnerColor = new JButton("Inner color");
 	private JButton btnDelete = new JButton("Delete");
 	public Color colorFrame;
@@ -207,9 +207,12 @@ public class DrawingFrame extends JFrame{
 		gbc_panel.gridy = 1;
 		panel.setBackground(UIManager.getColor("activeCaption"));
 		pnlSouth.add(panel, gbc_panel);
+		
+		btnSaveCommands.setEnabled(false);
 		panel.add(btnSaveCommands);
 		btnLoadCommands.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.saveLog();
 			}
 		});
 		panel.add(btnLoadCommands);
@@ -218,8 +221,19 @@ public class DrawingFrame extends JFrame{
 			}
 		});
 		panel.add(btnNext);
+		btnSaveDrawing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		
+		
+		btnSaveDrawing.setEnabled(false);
 		panel.add(btnSaveDrawing);
+		btnLoadDrawing.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveDrw();
+			}
+		});
 		
 		panel.add(btnLoadDrawing);
 		
@@ -395,7 +409,8 @@ public class DrawingFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				controller.redo();
 			}
-		});	
+		});
+		
 	}
 	
 	public void borderColor() {

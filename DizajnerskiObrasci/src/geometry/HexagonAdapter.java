@@ -51,7 +51,14 @@ public class HexagonAdapter extends Shape {
 	public Color getHexagonInnerColor() {
 		return this.hexagon.getAreaColor();
 	}
-
+	
+	public String getInnerColorRGB() {
+		int red = hexagon.getAreaColor().getRed();
+		int green = hexagon.getAreaColor().getGreen();
+		int blue = hexagon.getAreaColor().getBlue();
+		return "(" + red + ", " + green + ", " + blue + ")";
+	}
+	
 	public HexagonAdapter()
 	{
 		
@@ -164,5 +171,11 @@ public class HexagonAdapter extends Shape {
 		hexagon.setSelected(this.hexagon.isSelected());
 
 		return hexagon;
+	}
+	
+	@Override
+	public String toString() {
+		Point center = new Point(hexagon.getX(), hexagon.getY());
+		return "Hexagon [center=" + center.toStringPoint() + ", radius=" + hexagon.getR() + ", Color= " + this.getColorRGB() + ", Color= " + this.getInnerColorRGB() +  "]";
 	}
 }

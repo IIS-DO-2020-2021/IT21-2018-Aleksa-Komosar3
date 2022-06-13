@@ -10,9 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class Donut extends Circle implements Cloneable{
 	
 	private static final long serialVersionUID = 1L;
@@ -39,24 +39,6 @@ public class Donut extends Circle implements Cloneable{
 	}
 	
 	public void draw(Graphics g) {		
-		/*Ellipse2D outsideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getRadius(),
-				this.getCenter().getY() - this.getRadius(), this.getRadius() * 2, this.getRadius() * 2);
-		Ellipse2D insideCircle = new Ellipse2D.Double(this.getCenter().getX() - this.getInnerRadius(),
-				this.getCenter().getY() - this.getInnerRadius(), this.getInnerRadius() * 2, 
-				this.getInnerRadius() * 2);
-		Area bigArea = new Area(outsideCircle);
-		bigArea.subtract(new Area(insideCircle));
-
-		Graphics2D graph = (Graphics2D) g;
-		graph.setColor(getInnerColor());
-		graph.fill(bigArea);
-		graph.setColor(getColor());
-		graph.draw(bigArea);
-
-		if (isSelected()) {
-			super.putCirclePoint(g, this.getRadius());
-			super.putCirclePoint(g, this.innerRadius);
-		}*/
 		super.draw(g);
 		g.setColor(getColor());
 		g.drawOval(getCenter().getX() - this.innerRadius, getCenter().getY() - this.innerRadius, getInnerRadius() * 2, getInnerRadius() * 2);
@@ -70,10 +52,6 @@ public class Donut extends Circle implements Cloneable{
 	
 	
 	public void fill(Graphics g) {
-		/*g.setColor(getInnerColor());
-		super.fill(g);
-		g.setColor();
-		g.fillOval(getCenter().getX() - getInnerRadius(), getCenter().getY() - getInnerRadius(), getInnerRadius() * 2, getInnerRadius() * 2);*/
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(getInnerColor());
 
@@ -138,5 +116,14 @@ public class Donut extends Circle implements Cloneable{
 		donut.setSelected(this.isSelected());
 
 		return donut;
+	}
+	
+	@Override
+	public String toString() {
+		return "Donut [center=" + this.getCenter().toStringPoint() 
+				+ ", outerRadius=" + this.getRadius() 
+				+ ", innerRadius=" + innerRadius + ", Color= " 
+				+ this.getColorRGB() + ", innerColor= " 
+				+ this.getInnerColorRGB() + "]";
 	}
 }

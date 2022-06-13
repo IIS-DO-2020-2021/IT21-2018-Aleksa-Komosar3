@@ -22,10 +22,23 @@ public class BtnUpdate {
 	
 	private boolean btnUndoAct;
 	private boolean btnRedoAct;
+	
+	private boolean btnSaveDrwAct;
+	private boolean btnSaveComAct;
 
 	public BtnUpdate() {
 		super();
 		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
+	
+	public void setBtnSaveComAct(boolean btnSaveComAct) {
+		propertyChangeSupport.firePropertyChange("btnSaveCommands", this.btnSaveComAct, btnSaveComAct);
+		this.btnSaveComAct = btnSaveComAct;
+	}
+	
+	public void setBtnSaveDrwAct(boolean btnSaveDrwAct) {
+		propertyChangeSupport.firePropertyChange("btnSaveDrawing", this.btnSaveDrwAct, btnSaveDrwAct);
+		this.btnSaveDrwAct = btnSaveDrwAct;
 	}
 	
 	public void setBtnUndoAct(boolean btnUndoAct) {
