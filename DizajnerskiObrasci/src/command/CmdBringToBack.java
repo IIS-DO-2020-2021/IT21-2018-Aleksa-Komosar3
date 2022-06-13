@@ -36,5 +36,9 @@ public class CmdBringToBack implements Command {
 			e.printStackTrace();
 		}
 	}
+	
+	public String toString() {
+		return "BringToBack: "  + shape.toString() + "\n" ;
+	}
 
 }

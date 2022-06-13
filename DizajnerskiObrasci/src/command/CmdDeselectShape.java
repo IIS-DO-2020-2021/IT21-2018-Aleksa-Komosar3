@@ -28,5 +28,9 @@ public class CmdDeselectShape implements Command {
 		shape.setSelected(true);
 		model.addShapeToListOfSelected(shape);
 	}
+	
+	public String toString() {
+		return "Deselect: "  + shape.toString() + "\n" ;
+	}
 
 }

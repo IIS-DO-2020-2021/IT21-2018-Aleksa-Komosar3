@@ -207,12 +207,17 @@ public class DrawingFrame extends JFrame{
 		gbc_panel.gridy = 1;
 		panel.setBackground(UIManager.getColor("activeCaption"));
 		pnlSouth.add(panel, gbc_panel);
+		btnSaveCommands.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.saveLog();
+			}
+		});
 		
 		btnSaveCommands.setEnabled(false);
 		panel.add(btnSaveCommands);
 		btnLoadCommands.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveLog();
+				controller.loadLog();
 			}
 		});
 		panel.add(btnLoadCommands);
@@ -223,6 +228,7 @@ public class DrawingFrame extends JFrame{
 		panel.add(btnNext);
 		btnSaveDrawing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.saveDrw();
 			}
 		});
 		
@@ -231,7 +237,7 @@ public class DrawingFrame extends JFrame{
 		panel.add(btnSaveDrawing);
 		btnLoadDrawing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.saveDrw();
+				controller.loadDrawing();
 			}
 		});
 		

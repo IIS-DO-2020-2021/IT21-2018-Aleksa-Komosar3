@@ -36,5 +36,9 @@ public class CmdToFrontByOne implements Command {
 			e.printStackTrace();
 		}
 	}
+	
+	public String toString() {
+		return "ToFront: "  + shape.toString() + "\n" ;
+	}
 
 }

@@ -25,4 +25,8 @@ public class CmdDeleteOneShape implements Command {
 			model.addShapeToList(shape);
 			model.addShapeToListOfSelected(shape);
 	}
+	
+	public String toString() {
+		return "Deleting: "  + shape.toString() + "\n" ;
+	}
 }

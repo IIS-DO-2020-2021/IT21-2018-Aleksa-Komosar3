@@ -694,7 +694,8 @@ public class DrawingController {
 			Command command = model.getUndo().pop();
 			command.unexecute();
 			model.getRedo().add(command);
-	
+			frame.getTextArea().append("Undo: "  + command.toString());
+			
 			btnUpdate.setBtnRedoAct(true);
 			if(model.getUndo().size()==0){
 				btnUpdate.setBtnUndoAct(false);
@@ -712,6 +713,8 @@ public class DrawingController {
 			Command command = model.getRedo().pop();
 			command.execute();
 			model.getUndo().add(command);
+			
+			frame.getTextArea().append("Redo: "  + command.toString());
 		
 			btnUpdate.setBtnUndoAct(true);
 			if(model.getRedo().size()==0){

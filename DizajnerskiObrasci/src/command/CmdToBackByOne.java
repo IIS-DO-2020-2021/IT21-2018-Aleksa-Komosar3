@@ -36,5 +36,9 @@ public class CmdToBackByOne implements Command {
 		e.printStackTrace();
 		}
 	}
+	
+	public String toString() {
+		return "ToBack: "  + shape.toString() + "\n" ;
+	}
 
 }

@@ -5,5 +5,8 @@ public interface Command {
 	void execute();
 	
 	void unexecute();
+	
+	@Override
+	String toString();
 
 }

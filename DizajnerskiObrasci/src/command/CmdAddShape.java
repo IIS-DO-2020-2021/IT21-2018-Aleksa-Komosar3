@@ -29,5 +29,9 @@ public class CmdAddShape implements Command {
 		model.deleteShapeFromList(shape);
 
 	}
+	
+	public String toString() {
+		return "Adding: "  + shape.toString() + "\n" ;
+	}
 
 }

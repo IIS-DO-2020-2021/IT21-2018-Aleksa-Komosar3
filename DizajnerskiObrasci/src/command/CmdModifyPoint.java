@@ -49,5 +49,9 @@ public class CmdModifyPoint implements Command {
 			e.printStackTrace();
 		}
 	}
+	
+	public String toString() {
+		return "Modifing: "  + original.toString() + "\n" ;
+	}
 
 }

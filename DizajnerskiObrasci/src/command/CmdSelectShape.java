@@ -29,5 +29,9 @@ public class CmdSelectShape implements Command {
 		shape.setSelected(false);
 		model.deleteShapeFromSelectedList(shape);
 	}
+	
+	public String toString() {
+		return "Select: "  + shape.toString() + "\n" ;
+	}
 
 }

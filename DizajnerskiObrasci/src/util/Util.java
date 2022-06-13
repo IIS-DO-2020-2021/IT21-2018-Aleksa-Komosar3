@@ -194,11 +194,11 @@ public class Util implements LogUtil {
 				case "ToBack:":
 					controller.bringToBackByOne();
 					break;
-				case "Undo-":
-					controller.undo();
+				case "Undo:":
+					this.executeUndo(lineLog);
 					break;
-				case "Redo-":
-					controller.redo();
+				case "Redo:":
+					this.executeRedo(lineLog);
 					break;
 			}
 		} catch (Exception e) {
@@ -252,6 +252,34 @@ public class Util implements LogUtil {
 					"Try again! Something is not good.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+	
+	private void executeUndo(String command) {
+		command = command.replace("Undo: ", "");
+		frame.getTextArea().append("Undo: ");
+
+		if(model.getUndo().size()!=0){
+			Command command1 = model.getUndo().pop();
+			command1.unexecute();
+			model.getRedo().add(command1);
+		}
+		
+		frame.getTextArea().append(command + "\n");
+		frame.repaint();
+	}
+	
+	private void executeRedo(String command) {
+		command = command.replace("Redo: ", "");
+		frame.getTextArea().append("Redo: ");
+				
+		if(model.getRedo().size()!=0){
+			Command command1 = model.getRedo().pop();
+			command1.execute();
+			model.getUndo().add(command1);
+		}
+		
+		frame.getTextArea().append(command + "\n");
+		frame.repaint();
+	}
 
 	private void executeAdding(String lineLog, String[] splitLineLog, Command cmd) {
 		
@@ -267,7 +295,7 @@ public class Util implements LogUtil {
 		}
 		
 		controller.checkBtnState();
-		model.getUndo().clear();
+		// model.getUndo().clear();
 		btnRedo.setBtnRedoAct(false);
 		
 		frame.repaint();
@@ -287,7 +315,7 @@ public class Util implements LogUtil {
 		
 		model.getUndo().add(cmd);
 		controller.checkBtnState();
-		model.getRedo().clear();
+		// model.getRedo().clear();
 		
 		btnRedo.setBtnRedoAct(false);
 		frame.repaint();
@@ -319,7 +347,7 @@ public class Util implements LogUtil {
 		cmd.execute();
 		model.getUndo().add(cmd);
 		
-		model.getRedo().clear();
+		// model.getRedo().clear();
 		btnRedo.setBtnRedoAct(false);
 		
 		
@@ -341,7 +369,7 @@ public class Util implements LogUtil {
 		
 		controller.checkBtnState();
 
-		model.getRedo().clear();
+		// model.getRedo().clear();
 		
 		btnRedo.setBtnRedoAct(false);
 		frame.repaint();
@@ -363,7 +391,7 @@ public class Util implements LogUtil {
 		model.getUndo().add(cmd);
 		
 		controller.checkBtnState();
-		model.getRedo().clear();
+		// model.getRedo().clear();
 		
 		btnRedo.setBtnRedoAct(false);
 		frame.repaint();

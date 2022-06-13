@@ -36,5 +36,9 @@ public class CmdBringToFront implements Command {
 		e.printStackTrace();
 		}
 	}
+	
+	public String toString() {
+		return "BringToFront: "  + shape.toString() + "\n" ;
+	}
 
 }
