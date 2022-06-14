@@ -67,11 +67,15 @@ public class DrawingController {
 	public void btnsUndoRedo(){
 		if (model.getUndo().size()==0 || model.getUndo().isEmpty()){
 			btnUpdate.setBtnUndoAct(false);
+			btnUpdate.setBtnSaveDrwAct(true);
+			btnUpdate.setBtnSaveComAct(true);
 		} else {
 			btnUpdate.setBtnUndoAct(true);
 		}
 		if(model.getRedo().size()==0 || model.getRedo().isEmpty()) {
 			btnUpdate.setBtnRedoAct(false);
+			btnUpdate.setBtnSaveDrwAct(true);
+			btnUpdate.setBtnSaveComAct(true);
 		} else {
 			btnUpdate.setBtnRedoAct(true);
 		}
@@ -213,10 +217,12 @@ public class DrawingController {
 						Integer.parseInt(dlgRectangle.getTxtWidth().getText()));
 				if(dlgRectangle.isColorChosen()) {
 					rectangle.setColor(dlgRectangle.getColor());
+					frame.getBtnOuterColor().setBackground(dlgRectangle.getColor());
 				}else {
 					rectangle.setColor(frame.getBtnOuterColor().getBackground());
 				}if(dlgRectangle.isInnerColorChosen()){
 					rectangle.setInnerColor(dlgRectangle.getInnerColor());
+					frame.getBtnInnerColor().setBackground(dlgRectangle.getInnerColor());
 				} else {
 					rectangle.setInnerColor(frame.getBtnInnerColor().getBackground());
 				}
@@ -241,10 +247,12 @@ public class DrawingController {
 						Integer.parseInt(dlgCircle.getTxtRadius().getText()));
 				if(dlgCircle.isColorChosen()) {
 					circle.setColor(dlgCircle.getColor());
+					frame.getBtnOuterColor().setBackground(dlgCircle.getColor());
 				}else {
 					circle.setColor(frame.getBtnOuterColor().getBackground());
 				}if (dlgCircle.isInnerColorChosen()){
 					circle.setInnerColor(dlgCircle.getInnerColor());
+					frame.getBtnInnerColor().setBackground(dlgCircle.getInnerColor());
 				} else {
 					circle.setInnerColor(frame.getBtnInnerColor().getBackground());
 				}
@@ -275,10 +283,12 @@ public class DrawingController {
 						Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
 				if(dlgDonut.isColorChosen()) {
 					donut.setColor(dlgDonut.getColor());
+					frame.getBtnOuterColor().setBackground(dlgDonut.getColor());
 				} else {
 					donut.setColor(frame.getBtnOuterColor().getBackground());
 				}if (dlgDonut.isInnerColorChosen()){
 					donut.setInnerColor(dlgDonut.getInnerColor());
+					frame.getBtnInnerColor().setBackground(dlgDonut.getInnerColor());
 				} else {
 					donut.setInnerColor(frame.getBtnInnerColor().getBackground());
 				}
@@ -305,10 +315,12 @@ public class DrawingController {
 					
 					if(dlgHexagon.isColorChosen()) {
 						hexagon.setHexagonBorderColor(dlgHexagon.getColor());
+						frame.getBtnOuterColor().setBackground(dlgHexagon.getColor());
 					} else {
 						hexagon.setHexagonBorderColor(frame.getBtnOuterColor().getBackground());
 					}if (dlgHexagon.isInnerColorChosen()){
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerColor());
+						frame.getBtnInnerColor().setBackground(dlgHexagon.getInnerColor());
 					} else {
 						hexagon.setHexagonInnerColor(frame.getBtnInnerColor().getBackground());
 					}
@@ -417,11 +429,13 @@ public class DrawingController {
 							Integer.parseInt(dlgRec.getTxtWidth().getText()));
 					if(dlgRec.isColorChosen()){
 						rectangle.setColor(dlgRec.getColor());
+						frame.getBtnOuterColor().setBackground(dlgRec.getColor());
 					} else {
 						rectangle.setColor(dlgRec.getPicked());
 					}
 					if(dlgRec.isInnerColorChosen()){
 						rectangle.setInnerColor(dlgRec.getInnerColor());
+						frame.getBtnInnerColor().setBackground(dlgRec.getInnerColor());
 					} else {
 						rectangle.setInnerColor(dlgRec.getInnerPickedColor());
 					}
@@ -459,11 +473,13 @@ public class DrawingController {
 							Integer.parseInt(dlgDonut.getTxtInnerRadius().getText()));
 					if(dlgDonut.isColorChosen()){
 						donut.setColor(dlgDonut.getColor());
+						frame.getBtnOuterColor().setBackground(dlgDonut.getColor());
 					} else {
 						donut.setColor(dlgDonut.getPicked());
 					}
 					if(dlgDonut.isInnerColorChosen()){
 						donut.setInnerColor(dlgDonut.getInnerColor());
+						frame.getBtnInnerColor().setBackground(dlgDonut.getInnerColor());
 					}else{
 						donut.setInnerColor(dlgDonut.getInnerPickedColor());
 					}
@@ -497,12 +513,14 @@ public class DrawingController {
 					circle=new Circle(point,Integer.parseInt(dlgCircle.getTxtRadius().getText()));
 					if(dlgCircle.isColorChosen()){
 						circle.setColor(dlgCircle.getColor());
+						frame.getBtnOuterColor().setBackground(dlgCircle.getColor());
 					} else {
 						
 						circle.setColor(dlgCircle.getPicked());
 					} if(dlgCircle.isInnerColorChosen()){
 						
 						circle.setInnerColor(dlgCircle.getInnerColor());
+						frame.getBtnInnerColor().setBackground(dlgCircle.getInnerColor());
 					} else {
 						circle.setInnerColor(dlgCircle.getInnerPickedColor());
 					}
@@ -536,10 +554,12 @@ public class DrawingController {
 							Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					if(dlgHexagon.isColorChosen()){
 						hexagon.setHexagonBorderColor(dlgHexagon.getColor());
+						frame.getBtnOuterColor().setBackground(dlgHexagon.getColor());
 					} else {
 						hexagon.setHexagonBorderColor(dlgHexagon.getPicked());
 					} if(dlgHexagon.isInnerColorChosen()){
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerColor());
+						frame.getBtnInnerColor().setBackground(dlgHexagon.getInnerColor());
 					} else{
 						
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());

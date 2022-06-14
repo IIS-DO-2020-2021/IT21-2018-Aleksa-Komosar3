@@ -261,9 +261,6 @@ public class DrawingFrame extends JFrame{
 		gbc_textArea.anchor = GridBagConstraints.NORTHWEST;
 		gbc_textArea.gridx = 0;
 		gbc_textArea.gridy = 0;
-	//	GridBagConstraints gbc_textArea = new GridBagConstraints();
-	//	gbc_textArea.insets = new Insets(0, 0, 0, 5);
-	//	gbc_textArea.gridx = 0;
 		gbc_textArea.gridy = 0;
 		setResizable(false);
 		setTitle("IT 21-2018 Komosar Aleksa");

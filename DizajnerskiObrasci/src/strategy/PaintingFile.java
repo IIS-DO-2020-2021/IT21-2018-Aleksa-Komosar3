@@ -62,6 +62,7 @@ public class PaintingFile implements StrategyFile {
 					"Drawing is loaded!",
 					"OK", JOptionPane.OK_OPTION, img);
 			fileInpStream.close();
+			frame.getBtnSelect().setEnabled(true);
 		} catch (Exception e){
 			e.printStackTrace();
 			ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");

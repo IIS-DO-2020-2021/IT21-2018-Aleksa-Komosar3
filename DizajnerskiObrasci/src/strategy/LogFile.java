@@ -67,6 +67,8 @@ public class LogFile implements StrategyFile {
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 
 				this.util.loadFileByLoadingType(answer, sf);
+				model.getRedo().clear();
+				btnUpd.setBtnRedoAct(false);
 			}
 			else {
 				ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");
