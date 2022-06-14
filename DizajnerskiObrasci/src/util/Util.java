@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import command.CmdAddShape;
@@ -47,7 +48,7 @@ public class Util implements LogUtil {
 	DrawingModel model;
 	DrawingController controller;
 	DrawingFrame frame;
-	BtnUpdate btnRedo;
+	BtnUpdate btnBtns;
 	
 	@Override
 	public Shape makeShapeFromLog(String lineLog, String stringShape, Boolean second) {
@@ -189,19 +190,15 @@ public class Util implements LogUtil {
 					break;
 				case "BringToFront:":
 					this.executeFullFront(lineLog);
-					//controller.fullBringToFront();
 					break;
 				case "ToFront:":
 					this.executeToFront(lineLog);
-					//controller.bringToFrontByOne();
 					break;
 				case "BringToBack:":
 					this.executeToBack(lineLog);
-					//controller.fullBringToBack();
 					break;
 				case "ToBack:":
 					this.executeToBackByOne(lineLog);
-					//controller.bringToBackByOne();
 					break;
 				case "Undo:":
 					this.executeUndo(lineLog);
@@ -216,7 +213,7 @@ public class Util implements LogUtil {
 							"File is corrupted!", "Error", JOptionPane.ERROR_MESSAGE);
 				model.getRedo().clear();
 				model.getRedo().clear();
-				btnRedo.setBtnRedoAct(false);
+				btnBtns.setBtnRedoAct(false);
 				
 				frame.repaint();
 			}
@@ -228,16 +225,18 @@ public class Util implements LogUtil {
 		
 		try {
 			if(logFile.hasNextLine()){
-				btnRedo.setBtnUndoAct(true);
-				btnRedo.setBtnRedoAct(true);
+				btnBtns.setBtnUndoAct(true);
+				btnBtns.setBtnRedoAct(true);
 				if (type == 0){
 					while (logFile.hasNextLine()) {
 						String lineLog = logFile.nextLine();
 						executeLineLog(lineLog);
 					}
+					ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/ok.png");
 					JOptionPane.showMessageDialog(frame,
-							"Log is loaded!", "OK", JOptionPane.OK_OPTION);
+							"Log is loaded!", "OK", JOptionPane.OK_OPTION, img);
 					logFile.close();
+					frame.getBtnNext().setEnabled(false);
 				} else if (type == 1) {
 					frame.getTextArea().append("Click next for the first step of drawing!\n");
 					frame.getBtnNext().setEnabled(true);
@@ -344,21 +343,24 @@ public class Util implements LogUtil {
 							
 							if (!logFile.hasNextLine()) {
 								frame.getBtnNext().setEnabled(false);
+								ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/ok.png");
 								JOptionPane.showMessageDialog(frame,
-										"Log is loaded!", "OK", JOptionPane.OK_OPTION);
+										"Log is loaded!", "OK", JOptionPane.OK_OPTION, img);
 								logFile.close();
 							}
 						}
 					});
 				}
 			} else {
+				ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");
 				JOptionPane.showMessageDialog(frame, 
-						"Try again! Something is not good.", "Error", JOptionPane.ERROR_MESSAGE);
+						"Try again! Something is not good.", "Error", JOptionPane.ERROR_MESSAGE, img);
 			}
 		} catch (Exception exception) {
 			exception.printStackTrace();
+			ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");
 			JOptionPane.showMessageDialog(frame, 
-					"Try again! Something is not good.", "Error", JOptionPane.ERROR_MESSAGE);
+					"Try again! Something is not good.", "Error", JOptionPane.ERROR_MESSAGE, img);
 		}
 	}
 	
@@ -462,14 +464,12 @@ public class Util implements LogUtil {
 		}
 		
 		controller.checkBtnState();
-		// model.getUndo().clear();
-		btnRedo.setBtnRedoAct(false);
+		btnBtns.setBtnRedoAct(false);
 		
 		frame.repaint();
 	}
 
 	private void executeDeleting(String lineLog, String[] splitLineLog, Command cmd) {		
-		// Shape shape = makeShapeFromLog(lineLog, splitLineLog[1], false);
 		List<Shape> shapesToDelete = new ArrayList<Shape>();
 		for(Shape s: model.getSelectedShapes()) {
 			shapesToDelete.add(s);
@@ -483,9 +483,8 @@ public class Util implements LogUtil {
 		}
 		
 		controller.checkBtnState();
-		// model.getRedo().clear();
 		
-		btnRedo.setBtnRedoAct(false);
+		btnBtns.setBtnRedoAct(false);
 		frame.repaint();
 	}
 
@@ -511,8 +510,7 @@ public class Util implements LogUtil {
 		cmd.execute();
 		model.getUndo().add(cmd);
 		
-		// model.getRedo().clear();
-		btnRedo.setBtnRedoAct(false);
+		btnBtns.setBtnRedoAct(false);
 		
 		
 		frame.repaint();
@@ -532,10 +530,8 @@ public class Util implements LogUtil {
 		model.getUndo().add(cmd);
 		
 		controller.checkBtnState();
-
-		// model.getRedo().clear();
 		
-		btnRedo.setBtnRedoAct(false);
+		btnBtns.setBtnRedoAct(false);
 		frame.repaint();
 	}
 
@@ -555,9 +551,8 @@ public class Util implements LogUtil {
 		model.getUndo().add(cmd);
 		
 		controller.checkBtnState();
-		// model.getRedo().clear();
 		
-		btnRedo.setBtnRedoAct(false);
+		btnBtns.setBtnRedoAct(false);
 		frame.repaint();
 	}
 

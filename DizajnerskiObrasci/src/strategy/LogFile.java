@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import lombok.AllArgsConstructor;
@@ -41,14 +42,16 @@ public class LogFile implements StrategyFile {
 			PrintWriter print = new PrintWriter(path);
 			print.write(frame.getTextArea().getText());
 			
+			ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/ok.png");
 			JOptionPane.showMessageDialog(frame,
-					"Log is saved!", "OK", JOptionPane.OK_OPTION);
+					"Log is saved!", "OK", JOptionPane.OK_OPTION, img);
 			print.close();
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 			
+			ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");
 			JOptionPane.showMessageDialog(frame, 
-					"Cannot save this file!", "Error", JOptionPane.ERROR_MESSAGE);
+					"Cannot save this file!", "Error", JOptionPane.ERROR_MESSAGE, img);
 		}
 	}
 
@@ -66,8 +69,9 @@ public class LogFile implements StrategyFile {
 				this.util.loadFileByLoadingType(answer, sf);
 			}
 			else {
+				ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");
 				JOptionPane.showMessageDialog(frame,
-						"Cannot load this file!", "Error", JOptionPane.ERROR_MESSAGE);
+						"Cannot load this file!", "Error", JOptionPane.ERROR_MESSAGE, img);
 			}
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();

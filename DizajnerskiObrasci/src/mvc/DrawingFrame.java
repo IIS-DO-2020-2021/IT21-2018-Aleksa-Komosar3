@@ -15,10 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.JLabel;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -88,12 +90,14 @@ public class DrawingFrame extends JFrame{
 		gbc_btnSelect.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSelect.gridx = 1;
 		gbc_btnSelect.gridy = 0;
+		btnSelect.setBackground(Color.WHITE);
 		pnlNorth.add(btnSelect, gbc_btnSelect);
 		
 		GridBagConstraints gbc_btnModification = new GridBagConstraints();
 		gbc_btnModification.insets = new Insets(0, 0, 5, 5);
 		gbc_btnModification.gridx = 2;
 		gbc_btnModification.gridy = 0;
+		btnModification.setBackground(Color.WHITE);
 		pnlNorth.add(btnModification, gbc_btnModification);
 		btnModification.setEnabled(false);
 		btnModification.addActionListener(new ActionListener() {
@@ -101,11 +105,13 @@ public class DrawingFrame extends JFrame{
 				controller.editShape();
 			}
 		});
+		textArea.setEditable(false);
 		
 		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
 		gbc_btnDelete.insets = new Insets(0, 0, 5, 5);
 		gbc_btnDelete.gridx = 3;
 		gbc_btnDelete.gridy = 0;
+		btnDelete.setBackground(Color.WHITE);
 		pnlNorth.add(btnDelete, gbc_btnDelete);
 		
 		JLabel lblInnerColor = new JLabel("Inner color:");
@@ -207,25 +213,31 @@ public class DrawingFrame extends JFrame{
 		gbc_panel.gridy = 1;
 		panel.setBackground(UIManager.getColor("activeCaption"));
 		pnlSouth.add(panel, gbc_panel);
+		
+		btnSaveCommands.setEnabled(false);
+		btnSaveCommands.setBackground(Color.WHITE);
 		btnSaveCommands.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.saveLog();
 			}
 		});
 		
-		btnSaveCommands.setEnabled(false);
 		panel.add(btnSaveCommands);
+		btnLoadCommands.setBackground(Color.WHITE);
 		btnLoadCommands.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.loadLog();
 			}
 		});
 		panel.add(btnLoadCommands);
+		btnNext.setBackground(Color.WHITE);
+		btnNext.setEnabled(false);
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		panel.add(btnNext);
+		btnSaveDrawing.setBackground(Color.WHITE);
 		btnSaveDrawing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.saveDrw();
@@ -235,6 +247,7 @@ public class DrawingFrame extends JFrame{
 		
 		btnSaveDrawing.setEnabled(false);
 		panel.add(btnSaveDrawing);
+		btnLoadDrawing.setBackground(Color.WHITE);
 		btnLoadDrawing.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.loadDrawing();
@@ -343,6 +356,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnUndo.insets = new Insets(0, 0, 5, 5);
 		gbc_btnUndo.gridx = 0;
 		gbc_btnUndo.gridy = 1;
+		btnUndo.setBackground(Color.LIGHT_GRAY);
 		btnUndo.setHorizontalAlignment(SwingConstants.RIGHT);
 		pnlEast.add(btnUndo, gbc_btnUndo);
 		btnUndo.setEnabled(false);
@@ -356,12 +370,14 @@ public class DrawingFrame extends JFrame{
 		gbc_btnRedo.anchor = GridBagConstraints.NORTHWEST;
 		gbc_btnRedo.gridx = 1;
 		gbc_btnRedo.gridy = 1;
+		btnRedo.setBackground(Color.LIGHT_GRAY);
 		pnlEast.add(btnRedo, gbc_btnRedo);
 		
 		GridBagConstraints gbc_btnToFront = new GridBagConstraints();
 		gbc_btnToFront.insets = new Insets(0, 0, 5, 5);
 		gbc_btnToFront.gridx = 0;
 		gbc_btnToFront.gridy = 3;
+		btnToFront.setBackground(Color.WHITE);
 		btnToFront.setEnabled(false);
 		btnToFront.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -374,6 +390,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnToBack.insets = new Insets(0, 0, 5, 0);
 		gbc_btnToBack.gridx = 1;
 		gbc_btnToBack.gridy = 3;
+		btnToBack.setBackground(Color.WHITE);
 		
 		btnToBack.setEnabled(false);
 		btnToBack.addActionListener(new ActionListener() {
@@ -388,6 +405,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnBringToFront.insets = new Insets(0, 0, 0, 5);
 		gbc_btnBringToFront.gridx = 0;
 		gbc_btnBringToFront.gridy = 5;
+		btnBringToFront.setBackground(Color.WHITE);
 		
 		btnBringToFront.setEnabled(false);
 		btnBringToFront.addActionListener(new ActionListener() {
@@ -401,6 +419,7 @@ public class DrawingFrame extends JFrame{
 		gbc_btnBringToBack.anchor = GridBagConstraints.WEST;
 		gbc_btnBringToBack.gridx = 1;
 		gbc_btnBringToBack.gridy = 5;
+		btnBringToBack.setBackground(Color.WHITE);
 		
 		btnBringToBack.setEnabled(false);
 		btnBringToBack.addActionListener(new ActionListener() {
@@ -416,6 +435,59 @@ public class DrawingFrame extends JFrame{
 				controller.redo();
 			}
 		});
+		
+		Image pimg=new ImageIcon(this.getClass().getResource("/point.png")).getImage();
+		btnPoint.setIcon(new ImageIcon(pimg));
+		Image cimg=new ImageIcon(this.getClass().getResource("/circle.png")).getImage();
+		btnCircle.setIcon(new ImageIcon(cimg));
+		Image rimg=new ImageIcon(this.getClass().getResource("/rectangle.png")).getImage();
+		btnRectangle.setIcon(new ImageIcon(rimg));
+		Image limg=new ImageIcon(this.getClass().getResource("/line.png")).getImage();
+		btnLine.setIcon(new ImageIcon(limg));
+		Image dimg=new ImageIcon(this.getClass().getResource("/donut.png")).getImage();
+		btnDonut.setIcon(new ImageIcon(dimg));
+		Image himg=new ImageIcon(this.getClass().getResource("/hexagon.png")).getImage();
+		btnHexagon.setIcon(new ImageIcon(himg));
+		Image deimg=new ImageIcon(this.getClass().getResource("/delete.png")).getImage();
+		btnDelete.setIcon(new ImageIcon(deimg));
+		Image mimg=new ImageIcon(this.getClass().getResource("/modify.png")).getImage();
+		btnModification.setIcon(new ImageIcon(mimg));
+		Image simg=new ImageIcon(this.getClass().getResource("/select.png")).getImage();
+		btnSelect.setIcon(new ImageIcon(simg));
+		
+		Image unimg=new ImageIcon(this.getClass().getResource("/undo.png")).getImage();
+		btnUndo.setIcon(new ImageIcon(unimg));
+		
+		Image reimg=new ImageIcon(this.getClass().getResource("/redo.png")).getImage();
+		btnRedo.setIcon(new ImageIcon(reimg));
+		
+		Image ffimg=new ImageIcon(this.getClass().getResource("/tofront.png")).getImage();
+		btnBringToFront.setIcon(new ImageIcon(ffimg));
+		
+		Image bbimg=new ImageIcon(this.getClass().getResource("/toback.png")).getImage();
+		btnBringToBack.setIcon(new ImageIcon(bbimg));
+		
+		Image bfimg=new ImageIcon(this.getClass().getResource("/toback.png")).getImage();
+		btnToBack.setIcon(new ImageIcon(bfimg));
+		
+		Image fbimg=new ImageIcon(this.getClass().getResource("/tofront.png")).getImage();
+		btnToFront.setIcon(new ImageIcon(fbimg));
+		
+		Image slimg=new ImageIcon(this.getClass().getResource("/save.png")).getImage();
+		btnSaveCommands.setIcon(new ImageIcon(slimg));
+		
+		Image sdimg=new ImageIcon(this.getClass().getResource("/save.png")).getImage();
+		btnSaveDrawing.setIcon(new ImageIcon(sdimg));
+		
+		Image llimg=new ImageIcon(this.getClass().getResource("/load.png")).getImage();
+		btnLoadCommands.setIcon(new ImageIcon(llimg));
+		
+		Image lpimg=new ImageIcon(this.getClass().getResource("/load.png")).getImage();
+		btnLoadDrawing.setIcon(new ImageIcon(lpimg));
+		
+		Image next=new ImageIcon(this.getClass().getResource("/next.png")).getImage();
+		btnNext.setIcon(new ImageIcon(next));
+		
 		
 	}
 	
