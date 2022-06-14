@@ -5,12 +5,11 @@ import geometry.Shape;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.NoArgsConstructor;
 
 import mvc.DrawingModel;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdAddShape implements Command {
 	
 	private DrawingModel model;
@@ -18,14 +17,14 @@ public class CmdAddShape implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 		model.addShapeToList(shape);
 
 	}
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
+		
 		model.deleteShapeFromList(shape);
 
 	}

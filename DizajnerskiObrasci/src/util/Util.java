@@ -430,8 +430,11 @@ public class Util implements LogUtil {
 			Command command1 = model.getUndo().pop();
 			command1.unexecute();
 			model.getRedo().add(command1);
+		} else {
+			btnBtns.setBtnUndoAct(false);
 		}
 		
+		controller.checkBtnState();
 		frame.getTextArea().append(command + "\n");
 		frame.repaint();
 	}
@@ -444,8 +447,11 @@ public class Util implements LogUtil {
 			Command command1 = model.getRedo().pop();
 			command1.execute();
 			model.getUndo().add(command1);
+		} else {
+			btnBtns.setBtnRedoAct(false);
 		}
 		
+		controller.checkBtnState();
 		frame.getTextArea().append(command + "\n");
 		frame.repaint();
 	}
@@ -509,6 +515,8 @@ public class Util implements LogUtil {
 		
 		cmd.execute();
 		model.getUndo().add(cmd);
+		
+		controller.checkBtnState();
 		
 		btnBtns.setBtnRedoAct(false);
 		

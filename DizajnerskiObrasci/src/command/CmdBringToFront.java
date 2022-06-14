@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import mvc.DrawingModel;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdBringToFront implements Command {
 	
 	private DrawingModel model;
@@ -17,23 +16,21 @@ public class CmdBringToFront implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 		try{
-		model.deleteAtIndex(index);
-		model.getShapes().add(shape);
-	} catch (IndexOutOfBoundsException e) {
-		e.printStackTrace();
+			model.deleteAtIndex(index);
+			model.getShapes().add(shape);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
 		try {
-		model.deleteAtIndex(model.getShapes().size()-1);
-		model.addOnIndex(shape, index);
-	} catch (IndexOutOfBoundsException e) {
-		e.printStackTrace();
+			model.deleteAtIndex(model.getShapes().size()-1);
+			model.addOnIndex(shape, index);
+		} catch (IndexOutOfBoundsException e) {
+			e.printStackTrace();
 		}
 	}
 	

@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import mvc.DrawingModel;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdDeselectShape implements Command {
 	
 	private DrawingModel model;
@@ -16,7 +15,7 @@ public class CmdDeselectShape implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 		shape.setSelected(false);
 		model.deleteShapeFromSelectedList(shape);
 
@@ -24,7 +23,7 @@ public class CmdDeselectShape implements Command {
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
+		
 		shape.setSelected(true);
 		model.addShapeToListOfSelected(shape);
 	}

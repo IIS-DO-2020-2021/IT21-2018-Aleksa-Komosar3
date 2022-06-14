@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdModifyPoint implements Command {
 	
 	private Point oldPoint, newPoint;
@@ -21,31 +21,31 @@ public class CmdModifyPoint implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			original = oldPoint.clone(original);
 			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		try {
 			oldPoint = newPoint.clone(oldPoint);
 			oldPoint.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			oldPoint = original.clone(oldPoint);
 			oldPoint.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

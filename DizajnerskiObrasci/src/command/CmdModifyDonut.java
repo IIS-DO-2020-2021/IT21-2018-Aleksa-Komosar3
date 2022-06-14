@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdModifyDonut implements Command {
 	
 	private Donut oldDonut,newDonut;
@@ -21,31 +20,30 @@ public class CmdModifyDonut implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 		try {
 			original=oldDonut.clone(original);
 			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		try {
 			oldDonut=newDonut.clone(oldDonut);
 			oldDonut.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			oldDonut=original.clone(oldDonut);
 			//newDonut.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

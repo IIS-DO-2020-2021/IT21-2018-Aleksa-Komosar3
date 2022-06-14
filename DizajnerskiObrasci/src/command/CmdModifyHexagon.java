@@ -6,9 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdModifyHexagon implements Command {
 	
 	private HexagonAdapter oldHex,newHex;
@@ -22,31 +21,31 @@ public class CmdModifyHexagon implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			original=oldHex.clone(original);
 			//original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		try {
 			oldHex=newHex.clone(oldHex);
 			oldHex.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			oldHex=original.clone(oldHex);
 			oldHex.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}

@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdModifyCircle implements Command {
 	
 	private Circle oldCircle, newCircle;
@@ -20,19 +19,19 @@ public class CmdModifyCircle implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			original=oldCircle.clone(original);
 			//original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		try {
 			oldCircle=newCircle.clone(oldCircle);
 			oldCircle.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

@@ -5,9 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@AllArgsConstructor @NoArgsConstructor @Getter @Setter @ToString
+@AllArgsConstructor @NoArgsConstructor @Getter @Setter
 public class CmdModifyLine implements Command {
 	
 	private Line oldLine, newLine;
@@ -21,19 +20,19 @@ public class CmdModifyLine implements Command {
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			original = oldLine.clone(original);
 			original.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		try {
 			oldLine = newLine.clone(oldLine);
 			oldLine.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -41,12 +40,12 @@ public class CmdModifyLine implements Command {
 
 	@Override
 	public void unexecute() {
-		// TODO Auto-generated method stub
+		
 		try {
 			oldLine = original.clone(oldLine);
 			oldLine.setSelected(true);
 		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
