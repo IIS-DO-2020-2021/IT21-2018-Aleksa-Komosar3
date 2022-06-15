@@ -117,6 +117,10 @@ public class DrawingController {
 			btnUpdate.setBtnToBackAct(false);
 			btnUpdate.setBtnToFrontAct(false);
 			btnUpdate.setBtnSaveDrwAct(false);
+			//btnUpdate.setBtnSaveComAct(false);
+		}
+		if(frame.getTextArea().equals("")){
+			btnUpdate.setBtnSaveDrwAct(false);
 			btnUpdate.setBtnSaveComAct(false);
 		}
 		frame.repaint();
@@ -257,7 +261,7 @@ public class DrawingController {
 					circle.setInnerColor(frame.getBtnInnerColor().getBackground());
 				}
 				try {
-					newShape= circle;
+					newShape = circle;
 				} catch (Exception ex){
 					JOptionPane.showMessageDialog(frame, "Wrong data", "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -309,7 +313,6 @@ public class DrawingController {
 			dlgHexagon.setVisible(true);
 			
 			if(dlgHexagon.isOK()){
-				try {
 					hexagon = new HexagonAdapter(new Point(e.getX(),e.getY()), 
 						Integer.parseInt(dlgHexagon.getTxtRadius().getText()));
 					
@@ -325,19 +328,14 @@ public class DrawingController {
 						hexagon.setHexagonInnerColor(frame.getBtnInnerColor().getBackground());
 					}
 					newShape = hexagon;
-				} catch (Exception ex){
-					JOptionPane.showMessageDialog(frame, "Wrong data", "Error",
-							JOptionPane.ERROR_MESSAGE);
-					}
 			}
 		}
 		if (newShape!=null) {
 			command=new CmdAddShape(model, newShape);
-			command.execute();
-			model.getUndo().add(command);
-			
 			frame.getTextArea().append("Adding: " + newShape.toString() + "\n");
 			
+			command.execute();
+			model.getUndo().add(command);
 		}
 		checkBtnState();
 		btnsUndoRedo();
@@ -525,11 +523,11 @@ public class DrawingController {
 						circle.setInnerColor(dlgCircle.getInnerPickedColor());
 					}
 					command=new CmdModifyCircle((Circle)model.getSelectedShapes().get(0), circle);
-					command.execute();
-					model.getUndo().add(command);
 					
 					frame.getTextArea().append("Modifing: " + ((Circle)sel).toString() 
 							+ " To: " + circle.toString() + "\n");
+					command.execute();
+					model.getUndo().add(command);
 					
 					//model.getRedo().clear();
 					//btnUpdate.setBtnRedoAct(false);
@@ -565,11 +563,10 @@ public class DrawingController {
 						hexagon.setHexagonInnerColor(dlgHexagon.getInnerPickedColor());
 					}
 					command=new CmdModifyHexagon((HexagonAdapter)model.getSelectedShapes().get(0), hexagon);
-					command.execute();
-					model.getUndo().add(command);
-					
 					frame.getTextArea().append("Modifing: " + ((HexagonAdapter)sel).toString() 
 							+ " To: " + hexagon.toString() + "\n");
+					command.execute();
+					model.getUndo().add(command);
 					
 					//model.getRedo().clear();
 					//btnsUndoRedo();
@@ -578,8 +575,7 @@ public class DrawingController {
 			frame.repaint();
 			
 			//selShape.setSelected(true);
-		}
-		else if (model.getSelectedShapes().size()==0){
+		} else if (model.getSelectedShapes().size()==0){
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
 			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
@@ -610,16 +606,15 @@ public class DrawingController {
 			if (selectedOption == JOptionPane.YES_OPTION) {
 			for(int i=model.getSelectedShapes().size() - 1; i>=0; i-- )
 			{
-					frame.getTextArea().append("Deleting: " + model.getSelectedShapes().get(i).toString() + "\n");
+				frame.getTextArea().append("Deleting: " + model.getSelectedShapes().get(i).toString() + "\n");
 				 
-					command=new CmdDeleteOneShape(model, model.getSelectedShapes().get(i));
-					command.execute();
-					model.getUndo().add(command);
+				command=new CmdDeleteOneShape(model, model.getSelectedShapes().get(i));
+				command.execute();
+				model.getUndo().add(command);
 					
-				}
 			}
-		}
-		else {
+			}
+		} else {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
 			JOptionPane.showMessageDialog(null, "You did not select any shape!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
@@ -651,9 +646,9 @@ public class DrawingController {
 		Shape shape = model.getSelectedShapes().get(0);
 		int index= model.getShapes().indexOf(shape);
 		command = new CmdToBackByOne(model, shape, index);
+		frame.getTextArea().append("ToBack: "  + shape.toString() + "\n" );
 		command.execute();
 		model.getUndo().add(command);
-		frame.getTextArea().append("ToBack: "  + shape.toString() + "\n" );
 		checkBtnState();
 		
 		model.getRedo().clear();
@@ -666,9 +661,9 @@ public class DrawingController {
 		Shape shape = model.getSelectedShapes().get(0);
 		int index= model.getShapes().indexOf(shape);
 		command = new CmdBringToFront(model, shape, index);
+		frame.getTextArea().append("BringToFront: "  + shape.toString() + "\n" );
 		command.execute();
 		model.getUndo().add(command);
-		frame.getTextArea().append("BringToFront: "  + shape.toString() + "\n" );
 		checkBtnState();
 		
 		model.getRedo().clear();
@@ -681,9 +676,9 @@ public class DrawingController {
 		Shape shape = model.getSelectedShapes().get(0);
 		int index= model.getShapes().indexOf(shape);
 		command = new CmdToFrontByOne(model, shape, index);
+		frame.getTextArea().append("ToFront: "  + shape.toString() + "\n" );
 		command.execute();
 		model.getUndo().add(command);
-		frame.getTextArea().append("ToFront: "  + shape.toString() + "\n" );
 		checkBtnState();
 		
 		model.getRedo().clear();
@@ -694,9 +689,9 @@ public class DrawingController {
 	public void undo(){
 		if(model.getUndo().size()!=0){
 			Command command = model.getUndo().pop();
+			frame.getTextArea().append("Undo: "  + command.toString());
 			command.unexecute();
 			model.getRedo().add(command);
-			frame.getTextArea().append("Undo: "  + command.toString());
 			btnUpdate.setBtnRedoAct(true);
 			if(model.getUndo().size()==0){
 				btnUpdate.setBtnUndoAct(false);
@@ -712,10 +707,9 @@ public class DrawingController {
 	public void redo(){
 		if(model.getRedo().size()!=0){
 			Command command = model.getRedo().pop();
+			frame.getTextArea().append("Redo: "  + command.toString());
 			command.execute();
 			model.getUndo().add(command);
-			
-			frame.getTextArea().append("Redo: "  + command.toString());
 		
 			btnUpdate.setBtnUndoAct(true);
 			if(model.getRedo().size()==0){

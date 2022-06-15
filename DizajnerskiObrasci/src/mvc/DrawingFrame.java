@@ -40,13 +40,13 @@ public class DrawingFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private DrawingView view=new DrawingView();
 	private DrawingController controller;
-	private JToggleButton btnPoint = new JToggleButton("Point");
-	private JToggleButton btnLine = new JToggleButton("Line");
-	private JToggleButton btnRectangle = new JToggleButton("Rectangle");
-	private JToggleButton btnCircle = new JToggleButton("Circle");
-	private JToggleButton btnDonut = new JToggleButton("Donut");
+	private JToggleButton btnPoint = new JToggleButton("Point          ");
+	private JToggleButton btnLine = new JToggleButton("Line            ");
+	private JToggleButton btnRectangle = new JToggleButton("Rectangle ");
+	private JToggleButton btnCircle = new JToggleButton("Circle         ");
+	private JToggleButton btnDonut = new JToggleButton("Donut         ");
 	private JToggleButton btnSelect = new JToggleButton("Selection");
-	private JToggleButton btnHexagon=new JToggleButton("Hexagon");
+	private JToggleButton btnHexagon=new JToggleButton("Hexagon    ");
 	private JButton btnModification = new JButton("Modification");
 	private JButton btnUndo = new JButton("Undo ");
 	private JButton btnRedo = new JButton("Redo");
@@ -80,96 +80,12 @@ public class DrawingFrame extends JFrame{
 		pnlNorth.setForeground(UIManager.getColor("activeCaption"));
 		getContentPane().add(pnlNorth, BorderLayout.NORTH);
 		GridBagLayout gbl_pnlNorth = new GridBagLayout();
-		gbl_pnlNorth.columnWidths = new int[]{292, 0, 61, 61, 0, 92, 0, 0, 60, 0, 0, 0};
+		gbl_pnlNorth.columnWidths = new int[]{292, 0, 61, 61, 0, 108, 0, 89, 60, 0, 0, 0, 0};
 		gbl_pnlNorth.rowHeights = new int[]{55, 0, 0, 0};
-		gbl_pnlNorth.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_pnlNorth.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_pnlNorth.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		pnlNorth.setLayout(gbl_pnlNorth);
-		btnGroup.add(btnSelect);
-		GridBagConstraints gbc_btnSelect = new GridBagConstraints();
-		gbc_btnSelect.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSelect.gridx = 1;
-		gbc_btnSelect.gridy = 0;
-		btnSelect.setBackground(Color.WHITE);
-		pnlNorth.add(btnSelect, gbc_btnSelect);
-		
-		GridBagConstraints gbc_btnModification = new GridBagConstraints();
-		gbc_btnModification.insets = new Insets(0, 0, 5, 5);
-		gbc_btnModification.gridx = 2;
-		gbc_btnModification.gridy = 0;
-		btnModification.setBackground(Color.WHITE);
-		pnlNorth.add(btnModification, gbc_btnModification);
-		btnModification.setEnabled(false);
-		btnModification.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.editShape();
-			}
-		});
 		textArea.setEditable(false);
-		
-		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
-		gbc_btnDelete.insets = new Insets(0, 0, 5, 5);
-		gbc_btnDelete.gridx = 3;
-		gbc_btnDelete.gridy = 0;
-		btnDelete.setBackground(Color.WHITE);
-		pnlNorth.add(btnDelete, gbc_btnDelete);
-		
-		JLabel lblInnerColor = new JLabel("Inner color:");
-		lblInnerColor.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
-		GridBagConstraints gbc_lblInnerColor = new GridBagConstraints();
-		gbc_lblInnerColor.anchor = GridBagConstraints.SOUTH;
-		gbc_lblInnerColor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblInnerColor.gridx = 6;
-		gbc_lblInnerColor.gridy = 0;
-		pnlNorth.add(lblInnerColor, gbc_lblInnerColor);
-		
-		JLabel lblColors = new JLabel("COLORS:");
-		GridBagConstraints gbc_lblColors = new GridBagConstraints();
-		gbc_lblColors.insets = new Insets(0, 0, 5, 5);
-		gbc_lblColors.gridx = 7;
-		gbc_lblColors.gridy = 0;
-		pnlNorth.add(lblColors, gbc_lblColors);
-		
-		btnInnerColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				innerColor();
-				getBtnInnerColor().setSelected(false);
-			}
-		});
-		
-		JLabel lblOuterColor = new JLabel("Outer color:");
-		lblOuterColor.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
-		GridBagConstraints gbc_lblOuterColor = new GridBagConstraints();
-		gbc_lblOuterColor.anchor = GridBagConstraints.SOUTH;
-		gbc_lblOuterColor.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOuterColor.gridx = 8;
-		gbc_lblOuterColor.gridy = 0;
-		pnlNorth.add(lblOuterColor, gbc_lblOuterColor);
-		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
-		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
-		gbc_btnInnerColor.gridx = 6;
-		gbc_btnInnerColor.gridy = 1;
-		pnlNorth.add(btnInnerColor, gbc_btnInnerColor);
-		
-		GridBagConstraints gbc_btnOuterColor = new GridBagConstraints();
-		gbc_btnOuterColor.insets = new Insets(0, 0, 5, 5);
-		gbc_btnOuterColor.gridx = 8;
-		gbc_btnOuterColor.gridy = 1;
-		btnOuterColor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				borderColor();
-			}
-		});
-		pnlNorth.add(btnOuterColor, gbc_btnOuterColor);
-		
-		btnDelete.setEnabled(false);
-		btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				controller.deleteShape();
-			}
-		});
-		
-		btnSelect.setEnabled(false);
 		view.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -446,11 +362,95 @@ public class DrawingFrame extends JFrame{
 		Image himg=new ImageIcon(this.getClass().getResource("/hexagon.png")).getImage();
 		btnHexagon.setIcon(new ImageIcon(himg));
 		Image deimg=new ImageIcon(this.getClass().getResource("/delete.png")).getImage();
-		btnDelete.setIcon(new ImageIcon(deimg));
 		Image mimg=new ImageIcon(this.getClass().getResource("/modify.png")).getImage();
-		btnModification.setIcon(new ImageIcon(mimg));
 		Image simg=new ImageIcon(this.getClass().getResource("/select.png")).getImage();
+		
+		GridBagConstraints gbc_btnOuterColor = new GridBagConstraints();
+		gbc_btnOuterColor.insets = new Insets(0, 0, 5, 5);
+		gbc_btnOuterColor.gridx = 9;
+		gbc_btnOuterColor.gridy = 1;
+		btnOuterColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borderColor();
+			}
+		});
+		
+		btnInnerColor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				innerColor();
+				getBtnInnerColor().setSelected(false);
+			}
+		});
+		btnGroup.add(btnSelect);
+		GridBagConstraints gbc_btnSelect = new GridBagConstraints();
+		gbc_btnSelect.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSelect.gridx = 2;
+		gbc_btnSelect.gridy = 0;
+		btnSelect.setBackground(Color.WHITE);
+		pnlNorth.add(btnSelect, gbc_btnSelect);
+		
+		btnSelect.setEnabled(false);
 		btnSelect.setIcon(new ImageIcon(simg));
+		
+		GridBagConstraints gbc_btnModification = new GridBagConstraints();
+		gbc_btnModification.insets = new Insets(0, 0, 5, 5);
+		gbc_btnModification.gridx = 3;
+		gbc_btnModification.gridy = 0;
+		btnModification.setBackground(Color.WHITE);
+		pnlNorth.add(btnModification, gbc_btnModification);
+		btnModification.setEnabled(false);
+		btnModification.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.editShape();
+			}
+		});
+		btnModification.setIcon(new ImageIcon(mimg));
+		
+		GridBagConstraints gbc_btnDelete = new GridBagConstraints();
+		gbc_btnDelete.insets = new Insets(0, 0, 5, 5);
+		gbc_btnDelete.gridx = 4;
+		gbc_btnDelete.gridy = 0;
+		btnDelete.setBackground(Color.WHITE);
+		pnlNorth.add(btnDelete, gbc_btnDelete);
+		
+		btnDelete.setEnabled(false);
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				controller.deleteShape();
+			}
+		});
+		btnDelete.setIcon(new ImageIcon(deimg));
+		
+		JLabel lblInnerColor = new JLabel("Inner color:");
+		lblInnerColor.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblInnerColor = new GridBagConstraints();
+		gbc_lblInnerColor.anchor = GridBagConstraints.SOUTH;
+		gbc_lblInnerColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblInnerColor.gridx = 7;
+		gbc_lblInnerColor.gridy = 0;
+		pnlNorth.add(lblInnerColor, gbc_lblInnerColor);
+		
+		JLabel lblColors = new JLabel("COLORS:");
+		GridBagConstraints gbc_lblColors = new GridBagConstraints();
+		gbc_lblColors.insets = new Insets(0, 0, 5, 5);
+		gbc_lblColors.gridx = 8;
+		gbc_lblColors.gridy = 0;
+		pnlNorth.add(lblColors, gbc_lblColors);
+		
+		JLabel lblOuterColor = new JLabel("Outer color:");
+		lblOuterColor.setFont(new Font("Bahnschrift", Font.PLAIN, 13));
+		GridBagConstraints gbc_lblOuterColor = new GridBagConstraints();
+		gbc_lblOuterColor.anchor = GridBagConstraints.SOUTH;
+		gbc_lblOuterColor.insets = new Insets(0, 0, 5, 5);
+		gbc_lblOuterColor.gridx = 9;
+		gbc_lblOuterColor.gridy = 0;
+		pnlNorth.add(lblOuterColor, gbc_lblOuterColor);
+		GridBagConstraints gbc_btnInnerColor = new GridBagConstraints();
+		gbc_btnInnerColor.insets = new Insets(0, 0, 5, 5);
+		gbc_btnInnerColor.gridx = 7;
+		gbc_btnInnerColor.gridy = 1;
+		pnlNorth.add(btnInnerColor, gbc_btnInnerColor);
+		pnlNorth.add(btnOuterColor, gbc_btnOuterColor);
 		
 		Image unimg=new ImageIcon(this.getClass().getResource("/undo.png")).getImage();
 		btnUndo.setIcon(new ImageIcon(unimg));

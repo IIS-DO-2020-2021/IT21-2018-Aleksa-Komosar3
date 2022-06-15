@@ -428,6 +428,7 @@ public class Util implements LogUtil {
 
 		if(model.getUndo().size()!=0){
 			Command command1 = model.getUndo().pop();
+			frame.getTextArea().append(command + "\n");
 			command1.unexecute();
 			model.getRedo().add(command1);
 		} else {
@@ -435,7 +436,7 @@ public class Util implements LogUtil {
 		}
 		
 		controller.checkBtnState();
-		frame.getTextArea().append(command + "\n");
+		//frame.getTextArea().append(command + "\n");
 		frame.repaint();
 	}
 	

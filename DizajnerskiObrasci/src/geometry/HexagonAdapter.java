@@ -59,6 +59,13 @@ public class HexagonAdapter extends Shape {
 		return "(" + red + ", " + green + ", " + blue + ")";
 	}
 	
+	public String getColorRGB() {
+		int red = hexagon.getBorderColor().getRed();
+		int green = hexagon.getBorderColor().getGreen();
+		int blue = hexagon.getBorderColor().getBlue();
+		return "RGB(" + red + ", " + green + ", " + blue + ")";
+	}
+	
 	public HexagonAdapter()
 	{
 		

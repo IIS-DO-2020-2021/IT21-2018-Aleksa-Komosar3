@@ -68,6 +68,8 @@ public class LogFile implements StrategyFile {
 
 				this.util.loadFileByLoadingType(answer, sf);
 				model.getRedo().clear();
+				model.getUndo().clear();
+				btnUpd.setBtnUndoAct(false);
 				btnUpd.setBtnRedoAct(false);
 			}
 			else {
