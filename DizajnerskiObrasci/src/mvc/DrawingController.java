@@ -178,25 +178,24 @@ public class DrawingController {
 						frame.getTextArea().append("Deselect: " + shape.toString() + "\n");
 						checkBtnState();
 
-				} else if (!shape.isSelected()){
+					}else if (!shape.isSelected()){
 					
-					command=new CmdSelectShape(model, shape);
-					command.execute();
-					model.getUndo().add(command);
+						command=new CmdSelectShape(model, shape);
+						command.execute();
+						model.getUndo().add(command);
 					
-					frame.getTextArea().append("Select: " + shape.toString() + "\n");
-					selShape=shape;
-					checkBtnState();
+						frame.getTextArea().append("Select: " + shape.toString() + "\n");
+						selShape=shape;
+						checkBtnState();
+					}
+					break;
 				}
-			break;
 			}
-		}
-
 		} else if(frame.getBtnPoint().isSelected()){
 				Point point = new Point(e.getX(), e.getY());
 				point.setColor(frame.getBtnInnerColor().getBackground());
 				newShape = point;
-			} else if (frame.getBtnLine().isSelected()){
+		} else if (frame.getBtnLine().isSelected()){
 				if (startPoint==null) {
 					startPoint = new Point (e.getX(), e.getY());
 				}
@@ -579,6 +578,8 @@ public class DrawingController {
 			ImageIcon icon=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/er.png");
 			JOptionPane.showMessageDialog(null, "You did not select any shape to edit!","Error",
 					JOptionPane.WARNING_MESSAGE, icon);
+		} else if (model.getSelectedShapes().size()>1) {
+			btnUpdate.setBtnModificationAct(false);
 		}
 		btnsUndoRedo();
 		checkBtnState();

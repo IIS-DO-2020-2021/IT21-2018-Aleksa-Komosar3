@@ -63,6 +63,10 @@ public class PaintingFile implements StrategyFile {
 					"OK", JOptionPane.OK_OPTION, img);
 			fileInpStream.close();
 			frame.getBtnSelect().setEnabled(true);
+			model.getUndo().clear();
+			model.getRedo().clear();
+			frame.getBtnRedo().setEnabled(false);
+			frame.getBtnUndo().setEnabled(false);
 		} catch (Exception e){
 			e.printStackTrace();
 			ImageIcon img=new ImageIcon("C:/Users/EC/git/IT21-2018-Aleksa-Komosar3/DizajnerskiObrasci/images/fail.png");
